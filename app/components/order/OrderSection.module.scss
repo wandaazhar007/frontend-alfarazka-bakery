@@ -1,0 +1,184 @@
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.orderSection {
+  position: relative;
+  padding: v.$space-7 0 v.$space-7 0;
+  background: linear-gradient(180deg,
+      #fffdf8 0%,
+      #fef6f8 45%,
+      #ffffff 100%);
+  overflow: hidden;
+
+  // wave halus di bagian atas
+  &::before {
+    content: "";
+    position: absolute;
+    top: -3.4rem;
+    left: 0;
+    width: 100%;
+    height: 3.4rem;
+    background: inherit;
+    border-bottom-left-radius: 50% 100%;
+    border-bottom-right-radius: 50% 100%;
+  }
+}
+
+.inner {
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+}
+
+.header {
+  max-width: 60rem;
+  margin: 0 auto v.$space-5 auto;
+  text-align: center;
+}
+
+.kicker {
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: v.$color-primary-dark;
+  font-weight: 600;
+  margin-bottom: v.$space-2;
+}
+
+.title {
+  font-size: 2.4rem;
+  margin-bottom: v.$space-2;
+  color: v.$color-text-main;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: v.$color-text-muted;
+}
+
+/* STEP GRID */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: v.$space-3;
+  margin-bottom: v.$space-4;
+}
+
+.stepCard {
+  position: relative;
+  background: #ffffff;
+  border-radius: v.$radius-lg;
+  padding: v.$space-4 v.$space-3 v.$space-3 v.$space-3;
+  box-shadow: v.$shadow-soft;
+  border: 0.1rem solid rgba(248, 113, 113, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.stepBadge {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.4rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  background: v.$color-primary;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.stepIcon {
+  margin-top: 2.4rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: v.$color-primary-soft;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-primary-dark;
+  font-size: 1.8rem;
+}
+
+.stepTitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: v.$color-text-main;
+}
+
+.stepText {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+}
+
+/* FOOTER CTA */
+.footer {
+  text-align: center;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.2rem;
+  border-radius: v.$radius-pill;
+  background-color: v.$color-primary;
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: v.$shadow-soft;
+  margin-bottom: v.$space-2;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.08s ease;
+
+  &:hover {
+    background-color: v.$color-primary-dark;
+    box-shadow: v.$shadow-card;
+    transform: translateY(-0.06rem);
+  }
+}
+
+.microcopy {
+  font-size: 1.2rem;
+  color: v.$color-text-muted;
+}
+
+/* RESPONSIVE */
+@include r.respond-down("tablet") {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stepCard {
+    padding: v.$space-3;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .orderSection {
+    padding: v.$space-5 0 v.$space-6 0;
+  }
+
+  .inner {
+    padding: 0 v.$space-3;
+  }
+
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}

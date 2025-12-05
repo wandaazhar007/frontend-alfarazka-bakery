@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Hero from "./components/hero/Hero";
 import WhyAlfarazka from "./components/why/WhyAlfarazka";
+import ProductsSection from "./components/products/ProductsSection";
+import OrderSection from "./components/order/OrderSection";
 
 export const metadata: Metadata = {
   title: "Alfarazka Bakery – Roti Unyil Rumahan di Ciputat | Nyemil Sehat, Teman Ngopi",
@@ -19,6 +21,8 @@ export default function HomePage() {
     <>
       <Hero />
       <WhyAlfarazka />
+      <ProductsSection />
+      <OrderSection />
       {/* Nanti di bawah sini kita tambahkan section keunggulan, produk, cara pesan singkat, dsb */}
     </>
   );
