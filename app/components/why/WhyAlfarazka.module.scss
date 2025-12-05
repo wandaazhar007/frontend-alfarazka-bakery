@@ -1,0 +1,127 @@
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.whySection {
+  position: relative;
+  padding: v.$space-7 0;
+  background: linear-gradient(180deg,
+      #fff6f0 0%,
+      #fff9f5 50%,
+      #ffffff 100%);
+  overflow: hidden;
+
+  // wave di atas section
+  &::before {
+    content: "";
+    position: absolute;
+    top: -3.4rem;
+    left: 0;
+    width: 100%;
+    height: 3.4rem;
+    background: inherit;
+    border-bottom-left-radius: 50% 100%;
+    border-bottom-right-radius: 50% 100%;
+  }
+}
+
+.inner {
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+}
+
+.header {
+  max-width: 60rem;
+  margin: 0 auto v.$space-5 auto;
+  text-align: center;
+}
+
+.kicker {
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: v.$color-primary-dark;
+  font-weight: 600;
+  margin-bottom: v.$space-2;
+}
+
+.title {
+  font-size: 2.4rem;
+  margin-bottom: v.$space-2;
+  color: v.$color-text-main;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: v.$color-text-muted;
+}
+
+/* GRID KARTU KEUNGGULAN */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: v.$space-3;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: v.$radius-lg;
+  padding: v.$space-4;
+  box-shadow: v.$shadow-soft;
+  border: 0.1rem solid rgba(248, 113, 113, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.iconWrap {
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: v.$color-primary-soft;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-primary-dark;
+  font-size: 1.7rem;
+}
+
+.cardTitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: v.$color-text-main;
+}
+
+.cardText {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+}
+
+/* RESPONSIVE */
+@include r.respond-down("tablet") {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@include r.respond-down("mobile") {
+  .whySection {
+    padding: v.$space-5 0 v.$space-6 0;
+  }
+
+  .inner {
+    padding: 0 v.$space-3;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card {
+    padding: v.$space-3;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}
