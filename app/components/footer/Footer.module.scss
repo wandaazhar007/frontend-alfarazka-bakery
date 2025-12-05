@@ -1,0 +1,27 @@
+// app/components/footer/Footer.module.scss
+@use "../../styles/_variables" as v;
+
+.footer {
+  border-top: 0.1rem solid v.$color-border;
+  background: v.$color-bg-soft;
+  padding: v.$space-3 0;
+  margin-top: v.$space-6;
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: v.$space-2;
+  font-size: 1.25rem;
+  color: v.$color-text-soft;
+}
+
+.brand {
+  margin: 0;
+}
+
+.meta {
+  margin: 0;
+}

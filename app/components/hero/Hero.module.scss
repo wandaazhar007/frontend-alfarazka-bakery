@@ -1,0 +1,124 @@
+// app/components/hero/Hero.module.scss
+@use "../../styles/_variables" as v;
+@use "../../styles/_responsive" as r;
+
+.hero {
+  padding: v.$space-7 0 v.$space-6;
+  background: radial-gradient(circle at top left, #ffe5e8 0, #fff 40%, #fff 100%);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: v.$space-6;
+  align-items: center;
+}
+
+.left {}
+
+.eyebrow {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: v.$color-primary-dark;
+  margin-bottom: v.$space-1;
+}
+
+.title {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: v.$space-2;
+
+  span {
+    color: v.$color-primary;
+  }
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  max-width: 46rem;
+  margin-bottom: v.$space-4;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-2;
+  margin-bottom: v.$space-3;
+}
+
+.benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+
+  li {
+    font-size: 1.35rem;
+    color: v.$color-text-muted;
+  }
+}
+
+/* Right side card */
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.heroCard {
+  background: #ffffff;
+  border-radius: v.$radius-xl;
+  padding: v.$space-4;
+  box-shadow: v.$shadow-card;
+  max-width: 32rem;
+}
+
+.heroCardTitle {
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.heroCard ul {
+  padding-left: 1.6rem;
+  margin: 0 0 1.2rem 0;
+
+  li {
+    font-size: 1.35rem;
+    color: v.$color-text-muted;
+  }
+}
+
+.heroCardNote {
+  font-size: 1.3rem;
+  color: v.$color-text-soft;
+}
+
+/* Responsive */
+
+@include r.respond-down("tablet") {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .right {
+    justify-content: flex-start;
+  }
+
+  .benefits {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .title {
+    font-size: 2.4rem;
+  }
+
+  .hero {
+    padding: v.$space-5 0 v.$space-5;
+  }
+}
