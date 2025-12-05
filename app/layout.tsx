@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: "Alfarazka Bakery – Nyemil Sehat, Teman Ngopi",
   description:
     "Alfarazka Bakery adalah produsen roti unyil rumahan di Ciputat, Tangerang Selatan. Cocok untuk snack acara, bekal anak, dan teman ngopi harian.",
+  icons: {
+    icon: "/images/icon-logo-alfarazka-bakery.png",
+    shortcut: "/images/icon-logo-alfarazka-bakery.png",
+    apple: "/images/icon-logo-alfarazka-bakery.png",
+  },
 };
 
 export default function RootLayout({
