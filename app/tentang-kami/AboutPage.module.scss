@@ -1,0 +1,180 @@
+// app/tentang-kami/AboutPage.module.scss
+@use "../styles/variables" as v;
+@use "../styles/responsive" as r;
+
+.aboutPage {
+  min-height: 100vh;
+}
+
+/* HERO SECTION */
+
+.hero {
+  position: relative;
+  padding: v.$space-7 0 v.$space-7 0;
+  background: linear-gradient(180deg,
+      #fffdf8 0%,
+      #fef6f8 45%,
+      #ffffff 100%);
+  overflow: hidden;
+
+  // wave halus di bagian atas halaman tentang kami
+  &::before {
+    content: "";
+    position: absolute;
+    top: -3.4rem;
+    left: 0;
+    width: 100%;
+    height: 3.4rem;
+    background: inherit;
+    border-bottom-left-radius: 50% 100%;
+    border-bottom-right-radius: 50% 100%;
+  }
+}
+
+.heroInner {
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+  gap: v.$space-5;
+  align-items: center;
+}
+
+.heroContent {
+  max-width: 56rem;
+}
+
+.kicker {
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: v.$color-primary-dark;
+  font-weight: 600;
+  margin-bottom: v.$space-2;
+}
+
+.title {
+  font-size: 2.6rem;
+  line-height: 1.25;
+  margin-bottom: v.$space-3;
+  color: v.$color-text-main;
+
+  span {
+    display: block;
+    color: v.$color-primary-dark;
+  }
+}
+
+.lead {
+  font-size: 1.5rem;
+  color: v.$color-text-main;
+  margin-bottom: v.$space-2;
+}
+
+.text {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+  margin-bottom: v.$space-2;
+}
+
+/* VALUES LIST */
+
+.valuesList {
+  list-style: none;
+  padding: 0;
+  margin: v.$space-3 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-1;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 1.35rem;
+    color: v.$color-text-muted;
+
+    strong {
+      color: v.$color-text-main;
+      font-weight: 600;
+    }
+  }
+}
+
+.dot {
+  margin-top: 0.5rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: v.$color-primary;
+}
+
+/* IMAGE SIDE */
+
+.heroImageWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.heroImageInner {
+  position: relative;
+  width: 100%;
+  // max-width: 40rem;
+  // aspect-ratio: 4 / 5;
+
+  max-width: 52rem; // tadinya 40rem, sekarang lebih lebar
+  aspect-ratio: 16 / 9;
+
+  border-radius: v.$radius-xl;
+  overflow: hidden;
+  box-shadow: v.$shadow-card; // <-- pakai token yang ada di _variables.scss
+  background: #ffffff;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RESPONSIVE */
+
+@include r.respond-down("tablet") {
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: v.$space-4;
+  }
+
+  .heroImageWrapper {
+    order: -1; // di tablet/mobile, foto bisa di atas
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .title {
+    font-size: 2.3rem;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .hero {
+    padding: v.$space-5 0 v.$space-6 0;
+  }
+
+  .heroInner {
+    padding: 0 v.$space-3;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .heroImageInner {
+    max-width: 100%;
+    aspect-ratio: 4 / 3; // sedikit lebih tinggi di layar kecil
+  }
+
+}
