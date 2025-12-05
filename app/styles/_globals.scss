@@ -1,0 +1,208 @@
+// app/styles/_globals.scss
+@use "./variables" as v;
+@use "./responsive" as r;
+
+// RESET SEDERHANA + BASE
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  // 10px = 1rem (dengan asumsi default 16px)
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: v.$font-family-base;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: v.$color-text-main;
+  background: v.$color-bg;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button {
+  font-family: inherit;
+}
+
+// TYPOGRAPHY UTILITIES
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: v.$font-family-heading;
+  margin: 0 0 v.$space-2 0;
+  color: v.$color-text-main;
+}
+
+p {
+  margin: 0 0 v.$space-2 0;
+  color: v.$color-text-muted;
+}
+
+// LAYOUT UTILITIES
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.container {
+  width: 100%;
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+}
+
+.section {
+  padding: v.$space-7 0;
+}
+
+.section--soft {
+  padding: v.$space-7 0;
+  background: v.$color-bg-soft;
+}
+
+.section-title {
+  font-size: 2.4rem;
+  margin-bottom: v.$space-2;
+}
+
+.section-subtitle {
+  font-size: 1.5rem;
+  color: v.$color-text-muted;
+  max-width: 56rem;
+}
+
+// GLOBAL BUTTON STYLE (bisa dipakai ulang di component)
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1.8rem;
+  border-radius: v.$radius-pill;
+  border: none;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.08s ease;
+}
+
+.btn-primary {
+  @extend .btn;
+  background-color: v.$color-primary;
+  color: #fff;
+  box-shadow: v.$shadow-soft;
+
+  &:hover {
+    background-color: v.$color-primary-dark;
+    box-shadow: v.$shadow-card;
+    transform: translateY(-0.06rem);
+  }
+
+  &:active {
+    transform: translateY(0.04rem);
+    box-shadow: v.$shadow-soft;
+  }
+}
+
+.btn-outline {
+  @extend .btn;
+  background-color: #ffffff;
+  color: v.$color-primary;
+  border: 0.1rem solid v.$color-primary-soft;
+
+  &:hover {
+    background-color: v.$color-primary-soft;
+  }
+}
+
+// CARD UTILITY
+
+.card {
+  background: v.$color-surface;
+  border-radius: v.$radius-lg;
+  padding: v.$space-4;
+  box-shadow: v.$shadow-soft;
+}
+
+// FLOATING WHATSAPP BUTTON (global)
+
+.fab-whatsapp {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1rem 2.4rem rgba(16, 185, 129, 0.45);
+  z-index: 50;
+  cursor: pointer;
+  font-size: 2.4rem;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 1.4rem 3rem rgba(16, 185, 129, 0.55);
+  }
+}
+
+@include r.respond-down("mobile") {
+
+  .section,
+  .section--soft {
+    padding: v.$space-5 0;
+  }
+
+  .container {
+    padding: 0 v.$space-3;
+  }
+
+  .fab-whatsapp {
+    right: 1.6rem;
+    bottom: 1.6rem;
+    width: 4.2rem;
+    height: 4.2rem;
+    font-size: 2.1rem;
+  }
+}

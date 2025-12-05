@@ -1,0 +1,30 @@
+// app/styles/_responsive.scss
+@use "./variables" as v;
+
+// Mixin responsive berbasis nama breakpoint di v.$breakpoints
+
+// max-width (turun ke bawah)
+@mixin respond-down($bp-name) {
+  $bp-value: map-get(v.$breakpoints, $bp-name);
+
+  @if $bp-value ==null {
+    @error "Breakpoint `#{$bp-name}` tidak ditemukan di v.$breakpoints";
+  }
+
+  @media (max-width: $bp-value) {
+    @content;
+  }
+}
+
+// min-width (naik ke atas) — opsional tapi berguna
+@mixin respond-up($bp-name) {
+  $bp-value: map-get(v.$breakpoints, $bp-name);
+
+  @if $bp-value ==null {
+    @error "Breakpoint `#{$bp-name}` tidak ditemukan di v.$breakpoints";
+  }
+
+  @media (min-width: $bp-value) {
+    @content;
+  }
+}
