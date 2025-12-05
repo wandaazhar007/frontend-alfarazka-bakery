@@ -3,6 +3,8 @@ import Hero from "./components/hero/Hero";
 import WhyAlfarazka from "./components/why/WhyAlfarazka";
 import ProductsSection from "./components/products/ProductsSection";
 import OrderSection from "./components/order/OrderSection";
+import TestimonialsSection from "./components/testimonials/TestimonialsSection";
+import FaqSection from "./components/faq/FaqSection";
 
 export const metadata: Metadata = {
   title: "Alfarazka Bakery – Roti Unyil Rumahan di Ciputat | Nyemil Sehat, Teman Ngopi",
@@ -23,6 +25,8 @@ export default function HomePage() {
       <WhyAlfarazka />
       <ProductsSection />
       <OrderSection />
+      <TestimonialsSection />
+      <FaqSection />
       {/* Nanti di bawah sini kita tambahkan section keunggulan, produk, cara pesan singkat, dsb */}
     </>
   );

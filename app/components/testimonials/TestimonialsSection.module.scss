@@ -1,0 +1,165 @@
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.testimonialsSection {
+  position: relative;
+  padding: v.$space-7 0 v.$space-7 0;
+  background: linear-gradient(180deg,
+      #ffffff 0%,
+      #f7f5ff 40%,
+      #ffffff 100%);
+  overflow: hidden;
+
+  // wave halus di bagian atas
+  &::before {
+    content: "";
+    position: absolute;
+    top: -3.4rem;
+    left: 0;
+    width: 100%;
+    height: 3.4rem;
+    background: inherit;
+    border-bottom-left-radius: 50% 100%;
+    border-bottom-right-radius: 50% 100%;
+  }
+}
+
+.inner {
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+}
+
+.header {
+  max-width: 60rem;
+  margin: 0 auto v.$space-5 auto;
+  text-align: center;
+}
+
+.kicker {
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: v.$color-primary-dark;
+  font-weight: 600;
+  margin-bottom: v.$space-2;
+}
+
+.title {
+  font-size: 2.4rem;
+  margin-bottom: v.$space-2;
+  color: v.$color-text-main;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: v.$color-text-muted;
+}
+
+/* SLIDER */
+.slider {
+  overflow: hidden;
+  margin-bottom: v.$space-3;
+}
+
+.sliderInner {
+  display: inline-flex;
+  gap: v.$space-3;
+  min-width: max-content;
+  animation: slide-left 35s linear infinite;
+}
+
+.sliderInner:hover {
+  animation-play-state: paused; // berhenti saat di-hover
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* KARTU TESTIMONI */
+.card {
+  flex: 0 0 30rem;
+  max-width: 30rem;
+  background: #ffffff;
+  border-radius: v.$radius-xl;
+  padding: v.$space-4;
+  box-shadow: v.$shadow-soft;
+  border: 0.1rem solid rgba(148, 163, 184, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.quoteIcon {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: v.$color-primary-soft;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-primary-dark;
+  font-size: 1.4rem;
+}
+
+.quote {
+  font-size: 1.4rem;
+  line-height: 1.7;
+  color: v.$color-text-main;
+}
+
+.caption {
+  margin-top: v.$space-1;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: v.$color-text-main;
+}
+
+.context {
+  font-size: 1.3rem;
+  color: v.$color-text-muted;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+}
+
+.microcopy {
+  font-size: 1.2rem;
+  color: v.$color-text-muted;
+}
+
+/* RESPONSIVE */
+@include r.respond-down("tablet") {
+  .card {
+    flex: 0 0 26rem;
+    max-width: 26rem;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .testimonialsSection {
+    padding: v.$space-5 0 v.$space-6 0;
+  }
+
+  .inner {
+    padding: 0 v.$space-3;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}
