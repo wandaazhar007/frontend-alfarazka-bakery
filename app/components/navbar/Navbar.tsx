@@ -15,9 +15,9 @@ const navLinks = [
   { href: "/tentang-kami", label: "Tentang Kami" },
   { href: "/produk", label: "Produk & Paket" },
   { href: "/cara-pemesanan", label: "Cara Pemesanan" },
-  { href: "/testimoni", label: "Testimoni" },
-  { href: "/area-layanan", label: "Area Layanan" },
-  { href: "/hubungi-kami", label: "Hubungi Kami" },
+  // { href: "/testimoni", label: "Testimoni" },
+  // { href: "/area-layanan", label: "Area Layanan" },
+  // { href: "/hubungi-kami", label: "Hubungi Kami" },
 ];
 
 const Navbar: React.FC = () => {
@@ -44,9 +44,9 @@ const Navbar: React.FC = () => {
               </div>
               <div className={styles.brandText}>
                 <span className={styles.brandName}>Alfarazka Bakery</span>
-                <span className={styles.brandTagline}>
+                {/* <span className={styles.brandTagline}>
                   Nyemil Sehat, Teman Ngopi
-                </span>
+                </span> */}
               </div>
             </Link>
           </div>

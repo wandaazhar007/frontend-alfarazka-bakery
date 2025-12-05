@@ -1,5 +1,6 @@
 // app/components/footer/Footer.module.scss
 @use "../../styles/_variables" as v;
+@use "../../styles/_responsive" as r;
 
 .footer {
   border-top: 0.1rem solid v.$color-border;
@@ -16,6 +17,11 @@
   gap: v.$space-2;
   font-size: 1.25rem;
   color: v.$color-text-soft;
+
+  @include r.respond-down("mobile") {
+    justify-content: center;
+  }
+
 }
 
 .brand {
