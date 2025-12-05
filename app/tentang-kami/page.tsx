@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./AboutPage.module.scss";
 import tokoAlfarazka from "../../public/images/toko-alfarazka-bakery.png";
+import StorySection from "../components/storySection/StorySection";
 
 export const metadata: Metadata = {
   title:
@@ -97,11 +98,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Nanti kita bisa lanjut dengan section lanjutan:
-          - Timeline/cerita singkat
-          - Nilai & komitmen
-          - Highlight owner / tim
-      */}
+      <StorySection />
     </main>
   );
 }

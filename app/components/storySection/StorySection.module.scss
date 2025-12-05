@@ -1,0 +1,151 @@
+// app/components/storySection/StorySection.module.scss
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.storySection {
+  position: relative;
+  padding: v.$space-7 0 v.$space-8;
+  // background: linear-gradient(135deg,
+  //     v.$color-accent-soft 0%,
+  //     v.$color-bg-soft 100%);
+
+  background: linear-gradient(-45deg,
+      v.$color-primary-soft 0%,
+      #fff6f3 35%,
+      #ffffff 100%);
+  overflow: hidden;
+
+  // sedikit efek "ombak" halus di atas
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -6rem 0 auto;
+    background: radial-gradient(ellipse at top,
+        rgba(255, 255, 255, 0.9),
+        transparent 70%);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+}
+
+.storyInner {
+  position: relative;
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+  gap: v.$space-6;
+  align-items: center;
+
+  @include r.respond-down("tablet") {
+    grid-template-columns: 1fr;
+    gap: v.$space-5;
+  }
+
+  @include r.respond-down("mobile") {
+    padding: 0 v.$space-3;
+  }
+}
+
+/* KIRI – FOTO GRID */
+
+.photoColumn {
+  position: relative;
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  // border: .1rem solid salmon;
+  // gap: .1rem; // Jarak antar foto kira-kira 2rem, lebih mepet & padat
+}
+
+.photoItem {
+  // border: .1rem solid salmon;
+  position: relative;
+  overflow: hidden;
+  border-radius: v.$radius-lg;
+  box-shadow: v.$shadow-soft;
+  background: #fff;
+  aspect-ratio: 4 / 4; // Sedikit lebih tinggi dari 4/3 supaya foto terasa lebih besar
+  // width: 80%;
+  // &:nth-child(1),
+  // &:nth-child(4) {
+  //   transform: translateY(-0.4rem);
+  // }
+
+  // &:nth-child(2),
+  // &:nth-child(3) {
+  //   transform: translateY(0.4rem);
+  // }
+}
+
+.photoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+
+  .photoItem:hover & {
+    transform: scale(2.04);
+  }
+}
+
+/* KANAN – TEKS */
+
+.textColumn {
+  position: relative;
+  padding: v.$space-4;
+  background: v.$color-surface;
+  border-radius: v.$radius-xl;
+  box-shadow: v.$shadow-soft;
+  border: 0.1rem solid rgba(255, 255, 255, 0.7);
+}
+
+.kicker {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: v.$color-primary-dark; // dibuat merah, konsisten dengan subheadline lain
+  margin-bottom: v.$space-2;
+}
+
+.title {
+  font-size: 2.4rem;
+  line-height: 1.3;
+  margin-bottom: v.$space-3;
+
+  span {
+    color: v.$color-primary;
+  }
+
+  @include r.respond-down("mobile") {
+    font-size: 2rem;
+  }
+}
+
+.paragraph {
+  font-size: 1.45rem;
+  line-height: 1.7;
+  color: v.$color-text-muted;
+  margin-bottom: v.$space-2;
+
+  strong {
+    color: v.$color-text-main;
+    font-weight: 600;
+  }
+
+  em {
+    font-style: normal;
+    font-weight: 500;
+    color: v.$color-primary-dark;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}

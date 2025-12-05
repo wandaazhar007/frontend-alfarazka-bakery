@@ -11,9 +11,14 @@
 .hero {
   position: relative;
   padding: v.$space-7 0 v.$space-7 0;
-  background: linear-gradient(180deg,
-      #fffdf8 0%,
-      #fef6f8 45%,
+  // background: linear-gradient(180deg,
+  //     #fffdf8 0%,
+  //     #fef6f8 45%,
+  //     #ffffff 100%);
+
+  background: linear-gradient(135deg,
+      v.$color-primary-soft 0%,
+      #fff6f3 35%,
       #ffffff 100%);
   overflow: hidden;
 
