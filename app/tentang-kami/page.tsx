@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./AboutPage.module.scss";
 import tokoAlfarazka from "../../public/images/toko-alfarazka-bakery.png";
 import StorySection from "../components/storySection/StorySection";
+import TimelineSection from "../components/timelineSection/TimelineSection";
 
 export const metadata: Metadata = {
   title:
@@ -99,6 +100,7 @@ export default function AboutPage() {
       </section>
 
       <StorySection />
+      <TimelineSection />
     </main>
   );
 }
