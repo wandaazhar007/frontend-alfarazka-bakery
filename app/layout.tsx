@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./styles/_globals.scss";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
+import MainFooter from "./components/mainFooter/MainFooter";
 
 export const metadata: Metadata = {
   title: "Alfarazka Bakery – Nyemil Sehat, Teman Ngopi",
@@ -26,6 +27,7 @@ export default function RootLayout({
         <div className="app-shell">
           <Navbar />
           <main className="main-content">{children}</main>
+          <MainFooter />
           <Footer />
 
           {/* Floating WhatsApp button */}
