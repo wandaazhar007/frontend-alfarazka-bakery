@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import HeroCaraPemesanan from "../components/heroCaraPemesanan/HeroCaraPemesanan";
 import LangkahPesan from "../components/langkahPesan/LangkahPesan";
 import PreOrderSection from "../components/preOrderSection/PreOrderSection";
+import PengirimanPembayanSection from "../components/pengirimanPembayanSection/PengirimanPembayanSection";
 
 export const metadata: Metadata = {
   title: "Cara Pemesanan Roti Unyil & Snack Box — Alfarazka Bakery Ciputat",
@@ -46,6 +47,7 @@ const CaraPemesananPage = () => {
       <HeroCaraPemesanan />
       <LangkahPesan />
       <PreOrderSection />
+      <PengirimanPembayanSection />
     </>
   );
 };

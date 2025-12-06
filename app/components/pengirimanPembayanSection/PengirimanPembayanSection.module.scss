@@ -1,0 +1,247 @@
+// app/cara-pemesanan/pengirimanPembayanSection/PengirimanPembayanSection.module.scss
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.section {
+  position: relative;
+  padding: v.$space-7 0;
+  background: linear-gradient(180deg,
+      #fff7f2 0%,
+      #ffffff 40%,
+      v.$color-bg-soft 100%);
+  overflow: hidden;
+}
+
+/* wave lembut */
+.section::before {
+  content: "";
+  position: absolute;
+  inset: -6rem 0 auto 0;
+  height: 7rem;
+  background: v.$color-bg-soft;
+  border-bottom-left-radius: 50% 100%;
+  border-bottom-right-radius: 50% 100%;
+  opacity: 0.9;
+}
+
+.inner {
+  position: relative;
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+}
+
+.header {
+  max-width: 60rem;
+  margin-bottom: v.$space-5;
+}
+
+.kicker {
+  font-size: 1.2rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: v.$color-primary;
+  margin-bottom: v.$space-1;
+}
+
+.title {
+  font-family: v.$font-family-heading;
+  font-size: 2.4rem;
+  line-height: 1.3;
+  margin-bottom: v.$space-2;
+  color: v.$color-text-main;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: v.$color-text-muted;
+}
+
+/* GRID 2 KOLOM */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: v.$space-4;
+  margin-bottom: v.$space-5;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+}
+
+.columnTitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: v.$color-text-main;
+}
+
+/* ANIMASI */
+@keyframes floatFade {
+  0% {
+    opacity: 0;
+    transform: translateY(1.6rem) scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* CARD */
+.card {
+  position: relative;
+  border-radius: v.$radius-lg;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: v.$shadow-soft;
+  padding: v.$space-3;
+  display: flex;
+  gap: 1.6rem;
+  border: 0.1rem solid rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  animation: floatFade 0.55s ease forwards;
+  opacity: 0;
+
+  &:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: v.$shadow-card;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto -35% -40% auto;
+    width: 9rem;
+    height: 9rem;
+    background: radial-gradient(circle at center,
+        rgba(230, 57, 70, 0.09),
+        transparent 70%);
+    pointer-events: none;
+  }
+}
+
+/* Stagger animasi */
+.column:nth-of-type(1) .card:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.column:nth-of-type(2) .card:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.cardIcon {
+  flex: 0 0 3.8rem;
+  height: 3.8rem;
+  border-radius: 1.6rem;
+  background: v.$color-primary-soft;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-primary-dark;
+  font-size: 2rem;
+}
+
+.cardBody {
+  flex: 1;
+}
+
+.cardHeading {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: v.$color-text-main;
+  margin-bottom: 0.4rem;
+}
+
+.cardText {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+  margin-bottom: 0.4rem;
+}
+
+.list {
+  padding-left: 1.4rem;
+  margin: 0 0 0.4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 1.35rem;
+  color: v.$color-text-muted;
+
+  li {
+    line-height: 1.5;
+  }
+}
+
+.cardHint {
+  font-size: 1.25rem;
+  color: v.$color-text-soft;
+}
+
+/* NOTE BAR */
+.noteBar {
+  border-radius: v.$radius-lg;
+  padding: v.$space-3;
+  background: linear-gradient(90deg,
+      rgba(230, 57, 70, 0.08),
+      rgba(244, 162, 97, 0.12));
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.noteIcon {
+  flex: 0 0 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: v.$shadow-soft;
+}
+
+.noteIconInner {
+  font-size: 1.8rem;
+  color: v.$color-primary;
+}
+
+.noteText {
+  font-size: 1.35rem;
+  color: v.$color-text-main;
+}
+
+/* RESPONSIVE */
+@include r.respond-down("tablet") {
+  .section {
+    padding: v.$space-5 0;
+  }
+
+  .inner {
+    padding: 0 v.$space-3;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .title {
+    font-size: 2.1rem;
+  }
+
+  .subtitle {
+    font-size: 1.4rem;
+  }
+
+  .card {
+    flex-direction: row;
+  }
+
+  .noteText {
+    font-size: 1.3rem;
+  }
+}
