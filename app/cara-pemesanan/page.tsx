@@ -1,6 +1,7 @@
 // app/cara-pemesanan/page.tsx
 import type { Metadata } from "next";
 import HeroCaraPemesanan from "../components/heroCaraPemesanan/HeroCaraPemesanan";
+import LangkahPesan from "../components/langkahPesan/LangkahPesan";
 
 export const metadata: Metadata = {
   title: "Cara Pemesanan Roti Unyil & Snack Box — Alfarazka Bakery Ciputat",
@@ -42,6 +43,7 @@ const CaraPemesananPage = () => {
   return (
     <>
       <HeroCaraPemesanan />
+      <LangkahPesan />
     </>
   );
 };
