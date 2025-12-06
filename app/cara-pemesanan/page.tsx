@@ -4,6 +4,7 @@ import HeroCaraPemesanan from "../components/heroCaraPemesanan/HeroCaraPemesanan
 import LangkahPesan from "../components/langkahPesan/LangkahPesan";
 import PreOrderSection from "../components/preOrderSection/PreOrderSection";
 import PengirimanPembayanSection from "../components/pengirimanPembayanSection/PengirimanPembayanSection";
+import FaqMini from "../components/faqMini/FaqMini";
 
 export const metadata: Metadata = {
   title: "Cara Pemesanan Roti Unyil & Snack Box — Alfarazka Bakery Ciputat",
@@ -48,6 +49,7 @@ const CaraPemesananPage = () => {
       <LangkahPesan />
       <PreOrderSection />
       <PengirimanPembayanSection />
+      <FaqMini />
     </>
   );
 };
