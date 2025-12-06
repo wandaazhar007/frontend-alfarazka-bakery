@@ -87,7 +87,7 @@ const AddressSection: React.FC = () => {
         <div className={styles.mapColumn} aria-label="Peta lokasi Alfarazka Bakery">
           <div className={styles.mapCard}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d364.67194800443565!2d106.74824450165032!3d-6.320673696520818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69efa37d0ba7a5%3A0xcc7ef5e0c1b32318!2sAlfarazka%20Bakery!5e1!3m2!1sen!2sus!4v1765006197890!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1726.111788901183!2d106.74709398434162!3d-6.320919376161387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69efa37d0ba7a5%3A0xcc7ef5e0c1b32318!2sAlfarazka%20Bakery!5e0!3m2!1sen!2sus!4v1765012221086!5m2!1sen!2sus"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
