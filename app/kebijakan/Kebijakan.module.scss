@@ -1,0 +1,162 @@
+@use "../styles/variables" as v;
+@use "../styles/responsive" as r;
+
+.page {
+  padding: v.$space-7 v.$space-4 v.$space-7;
+  background: v.$color-bg-soft;
+}
+
+.inner {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+/* HEADER */
+
+.header {
+  text-align: center;
+  margin-bottom: v.$space-6;
+}
+
+.logoWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: v.$space-2;
+}
+
+.logo {
+  width: 6rem;
+  height: 6rem;
+}
+
+.kicker {
+  font-size: 1.3rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: v.$color-primary;
+  margin-bottom: v.$space-1;
+}
+
+.title {
+  font-family: v.$font-family-heading;
+  font-size: 2.4rem;
+  margin-bottom: v.$space-2;
+  color: v.$color-text-main;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: v.$color-text-muted;
+  margin: 0 0 v.$space-1 0;
+}
+
+.updated {
+  font-size: 1.3rem;
+  color: v.$color-text-soft;
+  margin: 0;
+}
+
+/* SECTION */
+
+.section {
+  background: v.$color-surface;
+  border-radius: v.$radius-lg;
+  padding: v.$space-4 v.$space-4 v.$space-3;
+  box-shadow: v.$shadow-soft;
+  margin-bottom: v.$space-3;
+}
+
+.sectionTitle {
+  font-size: 1.8rem;
+  margin-bottom: v.$space-2;
+}
+
+.paragraph {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+  margin-bottom: v.$space-2;
+}
+
+.list {
+  margin: 0;
+  padding-left: 2.2rem;
+}
+
+.listItem {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+  margin-bottom: v.$space-2;
+}
+
+.subList {
+  margin-top: v.$space-1;
+  padding-left: 2rem;
+
+  li {
+    font-size: 1.35rem;
+    color: v.$color-text-soft;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.note {
+  margin-top: v.$space-2;
+  font-size: 1.35rem;
+  color: v.$color-text-soft;
+}
+
+/* LINK STYLE INSIDE CONTENT */
+
+// a {
+//   color: v.$color-primary;
+//   text-decoration: none;
+
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// }
+
+/* LINK STYLE INSIDE CONTENT – hanya untuk link di dalam konten kebijakan */
+
+.inner a {
+  color: v.$color-primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* RESPONSIVE */
+
+@include r.respond-down("tablet") {
+  .page {
+    padding: v.$space-6 v.$space-3 v.$space-6;
+  }
+
+  .title {
+    font-size: 2.1rem;
+  }
+
+  .section {
+    padding: v.$space-3;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .page {
+    padding: v.$space-5 v.$space-3 v.$space-5;
+  }
+
+  .title {
+    font-size: 1.9rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.7rem;
+  }
+
+  .listItem {
+    font-size: 1.35rem;
+  }
+}

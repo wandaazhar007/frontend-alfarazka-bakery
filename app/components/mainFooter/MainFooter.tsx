@@ -72,7 +72,7 @@ const MainFooter: React.FC = () => {
           <Link href="/cara-pemesanan" className={styles.navItem}>
             Cara Pemesanan
           </Link>
-          <Link href="/hubungi-kami" className={styles.navItem}>
+          <Link href="/kebijakan" className={styles.navItem}>
             Kebijakan & Ketentuan
           </Link>
         </nav>
