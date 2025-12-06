@@ -1,0 +1,175 @@
+// app/tentang-kami/addressSection/AddressSection.module.scss
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.section {
+  position: relative;
+  padding: v.$space-7 0;
+  background: linear-gradient(180deg,
+      v.$color-bg-soft 0%,
+      #fff7f2 45%,
+      v.$color-bg-soft 100%);
+}
+
+.inner {
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: v.$space-6;
+}
+
+.infoColumn {
+  flex: 1 1 0;
+  max-width: 46rem;
+}
+
+.kicker {
+  font-size: 1.2rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: v.$color-primary;
+  margin-bottom: v.$space-1;
+}
+
+.heading {
+  font-family: v.$font-family-heading;
+  font-size: 2.4rem;
+  line-height: 1.3;
+  margin-bottom: v.$space-3;
+  color: v.$color-text-main;
+}
+
+.block {
+  margin-bottom: v.$space-3;
+}
+
+.blockTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: v.$color-text-main;
+}
+
+.blockText {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+}
+
+.linkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.8rem 0;
+  border-radius: v.$radius-md;
+  transition:
+    background-color 0.15s ease,
+    transform 0.08s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: v.$shadow-soft;
+    transform: translateY(-0.04rem);
+  }
+}
+
+.iconCircle {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: v.$color-primary-soft;
+  color: v.$color-primary-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.iconCircleWhatsapp {
+  @extend .iconCircle;
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+}
+
+.iconCircleInstagram {
+  @extend .iconCircle;
+  background: rgba(225, 48, 108, 0.12);
+  color: #e1306c;
+}
+
+.linkText {
+  font-size: 1.4rem;
+  color: v.$color-text-main;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.linkHint {
+  font-size: 1.2rem;
+  color: v.$color-text-soft;
+}
+
+/* MAP COLUMN */
+.mapColumn {
+  flex: 1 1 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.mapCard {
+  width: 100%;
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+  box-shadow: v.$shadow-soft;
+  background: #ffffff;
+}
+
+/* Responsive map */
+.mapCard iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 28rem;
+}
+
+/* RESPONSIVE */
+@include r.respond-down("tablet") {
+  .section {
+    padding: v.$space-5 0;
+  }
+
+  .inner {
+    padding: 0 v.$space-3;
+    flex-direction: column;
+    gap: v.$space-4;
+  }
+
+  .infoColumn {
+    max-width: none;
+  }
+
+  .heading {
+    font-size: 2.1rem;
+  }
+
+  .mapCard {
+    min-height: 24rem;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .heading {
+    font-size: 1.9rem;
+  }
+
+  .linkRow {
+    align-items: center;
+  }
+}
