@@ -5,6 +5,7 @@ import styles from "./AboutPage.module.scss";
 import tokoAlfarazka from "../../public/images/toko-alfarazka-bakery.png";
 import StorySection from "../components/storySection/StorySection";
 import TimelineSection from "../components/timelineSection/TimelineSection";
+import InstagramCtaSection from "../components/instagramCtaSection/InstagramCtaSection";
 
 export const metadata: Metadata = {
   title:
@@ -101,6 +102,7 @@ export default function AboutPage() {
 
       <StorySection />
       <TimelineSection />
+      <InstagramCtaSection />
     </main>
   );
 }
