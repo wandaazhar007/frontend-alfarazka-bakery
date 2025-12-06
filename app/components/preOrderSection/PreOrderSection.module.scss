@@ -1,0 +1,240 @@
+// app/cara-pemesanan/preOrderSection/PreOrderSection.module.scss
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.section {
+  position: relative;
+  padding: v.$space-7 0;
+  background: linear-gradient(180deg,
+      #ffffff 0%,
+      v.$color-bg-soft 50%,
+      #fff7f2 100%);
+  overflow: hidden;
+}
+
+/* wave lembut di atas section */
+.section::before {
+  content: "";
+  position: absolute;
+  inset: -6rem 0 auto 0;
+  height: 7rem;
+  background: #ffffff;
+  border-bottom-left-radius: 50% 100%;
+  border-bottom-right-radius: 50% 100%;
+  opacity: 0.85;
+}
+
+.inner {
+  position: relative;
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+  padding: 0 v.$space-4;
+}
+
+.header {
+  max-width: 60rem;
+  margin-bottom: v.$space-5;
+}
+
+.kicker {
+  font-size: 1.2rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: v.$color-primary;
+  margin-bottom: v.$space-1;
+}
+
+.title {
+  font-family: v.$font-family-heading;
+  font-size: 2.4rem;
+  line-height: 1.3;
+  margin-bottom: v.$space-2;
+  color: v.$color-text-main;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: v.$color-text-muted;
+}
+
+/* GRID CARD KETENTUAN */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: v.$space-3;
+  margin-bottom: v.$space-5;
+}
+
+/* Animasi */
+@keyframes fadeInUpSoft {
+  0% {
+    opacity: 0;
+    transform: translateY(1.6rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  position: relative;
+  border-radius: v.$radius-lg;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: v.$shadow-soft;
+  padding: v.$space-3;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+  border: 0.1rem solid rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  animation: fadeInUpSoft 0.55s ease forwards;
+  opacity: 0;
+  transform-origin: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto -40% -40% auto;
+    width: 10rem;
+    height: 10rem;
+    background: radial-gradient(circle at center,
+        rgba(230, 57, 70, 0.08),
+        transparent 70%);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: v.$shadow-card;
+  }
+}
+
+/* Stagger delay */
+.card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.iconWrapper {
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 1.6rem;
+  background: v.$color-primary-soft;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-primary-dark;
+  margin-bottom: 0.4rem;
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cardTitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: v.$color-text-main;
+}
+
+.list {
+  padding-left: 1.4rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 1.35rem;
+  color: v.$color-text-muted;
+
+  li {
+    line-height: 1.5;
+  }
+}
+
+/* NOTE BAR DI BAWAH */
+.noteBar {
+  border-radius: v.$radius-lg;
+  padding: v.$space-3;
+  background: linear-gradient(90deg,
+      rgba(230, 57, 70, 0.08),
+      rgba(244, 162, 97, 0.12));
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.noteIcon {
+  flex: 0 0 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: v.$shadow-soft;
+}
+
+.noteIconInner {
+  font-size: 1.8rem;
+  color: v.$color-primary;
+}
+
+.noteText {
+  font-size: 1.35rem;
+  color: v.$color-text-main;
+}
+
+/* RESPONSIVE */
+@include r.respond-down("tablet") {
+  .section {
+    padding: v.$space-5 0;
+  }
+
+  .inner {
+    padding: 0 v.$space-3;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    &:not(:last-child) {
+      margin-bottom: 0.2rem;
+    }
+  }
+
+  .noteBar {
+    flex-direction: row;
+  }
+}
+
+@include r.respond-down("mobile") {
+  .title {
+    font-size: 2.1rem;
+  }
+
+  .subtitle {
+    font-size: 1.4rem;
+  }
+
+  .noteText {
+    font-size: 1.3rem;
+  }
+}
