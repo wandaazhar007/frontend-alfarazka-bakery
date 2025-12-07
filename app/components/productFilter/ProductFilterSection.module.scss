@@ -1,0 +1,100 @@
+// app/components/productFilter/ProductFilterSection.module.scss
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.filterBar {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+  padding: v.$space-3 v.$space-3;
+  border-radius: v.$radius-lg;
+  background: linear-gradient(135deg,
+      v.$color-surface 0%,
+      v.$color-surface-muted 100%);
+  box-shadow: v.$shadow-soft;
+}
+
+.searchWrapper {
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1rem 1.4rem;
+  border-radius: v.$radius-md;
+  border: 0.1rem solid v.$color-border;
+  font-size: 1.4rem;
+  outline: none;
+  background-color: #ffffff;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+
+  &::placeholder {
+    color: v.$color-text-soft;
+  }
+
+  &:focus {
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.12);
+    background-color: #ffffff;
+  }
+}
+
+.categoryWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-2;
+  align-items: center;
+
+  @include r.respond-down("mobile") {
+    align-items: flex-start;
+  }
+}
+
+.categoryLabel {
+  font-size: 1.3rem;
+  color: v.$color-text-muted;
+  font-weight: 500;
+}
+
+.categoryChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.chip {
+  padding: 0.5rem 1.2rem;
+  border-radius: v.$radius-pill;
+  border: 0.1rem solid v.$color-border;
+  background-color: #ffffff;
+  font-size: 1.3rem;
+  color: v.$color-text-main;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.08s ease;
+
+  &:hover {
+    background-color: v.$color-primary-soft;
+    border-color: v.$color-primary-soft;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.chipActive {
+  background-color: v.$color-primary;
+  border-color: v.$color-primary-dark;
+  color: #ffffff;
+
+  &:hover {
+    background-color: v.$color-primary-dark;
+  }
+}

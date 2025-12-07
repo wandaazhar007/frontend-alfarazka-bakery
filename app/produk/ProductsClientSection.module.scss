@@ -1,0 +1,268 @@
+// app/produk/ProductsClientSection.module.scss
+@use "../styles/variables" as v;
+@use "../styles/responsive" as r;
+
+.wrapper {
+  padding: v.$space-5 0 v.$space-7;
+  background: linear-gradient(to bottom,
+      v.$color-bg-soft 0%,
+      #ffffff 18%,
+      #ffffff 100%);
+}
+
+.categoryError {
+  margin-top: v.$space-2;
+  font-size: 1.25rem;
+  color: v.$color-danger;
+}
+
+.productSection {
+  margin-top: v.$space-4;
+}
+
+.errorBanner {
+  margin-bottom: v.$space-3;
+  padding: 1.2rem 1.6rem;
+  border-radius: v.$radius-md;
+  background-color: rgba(220, 38, 38, 0.08);
+  color: v.$color-danger;
+  font-size: 1.3rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: v.$space-4;
+
+  @include r.respond-down("tablet") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include r.respond-down("mobile") {
+    grid-template-columns: 1fr;
+  }
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 1.35rem;
+  color: v.$color-text-muted;
+  padding: v.$space-4 0;
+}
+
+/* CARD PRODUK */
+.card {
+  border-radius: v.$radius-lg;
+  background-color: v.$color-surface;
+  box-shadow: v.$shadow-soft;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 70%; // rasio 7:10
+  overflow: hidden;
+  background: linear-gradient(135deg,
+      v.$color-primary-soft,
+      v.$color-accent-soft );
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.imagePlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,
+      v.$color-primary,
+      v.$color-primary-dark );
+  color: #fff;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.cardBody {
+  padding: v.$space-3 v.$space-3 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cardTitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.9rem;
+  border-radius: v.$radius-pill;
+  background-color: v.$color-primary-soft;
+  font-size: 1.2rem;
+  color: v.$color-primary-dark;
+}
+
+.cardDescription {
+  font-size: 1.3rem;
+  color: v.$color-text-muted;
+}
+
+.cardPrice {
+  font-size: 1.4rem;
+  color: v.$color-text-main;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.cardFooter {
+  padding: v.$space-3;
+  padding-top: v.$space-2;
+  margin-top: auto;
+}
+
+.cardButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border-radius: v.$radius-pill;
+  border: none;
+  font-size: 1.35rem;
+  font-weight: 600;
+  background-color: v.$color-primary;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    transform 0.08s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    background-color: v.$color-primary-dark;
+    box-shadow: v.$shadow-soft;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* SKELETON */
+.cardSkeleton {
+  border-radius: v.$radius-lg;
+  background-color: v.$color-surface;
+  box-shadow: v.$shadow-soft;
+  padding: v.$space-3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cardSkeletonImage {
+  width: 100%;
+  padding-top: 70%;
+  border-radius: v.$radius-md;
+  background: linear-gradient(90deg,
+      v.$color-surface-muted 0%,
+      #e5e7eb 50%,
+      v.$color-surface-muted 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+
+.cardSkeletonLine,
+.cardSkeletonLineShort {
+  height: 1.2rem;
+  border-radius: v.$radius-sm;
+  background: linear-gradient(90deg,
+      v.$color-surface-muted 0%,
+      #e5e7eb 50%,
+      v.$color-surface-muted 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+
+.cardSkeletonLineShort {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* PAGINATION */
+.paginationBar {
+  margin-top: v.$space-4;
+  padding-top: v.$space-3;
+  border-top: 0.1rem solid v.$color-border;
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-2;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pageInfo {
+  font-size: 1.3rem;
+  color: v.$color-text-muted;
+}
+
+.paginationControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pageButton {
+  padding: 0.6rem 1.4rem;
+  border-radius: v.$radius-pill;
+  border: 0.1rem solid v.$color-border;
+  background-color: #ffffff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.08s ease;
+
+  &:hover {
+    background-color: v.$color-primary-soft;
+    border-color: v.$color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+    background-color: v.$color-surface-muted;
+  }
+}
+
+.pageIndicator {
+  font-size: 1.3rem;
+  color: v.$color-text-main;
+}
