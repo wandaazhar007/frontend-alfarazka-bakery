@@ -1,4 +1,3 @@
-// app/produk/components/snackPackages/SnackPackagesSection.tsx
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

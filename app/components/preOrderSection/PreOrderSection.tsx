@@ -1,4 +1,3 @@
-// app/cara-pemesanan/preOrderSection/PreOrderSection.tsx
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

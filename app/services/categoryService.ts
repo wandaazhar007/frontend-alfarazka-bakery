@@ -1,4 +1,3 @@
-// app/services/categoryService.ts
 export type Category = {
   id: string;
   name: string;

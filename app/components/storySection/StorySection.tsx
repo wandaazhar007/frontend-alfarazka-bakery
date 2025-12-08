@@ -1,4 +1,3 @@
-// app/components/storySection/StorySection.tsx
 import Image from "next/image";
 import styles from "./StorySection.module.scss";
 

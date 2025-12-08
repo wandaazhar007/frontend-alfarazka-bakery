@@ -1,4 +1,3 @@
-// app/components/timelineSection/TimelineSection.tsx
 "use client";
 
 import styles from "./TimelineSection.module.scss";

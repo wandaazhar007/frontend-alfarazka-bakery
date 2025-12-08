@@ -1,4 +1,3 @@
-// app/kebijakan/page.tsx
 import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./Kebijakan.module.scss";

@@ -1,4 +1,3 @@
-// app/components/productHero/ProductHeroSection.tsx
 import Image from "next/image";
 import styles from "./ProductHeroSection.module.scss";
 

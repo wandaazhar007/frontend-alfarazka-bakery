@@ -1,3 +1,10 @@
+/*
+Author: Wanda Azhar
+Location: Michigan, USA
+Contact: wandaazhar@gmail.com
+Description: Alfarazka Bakery is a professionally designed website for a home-based bakery, created to showcase premium handcrafted baked goods with a modern, clean, and user-friendly interface. Built with responsive layouts and best practices, it reflects the brand’s quality, reliability, and professionalism.
+*/
+
 import type { Metadata } from "next";
 import Hero from "./components/hero/Hero";
 import WhyAlfarazka from "./components/why/WhyAlfarazka";
@@ -29,7 +36,6 @@ export default function HomePage() {
       <TestimonialsSection />
       <FaqSection />
       <ServiceAreaSection />
-      {/* Nanti di bawah sini kita tambahkan section keunggulan, produk, cara pesan singkat, dsb */}
     </>
   );
 }
