@@ -20,6 +20,106 @@ const PAGE_SIZE = 4;
 
 const ARTIFICIAL_DELAY_MS = 700; // buat skeleton loading agak lama dikit
 
+// KOMPONEN KECIL UNTUK CAROUSEL GAMBAR DI CARD PRODUK
+type ProductImageCarouselProps = {
+  name: string;
+  imageUrl?: string | null;
+  imageUrls?: string[];
+};
+
+const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
+  name,
+  imageUrl,
+  imageUrls,
+}) => {
+  // Normalisasi array gambar:
+  const sources: string[] = useMemo(() => {
+    if (Array.isArray(imageUrls) && imageUrls.length > 0) {
+      return imageUrls;
+    }
+    if (imageUrl) return [imageUrl];
+    return [];
+  }, [imageUrl, imageUrls]);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const hasMultiple = sources.length > 1;
+
+  const handlePrev = () => {
+    if (!hasMultiple) return;
+    setActiveIndex((prev) =>
+      prev === 0 ? sources.length - 1 : prev - 1
+    );
+  };
+
+  const handleNext = () => {
+    if (!hasMultiple) return;
+    setActiveIndex((prev) =>
+      prev === sources.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  if (sources.length === 0) {
+    return (
+      <div className={styles.imageWrapper}>
+        <div className={styles.imagePlaceholder}>
+          <span>{name ? name.charAt(0).toUpperCase() : "R"}</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.imageWrapper}>
+      <div className={styles.imageInner}>
+        <div
+          className={styles.imageTrack}
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {sources.map((src, idx) => (
+            <div className={styles.imageSlide} key={idx}>
+              <img src={src} alt={`${name} - foto ${idx + 1}`} loading="lazy" />
+            </div>
+          ))}
+        </div>
+
+        {hasMultiple && (
+          <>
+            <button
+              type="button"
+              className={`${styles.navButton} ${styles.navButtonPrev}`}
+              onClick={handlePrev}
+              aria-label="Lihat foto sebelumnya"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className={`${styles.navButton} ${styles.navButtonNext}`}
+              onClick={handleNext}
+              aria-label="Lihat foto berikutnya"
+            >
+              ›
+            </button>
+
+            <div className={styles.dotsWrapper}>
+              {sources.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`${styles.dot} ${idx === activeIndex ? styles.dotActive : ""
+                    }`}
+                  onClick={() => setActiveIndex(idx)}
+                  aria-label={`Lihat foto ke-${idx + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const ProductsClientSection: React.FC = () => {
   // FILTER STATE
   const [search, setSearch] = useState("");
@@ -102,13 +202,16 @@ const ProductsClientSection: React.FC = () => {
         page: targetPage,
         limit: PAGE_SIZE,
         search: debouncedSearch,
-        categoryId: selectedCategoryId === "all" ? undefined : selectedCategoryId,
+        categoryId:
+          selectedCategoryId === "all" ? undefined : selectedCategoryId,
       });
 
       // buat skeleton tampak smooth
       const [data] = await Promise.all([
         dataPromise,
-        new Promise((resolve) => setTimeout(resolve, ARTIFICIAL_DELAY_MS)),
+        new Promise((resolve) =>
+          setTimeout(resolve, ARTIFICIAL_DELAY_MS)
+        ),
       ]);
 
       setProducts(data.products);
@@ -198,23 +301,12 @@ const ProductsClientSection: React.FC = () => {
               products.length > 0 &&
               products.map((product) => (
                 <article key={product.id} className={styles.card}>
-                  <div className={styles.imageWrapper}>
-                    {product.imageUrl ? (
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className={styles.imagePlaceholder}>
-                        <span>
-                          {product.name
-                            ? product.name.charAt(0).toUpperCase()
-                            : "R"}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                  {/* IMAGE CAROUSEL */}
+                  <ProductImageCarousel
+                    name={product.name}
+                    imageUrl={product.imageUrl}
+                    imageUrls={product.imageUrls}
+                  />
 
                   <div className={styles.cardBody}>
                     <h3 className={styles.cardTitle}>{product.name}</h3>
