@@ -4,7 +4,7 @@ import styles from "./StorySection.module.scss";
 import roti1 from "../../../public/images/roti-unyil-1.jpg";
 import roti2 from "../../../public/images/roti-unyil-2.jpg";
 import roti3 from "../../../public/images/roti-unyil-3.jpg";
-import roti4 from "../../../public/images/roti-unyil-4.jpg";
+import roti4 from "../../../public/images/roti-unyil-6.jpg";
 
 const StorySection: React.FC = () => {
   return (
