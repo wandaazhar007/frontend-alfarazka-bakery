@@ -67,6 +67,7 @@ import type { Metadata } from "next";
 import ProductHeroSection from "../components/productHero/ProductHeroSection";
 import ProductsClientSection from "./ProductsClientSection";
 import SnackPackagesSection from "../components/snackPackages/SnackPackagesSection";
+import ProdukFaqMini from "../components/faqMini/ProdukFaqMini";
 
 export const metadata: Metadata = {
   title: "Produk Roti Unyil & Paket Snack — Alfarazka Bakery Ciputat",
@@ -111,6 +112,7 @@ const ProdukPage = () => {
       {/* SECTION 2 & 3: Filter + Daftar Produk (nanti terhubung REST API) */}
       <ProductsClientSection />
       <SnackPackagesSection />
+      <ProdukFaqMini />
     </main>
   );
 };
