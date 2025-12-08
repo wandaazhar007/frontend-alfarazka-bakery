@@ -73,7 +73,8 @@
 
 import Image from "next/image";
 import styles from "./Hero.module.scss";
-import heroBanner from "../../../public/images/hero-banner-alfarazka-bakery.jpeg";
+// import heroBanner from "../../../public/images/hero-banner-alfarazka-bakery.jpeg";
+import heroBanner from "../../../public/images/toko-alfarazka-bakery.png";
 
 const Hero: React.FC = () => {
   return (
