@@ -1,4 +1,3 @@
-// app/produk/components/faqMini/ProdukFaqMini.tsx
 "use client";
 
 import { useState } from "react";

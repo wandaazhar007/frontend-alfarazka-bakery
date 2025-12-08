@@ -1,4 +1,3 @@
-// app/cara-pemesanan/heroCaraPemesanan/heroCaraPemesanan.tsx
 "use client";
 
 import styles from "./HeroCaraPemesanan.module.scss";

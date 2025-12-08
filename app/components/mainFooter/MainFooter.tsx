@@ -76,11 +76,6 @@ const MainFooter: React.FC = () => {
             Kebijakan & Ketentuan
           </Link>
         </nav>
-
-        {/* COPYRIGHT */}
-        {/* <p className={styles.copy}>
-          © {year} Alfarazka Bakery. All rights reserved.
-        </p> */}
       </div>
     </footer>
   );

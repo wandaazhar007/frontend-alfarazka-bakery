@@ -1,4 +1,3 @@
-// app/cara-pemesanan/page.tsx
 import type { Metadata } from "next";
 import HeroCaraPemesanan from "../components/heroCaraPemesanan/HeroCaraPemesanan";
 import LangkahPesan from "../components/langkahPesan/LangkahPesan";

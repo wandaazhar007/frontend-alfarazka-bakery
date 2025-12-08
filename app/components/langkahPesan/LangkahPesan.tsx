@@ -1,4 +1,3 @@
-// app/cara-pemesanan/langkahPesan/LangkahPesan.tsx
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

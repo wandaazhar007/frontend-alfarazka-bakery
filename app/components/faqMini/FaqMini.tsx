@@ -1,6 +1,4 @@
-// app/cara-pemesanan/faqMini/FaqMini.tsx
 "use client";
-
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
