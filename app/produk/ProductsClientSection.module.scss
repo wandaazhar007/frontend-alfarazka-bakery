@@ -1,4 +1,3 @@
-// app/produk/ProductsClientSection.module.scss
 @use "../styles/variables" as v;
 @use "../styles/responsive" as r;
 
@@ -29,17 +28,26 @@
   font-size: 1.3rem;
 }
 
+/* GRID PRODUK */
+/* Default: desktop lebar -> 4 kolom */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: v.$space-4;
 
+  /* Desktop medium / tablet besar -> 3 kolom */
+  @include r.respond-down("desktop") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Tablet / mobile besar -> 2 kolom */
   @include r.respond-down("tablet") {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Mobile kecil -> tetap 2 kolom biar padat tapi masih terbaca */
   @include r.respond-down("mobile") {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

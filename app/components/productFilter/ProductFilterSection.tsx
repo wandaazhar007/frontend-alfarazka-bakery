@@ -1,7 +1,13 @@
-// app/components/productFilter/ProductFilterSection.tsx
 "use client";
 
-import { ChangeEvent } from "react";
+import { useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
+
 import styles from "./ProductFilterSection.module.scss";
 
 export type FilterCategoryItem = {
@@ -9,7 +15,7 @@ export type FilterCategoryItem = {
   label: string;
 };
 
-type ProductFilterSectionProps = {
+type Props = {
   search: string;
   onSearchChange: (value: string) => void;
   selectedCategoryId: string;
@@ -18,7 +24,9 @@ type ProductFilterSectionProps = {
   isLoadingCategories?: boolean;
 };
 
-const ProductFilterSection: React.FC<ProductFilterSectionProps> = ({
+const SCROLL_STEP = 180;
+
+const ProductFilterSection: React.FC<Props> = ({
   search,
   onSearchChange,
   selectedCategoryId,
@@ -26,47 +34,96 @@ const ProductFilterSection: React.FC<ProductFilterSectionProps> = ({
   categories,
   isLoadingCategories,
 }) => {
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  const handleScroll = (direction: "left" | "right") => {
+    const node = scrollRef.current;
+    if (!node) return;
+
+    const delta = direction === "left" ? -SCROLL_STEP : SCROLL_STEP;
+    node.scrollBy({ left: delta, behavior: "smooth" });
+  };
+
+  const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange(e.target.value);
   };
 
   return (
-    <div
-      className={styles.filterBar}
-      aria-label="Filter produk roti Alfarazka Bakery"
-    >
-      {/* SEARCH */}
-      <div className={styles.searchWrapper}>
-        <input
-          type="text"
-          value={search}
-          onChange={handleSearchChange}
-          placeholder="Cari produk berdasarkan nama atau rasa..."
-          className={styles.searchInput}
-          aria-label="Cari produk"
-        />
-      </div>
+    <div className={styles.filterBar} aria-label="Filter produk roti unyil">
+      <div className={styles.inner}>
+        {/* SEARCH */}
+        <div className={styles.searchWrapper}>
+          <span className={styles.searchIcon}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </span>
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder="Cari produk berdasarkan nama…"
+            value={search}
+            onChange={handleChangeSearch}
+          />
+        </div>
 
-      {/* KATEGORI */}
-      <div className={styles.categoryWrapper}>
-        <span className={styles.categoryLabel}>
-          {isLoadingCategories ? "Memuat kategori..." : "Filter kategori:"}
-        </span>
-        <div className={styles.categoryChips}>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              className={
-                selectedCategoryId === cat.id
-                  ? `${styles.chip} ${styles.chipActive}`
-                  : styles.chip
-              }
-              onClick={() => onCategoryChange(cat.id)}
+        {/* CATEGORY CHIPS (HORIZONTAL SCROLLABLE) */}
+        <div className={styles.categoryArea}>
+          <button
+            type="button"
+            className={`${styles.scrollButton} ${styles.scrollButtonLeft}`}
+            onClick={() => handleScroll("left")}
+            aria-label="Scroll kategori ke kiri"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+
+          <div className={styles.categoryScrollOuter}>
+            <div className={styles.fadeLeft} aria-hidden="true" />
+            <div className={styles.fadeRight} aria-hidden="true" />
+
+            <div
+              className={styles.categoryScrollInner}
+              ref={scrollRef}
+              role="tablist"
+              aria-label="Filter kategori produk"
             >
-              {cat.label}
-            </button>
-          ))}
+              {isLoadingCategories && (
+                <button
+                  type="button"
+                  className={`${styles.chip} ${styles.chipDisabled}`}
+                  disabled
+                >
+                  Memuat kategori…
+                </button>
+              )}
+
+              {!isLoadingCategories &&
+                categories.map((cat) => {
+                  const isActive = cat.id === selectedCategoryId;
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      className={`${styles.chip} ${isActive ? styles.chipActive : ""
+                        }`}
+                      onClick={() => onCategoryChange(cat.id)}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className={`${styles.scrollButton} ${styles.scrollButtonRight}`}
+            onClick={() => handleScroll("right")}
+            aria-label="Scroll kategori ke kanan"
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </button>
         </div>
       </div>
     </div>

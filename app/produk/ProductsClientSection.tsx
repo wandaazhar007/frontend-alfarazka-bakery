@@ -1,4 +1,3 @@
-// app/produk/ProductsClientSection.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -15,7 +14,10 @@ import {
   type Product,
 } from "../services/productService";
 
-const PAGE_SIZE = 12;
+// NOTE: UBAH LIMIT PRODUK PER HALAMAN DI SINI
+// Ganti angka 4 jika ingin menampilkan lebih banyak produk per page.
+const PAGE_SIZE = 4;
+
 const ARTIFICIAL_DELAY_MS = 700; // buat skeleton loading agak lama dikit
 
 const ProductsClientSection: React.FC = () => {
@@ -149,7 +151,7 @@ const ProductsClientSection: React.FC = () => {
   }, [page, totalItems]);
 
   const renderSkeletonCards = () =>
-    Array.from({ length: 6 }).map((_, idx) => (
+    Array.from({ length: PAGE_SIZE }).map((_, idx) => (
       <div key={idx} className={styles.cardSkeleton}>
         <div className={styles.cardSkeletonImage} />
         <div className={styles.cardSkeletonLine} />
@@ -198,7 +200,6 @@ const ProductsClientSection: React.FC = () => {
                 <article key={product.id} className={styles.card}>
                   <div className={styles.imageWrapper}>
                     {product.imageUrl ? (
-                      // pakai img biasa supaya simpel
                       <img
                         src={product.imageUrl}
                         alt={product.name}
