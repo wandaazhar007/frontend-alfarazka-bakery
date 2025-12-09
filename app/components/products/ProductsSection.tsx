@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBreadSlice, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ProductsSection.module.scss";
+import Link from "next/link";
 
 const ProductsSection: React.FC = () => {
   return (
@@ -46,9 +47,9 @@ const ProductsSection: React.FC = () => {
             </ul>
 
             <div className={styles.actions}>
-              <a href="/produk" className={styles.primaryButton}>
+              <Link href="/produk" className={styles.primaryButton}>
                 Lihat semua produk
-              </a>
+              </Link>
             </div>
           </article>
 
@@ -79,15 +80,15 @@ const ProductsSection: React.FC = () => {
             </ul>
 
             <div className={styles.actions}>
-              <a href="/paket" className={styles.secondaryButton}>
+              <Link href="/produk" className={styles.secondaryButton}>
                 Lihat paket & rekomendasi
-              </a>
-              <a
+              </Link>
+              <Link
                 href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20snack%20acara%20Alfarazka%20Bakery."
                 className={styles.linkWhatsApp}
               >
                 Konsultasi paket via WhatsApp
-              </a>
+              </Link>
             </div>
 
             <p className={styles.microcopy}>

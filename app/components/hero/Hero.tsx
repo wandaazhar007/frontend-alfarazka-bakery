@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./Hero.module.scss";
 // import heroBanner from "../../../public/images/hero-banner-alfarazka-bakery.jpeg";
 import heroBanner from "../../../public/images/toko-alfarazka-bakery.png";
+import Link from "next/link";
 
 const Hero: React.FC = () => {
   return (
@@ -47,17 +48,17 @@ const Hero: React.FC = () => {
           </ul>
 
           <div className={styles.heroActions}>
-            <a
+            <Link
               href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20mau%20tanya%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
               className={styles.primaryButton}
               aria-label="Pesan roti unyil Alfarazka Bakery melalui WhatsApp"
             >
               Pesan via WhatsApp
-            </a>
+            </Link>
 
-            <a href="#produk" className={styles.secondaryLink}>
+            <Link href="/produk" className={styles.secondaryLink}>
               Lihat katalog produk
-            </a>
+            </Link>
           </div>
 
           <p className={styles.microcopy}>
