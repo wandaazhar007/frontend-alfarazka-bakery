@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import styles from "./AddressSection.module.scss";
+import Link from "next/link";
 
 const AddressSection: React.FC = () => {
   return (
@@ -26,7 +27,7 @@ const AddressSection: React.FC = () => {
           {/* ALAMAT */}
           <div className={styles.block}>
             <h3 className={styles.blockTitle}>Alamat dapur produksi</h3>
-            <a
+            <Link
               href="https://maps.app.goo.gl/dMbWuud6ZD9DSqap6"
               target="_blank"
               rel="noreferrer"
@@ -40,13 +41,13 @@ const AddressSection: React.FC = () => {
                 Cimanggis, Ciputat, Kota Tangsel (15411)
                 <span className={styles.linkHint}>Klik untuk buka Google Maps</span>
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* WHATSAPP */}
           <div className={styles.block}>
             <h3 className={styles.blockTitle}>WhatsApp pemesanan</h3>
-            <a
+            <Link
               href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20pemesanan%20roti%20Alfarazka%20Bakery."
               target="_blank"
               rel="noreferrer"
@@ -59,13 +60,13 @@ const AddressSection: React.FC = () => {
                 0821 9422 8282
                 <span className={styles.linkHint}>Klik untuk chat di WhatsApp</span>
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* INSTAGRAM */}
           <div className={styles.block}>
             <h3 className={styles.blockTitle}>Instagram</h3>
-            <a
+            <Link
               href="https://instagram.com/alfarazkabakery"
               target="_blank"
               rel="noreferrer"
@@ -78,7 +79,7 @@ const AddressSection: React.FC = () => {
                 @alfarazkabakery
                 <span className={styles.linkHint}>Lihat feed menu & testimoni</span>
               </span>
-            </a>
+            </Link>
           </div>
         </div>
 

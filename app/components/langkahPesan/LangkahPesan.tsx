@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"; // kalau error, pisah import icon-icon yang ada
 import styles from "./LangkahPesan.module.scss";
 import { faWhatsappSquare } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
 
 const LangkahPesan: React.FC = () => {
   return (
@@ -116,12 +117,12 @@ const LangkahPesan: React.FC = () => {
           <p className={styles.ctaText}>
             Masih bingung jumlah yang pas untuk acara kamu?
           </p>
-          <a
+          <Link
             href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20jumlah%20roti%20untuk%20acara."
             className={styles.ctaButton}
           >
             Konsultasi jumlah & varian via WhatsApp
-          </a>
+          </Link>
         </div>
       </div>
     </section>

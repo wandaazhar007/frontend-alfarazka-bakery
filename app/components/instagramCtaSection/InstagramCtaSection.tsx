@@ -11,6 +11,7 @@ import img9 from "../../../public/images/roti-unyil-9.jpg";
 import img10 from "../../../public/images/roti-unyil-10.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
 
 const InstagramCtaSection: React.FC = () => {
   return (
@@ -37,7 +38,7 @@ const InstagramCtaSection: React.FC = () => {
             <li>Highlight testimoni dan dokumentasi acara pelanggan.</li>
           </ul>
 
-          <a
+          <Link
             href="https://instagram.com/alfarazkabakery"
             target="_blank"
             rel="noreferrer"
@@ -46,7 +47,7 @@ const InstagramCtaSection: React.FC = () => {
           >
             <span><FontAwesomeIcon icon={faInstagram} className={styles.icon} /></span>
             <span>alfarazkabakery</span>
-          </a>
+          </Link>
 
           <p className={styles.microcopy}>
             *Jika kamu ragu soal jumlah atau varian, silakan screenshot contoh

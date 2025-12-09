@@ -13,6 +13,7 @@ import {
   fetchProducts,
   type Product,
 } from "../services/productService";
+import Link from "next/link";
 
 // NOTE: UBAH LIMIT PRODUK PER HALAMAN DI SINI
 // Ganti angka 4 jika ingin menampilkan lebih banyak produk per page.
@@ -333,7 +334,7 @@ const ProductsClientSection: React.FC = () => {
                   </div>
 
                   <div className={styles.cardFooter}>
-                    <a
+                    <Link
                       href={`https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(
                         product.name
                       )}%20dari%20Alfarazka%20Bakery.%20Apakah%20masih%20tersedia%3F`}
@@ -342,7 +343,7 @@ const ProductsClientSection: React.FC = () => {
                       className={styles.cardButton}
                     >
                       Pesan produk ini
-                    </a>
+                    </Link>
                   </div>
                 </article>
               ))}

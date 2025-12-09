@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./ProductHeroSection.module.scss";
+import Link from "next/link";
 
 const ProductHeroSection: React.FC = () => {
   return (
@@ -59,20 +60,20 @@ const ProductHeroSection: React.FC = () => {
             </ul>
 
             <div className={styles.actions}>
-              <a
+              <Link
                 href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20katalog%20produk%20roti%20unyil%20dan%20paket%20snack%20Alfarazka%20Bakery."
                 className={styles.primaryButton}
                 aria-label="Pesan roti unyil dan paket snack Alfarazka Bakery via WhatsApp"
               >
                 Pesan via WhatsApp
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="/cara-pemesanan"
                 className={styles.secondaryLink}
               >
                 Lihat cara pemesanan
-              </a>
+              </Link>
             </div>
 
             <p className={styles.microcopy}>

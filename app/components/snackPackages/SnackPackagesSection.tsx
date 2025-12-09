@@ -15,6 +15,7 @@ import {
   fetchPublicSnackPackages,
   type SnackPackageApi,
 } from "../../services/snackPackageService";
+import Link from "next/link";
 
 // Bentuk data yang dipakai card di frontend
 type SnackPackageCard = {
@@ -190,14 +191,14 @@ const SnackPackagesSection: React.FC = () => {
               </ul>
 
               <div className={styles.cardFooter}>
-                <a
+                <Link
                   href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20snack%20acara%20Alfarazka%20Bakery."
                   target="_blank"
                   rel="noreferrer"
                   className={styles.cardButton}
                 >
                   Konsultasi via WhatsApp
-                </a>
+                </Link>
               </div>
             </article>
           ))}

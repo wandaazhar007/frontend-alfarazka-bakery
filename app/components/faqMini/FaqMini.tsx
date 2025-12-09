@@ -9,6 +9,7 @@ import {
 import styles from "./FaqMini.module.scss";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons/faWhatsapp";
 import { faMessage } from "@fortawesome/free-regular-svg-icons/faMessage";
+import Link from "next/link";
 
 type FaqItem = {
   question: string;
@@ -82,13 +83,13 @@ const FaqMini: React.FC = () => {
             </p>
           </div>
 
-          <a
+          <Link
             href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20lebih%20lanjut%20soal%20pemesanan%20roti%20Alfarazka%20Bakery."
             className={styles.ctaButton}
           >
             <FontAwesomeIcon icon={faWhatsapp} />
             <span>Tanya langsung via WhatsApp</span>
-          </a>
+          </Link>
 
           <p className={styles.microcopy}>
             Biasanya kami respon dalam jam kerja. Untuk pesan di luar jam

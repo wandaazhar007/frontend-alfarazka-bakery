@@ -13,6 +13,7 @@ import {
 
 import styles from "./ProdukFaqMini.module.scss";
 import { faWhatsappSquare } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
 
 type FaqItem = {
   id: string;
@@ -82,7 +83,7 @@ const ProdukFaqMini: React.FC = () => {
             </p>
 
             <div className={styles.ctaGroup}>
-              <a
+              <Link
                 href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20soal%20produk%20dan%20paket%20roti%20Alfarazka%20Bakery."
                 target="_blank"
                 rel="noreferrer"
@@ -90,7 +91,7 @@ const ProdukFaqMini: React.FC = () => {
               >
                 <FontAwesomeIcon icon={faWhatsappSquare} />
                 <span>Konsultasi Paket via WhatsApp</span>
-              </a>
+              </Link>
               <p className={styles.miniNote}>
                 *Tidak harus langsung pesan. Boleh tanya-tanya dulu, insyaAllah
                 kami jawab dengan senang hati.

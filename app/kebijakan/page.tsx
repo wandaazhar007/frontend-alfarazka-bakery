@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./Kebijakan.module.scss";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Kebijakan & Ketentuan Layanan — Alfarazka Bakery Ciputat",
@@ -294,13 +295,13 @@ const KebijakanPage = () => {
             <li className={styles.listItem}>
               Instagram:{" "}
               <strong>
-                <a
+                <Link
                   href="https://www.instagram.com/alfarazkabakery"
                   target="_blank"
                   rel="noreferrer"
                 >
                   @alfarazkabakery
-                </a>
+                </Link>
               </strong>
             </li>
           </ul>

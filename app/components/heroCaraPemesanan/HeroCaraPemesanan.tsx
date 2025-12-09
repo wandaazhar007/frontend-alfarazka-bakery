@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import styles from "./HeroCaraPemesanan.module.scss";
 
 const HeroCaraPemesanan: React.FC = () => {
@@ -43,17 +44,17 @@ const HeroCaraPemesanan: React.FC = () => {
           </ul>
 
           <div className={styles.heroActions}>
-            <a
+            <Link
               href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20pemesanan%20roti%20Alfarazka%20Bakery."
               className={styles.primaryButton}
               aria-label="Konsultasi pemesanan roti Alfarazka Bakery via WhatsApp"
             >
               Pesan / Konsultasi via WhatsApp
-            </a>
+            </Link>
 
-            <a href="/produk-paket" className={styles.secondaryLink}>
+            <Link href="/produk" className={styles.secondaryLink}>
               Lihat dulu produk &amp; paket
-            </a>
+            </Link>
           </div>
 
           <p className={styles.microcopy}>
