@@ -192,3 +192,17 @@ Description: Alfarazka Bakery is a professionally designed website for a home-ba
   max-width: 64rem;
   margin-inline: auto;
 }
+
+.loadingText {
+  text-align: center;
+  font-size: 1.35rem;
+  color: v.$color-text-muted;
+  margin-bottom: v.$space-3;
+}
+
+.errorText {
+  text-align: center;
+  font-size: 1.3rem;
+  color: v.$color-danger;
+  margin-top: v.$space-2;
+}
