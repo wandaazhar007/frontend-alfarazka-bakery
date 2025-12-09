@@ -10,6 +10,7 @@ import {
 
 import styles from "./OrderSection.module.scss";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
 
 const OrderSection: React.FC = () => {
   return (
@@ -91,12 +92,12 @@ const OrderSection: React.FC = () => {
 
         {/* CTA + MICROCOPY */}
         <div className={styles.footer}>
-          <a
+          <Link
             href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
             className={styles.primaryButton}
           >
             Pesan Sekarang via WhatsApp
-          </a>
+          </Link>
           <p className={styles.microcopy}>
             *Disarankan pre-order minimal H-1 untuk jumlah standar. Untuk
             pesanan ratusan pcs, sebaiknya menghubungi beberapa hari sebelumnya

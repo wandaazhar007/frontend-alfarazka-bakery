@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import styles from "./ServiceAreaSection.module.scss";
 
 const ServiceAreaSection: React.FC = () => {
@@ -39,12 +40,12 @@ const ServiceAreaSection: React.FC = () => {
             </div>
 
             <div className={styles.actions}>
-              <a
+              <Link
                 href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20area%20jangkauan%20pengantaran%20Alfarazka%20Bakery."
                 className={styles.primaryButton}
               >
                 Tanya area jangkauan via WhatsApp
-              </a>
+              </Link>
             </div>
           </div>
 

@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./FaqSection.module.scss";
+import Link from "next/link";
 
 type FaqItem = {
   question: string;
@@ -131,12 +132,12 @@ const FaqSection: React.FC = () => {
             </p>
 
             <div className={styles.ctaBox}>
-              <a
+              <Link
                 href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20tentang%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
                 className={styles.primaryButton}
               >
                 Tanya lewat WhatsApp
-              </a>
+              </Link>
               <p className={styles.microcopy}>
                 *Jawab cepat di jam operasional. Di luar jam tersebut, insyaAllah
                 akan dibalas secepatnya.
