@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 export const metadata: Metadata = {
-  title: "Alfarazka Bakery – Nyemil Sehat, Teman Ngopi",
+  title: "Alfarazka Bakery – Roti Unyil Seribuan di Ciputat",
   description:
-    "Alfarazka Bakery adalah produsen roti unyil rumahan di Ciputat, Tangerang Selatan. Cocok untuk snack acara, bekal anak, dan teman ngopi harian.",
+    "Alfarazka Bakery adalah produsen roti unyil rumahan di Ciputat, Tangerang Selatan. Roti lembut mulai Rp 1.000/pcs, cocok untuk pengajian, arisan, ulang tahun, dan acara kantor.",
   icons: {
     icon: "/images/icon-logo-alfarazka-bakery.png",
     shortcut: "/images/icon-logo-alfarazka-bakery.png",

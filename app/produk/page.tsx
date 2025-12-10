@@ -5,7 +5,7 @@ import SnackPackagesSection from "../components/snackPackages/SnackPackagesSecti
 import ProdukFaqMini from "../components/faqMini/ProdukFaqMini";
 
 export const metadata: Metadata = {
-  title: "Produk Roti Unyil & Paket Snack — Alfarazka Bakery Ciputat",
+  title: "Produk & Paket Roti Unyil – Alfarazka Bakery Ciputat",
   description:
     "Lihat katalog roti unyil seribuan, roti meises, dan pizza mini dari Alfarazka Bakery di Ciputat. Cocok untuk pengajian, arisan, ulang tahun anak, dan rapat kantor dengan harga mulai Rp1.000/pcs.",
   keywords: [

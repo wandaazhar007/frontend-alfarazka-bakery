@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://alfarazkabakery.com/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://alfarazkabakery.com/tentang-kami</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alfarazkabakery.com/produk</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alfarazkabakery.com/cara-pemesanan</loc>
+    <priority>0.7</priority>
+  </url>
+  <!-- Kalau nanti aktif:
+  <url>
+    <loc>https://alfarazkabakery.com/testimoni</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alfarazkabakery.com/area-layanan</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alfarazkabakery.com/hubungi-kami</loc>
+    <priority>0.6</priority>
+  </url>
+  -->
+</urlset>

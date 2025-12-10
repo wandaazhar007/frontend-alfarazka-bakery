@@ -9,9 +9,9 @@ import AddressSection from "../components/addressSection/AddressSection";
 
 export const metadata: Metadata = {
   title:
-    "Tentang Kami – Alfarazka Bakery | Roti Unyil Rumahan di Ciputat, Tangerang Selatan",
+    "Tentang Alfarazka Bakery – Roti Unyil Rumahan Ciputat.",
   description:
-    "Alfarazka Bakery adalah usaha roti unyil rumahan di Ciputat yang berdiri sejak 7 Juli 2024. Menghadirkan roti unyil seribuan, roti meises, dan pizza mini yang fresh, higienis, dan ramah di kantong untuk keluarga dan acara.",
+    "Kenal lebih dekat dengan Alfarazka Bakery, produsen roti unyil rumahan di Ciputat. Kami mengutamakan rasa, kebersihan, dan pelayanan ramah untuk setiap pelanggan.",
   keywords: [
     "Alfarazka Bakery",
     "roti unyil Ciputat",
