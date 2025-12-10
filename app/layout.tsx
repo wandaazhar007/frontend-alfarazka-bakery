@@ -1,11 +1,5 @@
-/*
-Author: Wanda Azhar
-Location: Michigan, USA
-Contact: wandaazhar@gmail.com
-Description: Alfarazka Bakery is a professionally designed website for a home-based bakery, created to showcase premium handcrafted baked goods with a modern, clean, and user-friendly interface. Built with responsive layouts and best practices, it reflects the brand’s quality, reliability, and professionalism.
-*/
-
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./styles/_globals.scss";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
@@ -24,6 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({
   children,
 }: {
@@ -31,6 +27,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
+      <head>
+        {GA_ID && (
+          <>
+            {/* Google tag (gtag.js) */}
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
+      </head>
       <body>
         <div className="app-shell">
           <Navbar />
