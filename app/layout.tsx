@@ -4,16 +4,20 @@ import "./styles/_globals.scss";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import MainFooter from "./components/mainFooter/MainFooter";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+
 
 export const metadata: Metadata = {
   title: "Alfarazka Bakery – Roti Unyil Seribuan di Ciputat",
   description:
     "Alfarazka Bakery adalah produsen roti unyil rumahan di Ciputat, Tangerang Selatan. Roti lembut mulai Rp 1.000/pcs, cocok untuk pengajian, arisan, ulang tahun, dan acara kantor.",
   icons: {
-    icon: "/images/icon-logo-alfarazka-bakery.png",
-    shortcut: "/images/icon-logo-alfarazka-bakery.png",
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/images/icon-logo-alfarazka-bakery.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
     apple: "/images/icon-logo-alfarazka-bakery.png",
   },
 };
