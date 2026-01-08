@@ -1,24 +1,51 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./styles/_globals.scss";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import MainFooter from "./components/mainFooter/MainFooter";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://alfarazkabakery.com";
 
 export const metadata: Metadata = {
-  title: "Alfarazka Bakery – Roti Unyil Seribuan di Ciputat",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Alfarazka Bakery – Roti Unyil Rumahan di Ciputat",
+    template: "%s | Alfarazka Bakery",
+  },
   description:
     "Alfarazka Bakery adalah produsen roti unyil rumahan di Ciputat, Tangerang Selatan. Roti lembut mulai Rp 1.000/pcs, cocok untuk pengajian, arisan, ulang tahun, dan acara kantor.",
+  keywords: [
+    "Alfarazka Bakery",
+    "roti unyil Ciputat",
+    "roti unyil seribuan",
+    "roti unyil Tangerang Selatan",
+    "snack pengajian Ciputat",
+    "roti rumahan",
+  ],
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "Alfarazka Bakery",
+    title: "Alfarazka Bakery – Roti Unyil Rumahan di Ciputat",
+    description:
+      "Roti unyil seribuan, roti meises, dan pizza mini yang lembut dan fresh dari dapur rumahan di Ciputat. Cocok untuk pengajian, arisan, ulang tahun, dan acara kantor.",
+    images: [
+      {
+        url: "/images/og-alfarazka-bakery.png", // kalau ada OG khusus 1200x630, ganti ke sana
+        alt: "Logo Alfarazka Bakery – Roti Unyil Rumahan di Ciputat",
+      },
+    ],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", type: "image/x-icon" },
-      { url: "/images/icon-logo-alfarazka-bakery.png", type: "image/png" },
+      { url: "/images/og-alfarazka-bakery.png", type: "image/png" },
     ],
     shortcut: "/favicon.ico",
-    apple: "/images/icon-logo-alfarazka-bakery.png",
+    apple: "/images/og-alfarazka-bakery.png",
   },
 };
 
@@ -56,17 +83,6 @@ export default function RootLayout({
           <main className="main-content">{children}</main>
           <MainFooter />
           <Footer />
-
-          {/* Floating WhatsApp button */}
-          {/* <a
-            href="https://wa.me/6282194228282"
-            target="_blank"
-            rel="noreferrer"
-            className="fab-whatsapp"
-            aria-label="Chat via WhatsApp"
-          >
-            <FontAwesomeIcon icon={faWhatsapp} />
-          </a> */}
         </div>
       </body>
     </html>
