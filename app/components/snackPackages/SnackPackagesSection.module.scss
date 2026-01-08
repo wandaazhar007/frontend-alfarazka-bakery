@@ -5,6 +5,218 @@ Contact: wandaazhar@gmail.com
 Description: Alfarazka Bakery is a professionally designed website for a home-based bakery, created to showcase premium handcrafted baked goods with a modern, clean, and user-friendly interface. Built with responsive layouts and best practices, it reflects the brand’s quality, reliability, and professionalism.
 */
 
+// @use "../../styles/variables" as v;
+// @use "../../styles/responsive" as r;
+
+// .section {
+//   padding: v.$space-7 0;
+//   background: radial-gradient(circle at top left,
+//       rgba(255, 229, 232, 0.7),
+//       transparent 55%),
+//     radial-gradient(circle at bottom right,
+//       rgba(255, 241, 226, 0.8),
+//       transparent 55%),
+//     #ffffff;
+// }
+
+// .header {
+//   text-align: center;
+//   max-width: 64rem;
+//   margin: 0 auto v.$space-5 auto;
+// }
+
+// .kicker {
+//   font-size: 1.3rem;
+//   letter-spacing: 0.18rem;
+//   text-transform: uppercase;
+//   color: v.$color-primary;
+//   font-weight: 600;
+//   margin-bottom: v.$space-1;
+// }
+
+// .title {
+//   font-size: 2.4rem;
+//   margin-bottom: v.$space-2;
+//   color: v.$color-text-main;
+// }
+
+// .subtitle {
+//   font-size: 1.4rem;
+//   color: v.$color-text-muted;
+// }
+
+// /* GRID 4 CARD DI DESKTOP, 2 DI MOBILE */
+// .grid {
+//   display: grid;
+//   grid-template-columns: repeat(4, minmax(0, 1fr));
+//   gap: v.$space-4;
+
+//   @include r.respond-down("desktop") {
+//     grid-template-columns: repeat(3, minmax(0, 1fr));
+//   }
+
+//   @include r.respond-down("tablet") {
+//     grid-template-columns: repeat(2, minmax(0, 1fr));
+//   }
+
+//   @include r.respond-down("mobile") {
+//     grid-template-columns: repeat(2, minmax(0, 1fr));
+//   }
+// }
+
+// .card {
+//   background-color: v.$color-surface;
+//   border-radius: v.$radius-lg;
+//   padding: v.$space-4;
+//   box-shadow: v.$shadow-soft;
+//   display: flex;
+//   flex-direction: column;
+//   gap: v.$space-2;
+//   position: relative;
+//   overflow: hidden;
+//   isolation: isolate;
+//   transition:
+//     transform 0.16s ease,
+//     box-shadow 0.16s ease,
+//     background-color 0.16s ease;
+
+//   &::before {
+//     content: "";
+//     position: absolute;
+//     inset-inline: -20%;
+//     top: -35%;
+//     height: 55%;
+//     background: radial-gradient(circle at top,
+//         rgba(230, 57, 70, 0.14),
+//         transparent 65%);
+//     opacity: 0.8;
+//     z-index: -1;
+//   }
+
+//   &:hover {
+//     transform: translateY(-0.4rem);
+//     box-shadow: v.$shadow-card;
+//     background-color: #fff7f8;
+//   }
+// }
+
+// .iconWrapper {
+//   width: 3.6rem;
+//   height: 3.6rem;
+//   border-radius: v.$radius-pill;
+//   background: linear-gradient(135deg,
+//       v.$color-primary,
+//       v.$color-primary-dark );
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   color: #ffffff;
+//   font-size: 1.7rem;
+//   margin-bottom: 0.4rem;
+// }
+
+// .cardTitle {
+//   font-size: 1.6rem;
+//   font-weight: 600;
+//   margin: 0;
+//   color: v.$color-text-main;
+// }
+
+// .cardHighlight {
+//   font-size: 1.35rem;
+//   color: v.$color-text-main;
+// }
+
+// .cardPrice {
+//   font-size: 1.35rem;
+//   font-weight: 600;
+//   color: v.$color-primary-dark;
+// }
+
+// .cardSuitable {
+//   font-size: 1.25rem;
+//   color: v.$color-text-muted;
+// }
+
+// .cardList {
+//   margin: 0;
+//   padding-left: 1.6rem;
+//   list-style: disc;
+//   font-size: 1.25rem;
+//   color: v.$color-text-main;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.4rem;
+// }
+
+// .cardFooter {
+//   margin-top: auto;
+//   padding-top: v.$space-2;
+// }
+
+// .cardButton {
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 0.8rem 1.4rem;
+//   border-radius: v.$radius-pill;
+//   border: none;
+//   font-size: 1.3rem;
+//   font-weight: 600;
+//   background-color: v.$color-primary;
+//   color: #ffffff;
+//   cursor: pointer;
+//   text-decoration: none;
+//   width: 100%;
+//   text-align: center;
+//   transition:
+//     background-color 0.15s ease,
+//     transform 0.08s ease,
+//     box-shadow 0.15s ease;
+
+//   &:hover {
+//     background-color: v.$color-primary-dark;
+//     box-shadow: v.$shadow-soft;
+//   }
+
+//   &:active {
+//     transform: scale(0.97);
+//   }
+// }
+
+// .note {
+//   margin-top: v.$space-4;
+//   font-size: 1.3rem;
+//   color: v.$color-text-muted;
+//   text-align: center;
+//   max-width: 64rem;
+//   margin-inline: auto;
+// }
+
+// .loadingText {
+//   text-align: center;
+//   font-size: 1.35rem;
+//   color: v.$color-text-muted;
+//   margin-bottom: v.$space-3;
+// }
+
+// .errorText {
+//   text-align: center;
+//   font-size: 1.3rem;
+//   color: v.$color-danger;
+//   margin-top: v.$space-2;
+// }
+
+
+
+
+/*
+Author: Wanda Azhar
+Location: Michigan, USA
+Contact: wandaazhar@gmail.com
+Description: Alfarazka Bakery is a professionally designed website for a home-based bakery, created to showcase premium handcrafted baked goods with a modern, clean, and user-friendly interface. Built with responsive layouts and best practices, it reflects the brand’s quality, reliability, and professionalism.
+*/
+
 @use "../../styles/variables" as v;
 @use "../../styles/responsive" as r;
 
@@ -152,6 +364,9 @@ Description: Alfarazka Bakery is a professionally designed website for a home-ba
 .cardFooter {
   margin-top: auto;
   padding-top: v.$space-2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .cardButton {
@@ -181,6 +396,33 @@ Description: Alfarazka Bakery is a professionally designed website for a home-ba
 
   &:active {
     transform: scale(0.97);
+  }
+}
+
+.cardSecondaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.4rem;
+  border-radius: v.$radius-pill;
+  border: 0.1rem solid v.$color-primary-soft;
+  font-size: 1.25rem;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: v.$color-primary-dark;
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.08s ease;
+
+  &:hover {
+    background-color: v.$color-primary-soft;
+    border-color: v.$color-primary;
+    transform: translateY(-0.04rem);
   }
 }
 
