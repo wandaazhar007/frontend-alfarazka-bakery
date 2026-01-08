@@ -47,7 +47,7 @@ Description: Alfarazka Bakery is a professionally designed website for a home-ba
   justify-content: center;
   gap: v.$space-2;
   margin-top: v.$space-4;
-  margin-bottom: v.$space-3;
+  margin-bottom: v.$space-4;
 }
 
 .socialIcon {
@@ -75,6 +75,37 @@ Description: Alfarazka Bakery is a professionally designed website for a home-ba
   }
 }
 
+/* LINK COLUMNS */
+
+.linkColumns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: v.$space-4;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: v.$space-2;
+
+  @include r.respond-down("tablet") {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.navHeading {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(249, 250, 251, 0.9);
+}
+
 /* NAV BUTTONS */
 
 .nav {
@@ -82,13 +113,12 @@ Description: Alfarazka Bakery is a professionally designed website for a home-ba
   flex-wrap: wrap;
   justify-content: center;
   gap: v.$space-2;
-  margin-bottom: v.$space-2;
 }
 
 .navItem {
   min-width: 7.2rem;
   padding: 0.6rem 1.6rem;
-  border-radius: 999rem;
+  border-radius: v.$radius-pill;
   border: 0.1rem solid rgba(248, 250, 252, 0.35);
   font-size: 1.3rem;
   color: #f9fafb;
@@ -110,7 +140,7 @@ Description: Alfarazka Bakery is a professionally designed website for a home-ba
 /* COPYRIGHT */
 
 .copy {
-  margin: v.$space-2 0 0;
+  margin: v.$space-3 0 0;
   font-size: 1.2rem;
   color: v.$color-bg;
 }

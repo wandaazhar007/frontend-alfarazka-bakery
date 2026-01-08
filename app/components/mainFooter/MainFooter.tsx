@@ -8,9 +8,7 @@ import {
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 import styles from "./MainFooter.module.scss";
-import { faMapLocation } from "@fortawesome/free-solid-svg-icons/faMapLocation";
-import { faLocation, faLocationArrow, faMapMarked } from "@fortawesome/free-solid-svg-icons";
-import { faMap } from "@fortawesome/free-regular-svg-icons/faMap";
+import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 
 const MainFooter: React.FC = () => {
   const year = new Date().getFullYear();
@@ -51,31 +49,85 @@ const MainFooter: React.FC = () => {
             href="https://maps.app.goo.gl/dMbWuud6ZD9DSqap6"
             target="_blank"
             rel="noreferrer"
-            aria-label="Facebook Alfarazka Bakery"
+            aria-label="Lokasi Alfarazka Bakery"
             className={styles.socialIcon}
           >
             <FontAwesomeIcon icon={faLocationArrow} />
           </a>
         </div>
 
-        {/* NAV LINKS */}
-        <nav className={styles.nav}>
-          <Link href="/" className={styles.navItem}>
-            Beranda
-          </Link>
-          <Link href="/tentang-kami" className={styles.navItem}>
-            Tentang Kami
-          </Link>
-          <Link href="/produk" className={styles.navItem}>
-            Produk &amp; Paket
-          </Link>
-          <Link href="/cara-pemesanan" className={styles.navItem}>
-            Cara Pemesanan
-          </Link>
-          <Link href="/kebijakan" className={styles.navItem}>
-            Kebijakan & Ketentuan
-          </Link>
-        </nav>
+        {/* LINK COLUMNS */}
+        <div className={styles.linkColumns}>
+          {/* Navigasi utama */}
+          <div className={styles.navGroup}>
+            <p className={styles.navHeading}>Navigasi</p>
+            <nav className={styles.nav}>
+              <Link href="/" className={styles.navItem}>
+                Beranda
+              </Link>
+              <Link href="/tentang-kami" className={styles.navItem}>
+                Tentang Kami
+              </Link>
+              <Link href="/produk" className={styles.navItem}>
+                Produk &amp; Paket
+              </Link>
+              <Link href="/cara-pemesanan" className={styles.navItem}>
+                Cara Pemesanan
+              </Link>
+              <Link href="/kebijakan" className={styles.navItem}>
+                Kebijakan &amp; Ketentuan
+              </Link>
+            </nav>
+          </div>
+
+          {/* Paket & Area Layanan */}
+          <div className={styles.navGroup}>
+            <p className={styles.navHeading}>Paket &amp; Area Layanan</p>
+            <nav className={styles.nav}>
+              <Link
+                href="/roti-unyil-ciputat"
+                className={styles.navItem}
+              >
+                Roti Unyil Ciputat
+              </Link>
+              <Link
+                href="/snack-box-pengajian-ciputat"
+                className={styles.navItem}
+              >
+                Snack Box Pengajian
+              </Link>
+              <Link
+                href="/snack-box-arisan-ciputat"
+                className={styles.navItem}
+              >
+                Snack Box Arisan
+              </Link>
+              <Link
+                href="/paket-snack-ulang-tahun-anak-ciputat"
+                className={styles.navItem}
+              >
+                Paket Ulang Tahun Anak
+              </Link>
+              <Link
+                href="/paket-snack-rapat-kantor-ciputat"
+                className={styles.navItem}
+              >
+                Paket Snack Rapat Kantor
+              </Link>
+              <Link
+                href="/toko-roti-rumahan-ciputat"
+                className={styles.navItem}
+              >
+                Toko Roti Rumahan Ciputat
+              </Link>
+            </nav>
+          </div>
+        </div>
+
+        {/* COPYRIGHT */}
+        <p className={styles.copy}>
+          &copy; {year} Alfarazka Bakery. Semua hak cipta dilindungi.
+        </p>
       </div>
     </footer>
   );
