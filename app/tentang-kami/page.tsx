@@ -6,6 +6,7 @@ import StorySection from "../components/storySection/StorySection";
 import TimelineSection from "../components/timelineSection/TimelineSection";
 import InstagramCtaSection from "../components/instagramCtaSection/InstagramCtaSection";
 import AddressSection from "../components/addressSection/AddressSection";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 
 export const metadata: Metadata = {
   title:
@@ -24,6 +25,15 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className={styles.aboutPage}>
+      {/* BREADCRUMB */}
+      <div className="container">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Tentang Kami", href: "/tentang-kami" },
+          ]}
+        />
+      </div>
       {/* HERO TENTANG KAMI */}
       <section
         className={styles.hero}

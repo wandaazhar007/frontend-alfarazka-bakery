@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./RotiUnyilCiputatPage.module.scss";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Roti Unyil Ciputat — Roti Seribuan Enak & Fresh | Alfarazka Bakery",
@@ -56,6 +57,16 @@ const whatsappLink =
 const RotiUnyilCiputatPage = () => {
   return (
     <main className={styles.page}>
+      {/* BREADCRUMB */}
+      <div className="container">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Produk & Paket", href: "/produk" },
+            { label: "Roti Unyil Ciputat", href: "/roti-unyil-ciputat" },
+          ]}
+        />
+      </div>
       {/* HERO */}
       <section
         className={`section ${styles.heroSection}`}

@@ -3,6 +3,7 @@ import ProductHeroSection from "../components/productHero/ProductHeroSection";
 import ProductsClientSection from "./ProductsClientSection";
 import SnackPackagesSection from "../components/snackPackages/SnackPackagesSection";
 import ProdukFaqMini from "../components/faqMini/ProdukFaqMini";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Produk & Paket Roti Unyil – Alfarazka Bakery Ciputat",
@@ -43,6 +44,15 @@ export const metadata: Metadata = {
 const ProdukPage = () => {
   return (
     <main className="main-content">
+      {/* BREADCRUMB */}
+      <div className="container">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Produk & Paket", href: "/produk" },
+          ]}
+        />
+      </div>
       <ProductHeroSection />
       {/* SECTION 2 & 3: Filter + Daftar Produk (nanti terhubung REST API) */}
       <ProductsClientSection />

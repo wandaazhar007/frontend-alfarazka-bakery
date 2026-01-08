@@ -4,6 +4,7 @@ import LangkahPesan from "../components/langkahPesan/LangkahPesan";
 import PreOrderSection from "../components/preOrderSection/PreOrderSection";
 import PengirimanPembayanSection from "../components/pengirimanPembayanSection/PengirimanPembayanSection";
 import FaqMini from "../components/faqMini/FaqMini";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs"
 
 export const metadata: Metadata = {
   title: "Cara Pemesanan Roti Unyil & Snack Box — Alfarazka Bakery Ciputat",
@@ -44,6 +45,15 @@ export const metadata: Metadata = {
 const CaraPemesananPage = () => {
   return (
     <>
+      {/* BREADCRUMB */}
+      <div className="container">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Cara Pemesanan", href: "/cara-pemesanan" },
+          ]}
+        />
+      </div>
       <HeroCaraPemesanan />
       <LangkahPesan />
       <PreOrderSection />

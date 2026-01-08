@@ -1,0 +1,65 @@
+/*
+Author: Wanda Azhar
+Location: Michigan, USA
+Contact: wandaazhar@gmail.com
+Description: Breadcrumb component for Alfarazka Bakery with SEO-friendly
+structured data and clean visual style.
+*/
+
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.breadcrumb {
+  padding: v.$space-2 0;
+  font-size: 1.25rem;
+  color: v.$color-text-soft;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.link {
+  color: v.$color-text-muted;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    color: v.$color-primary-dark;
+  }
+}
+
+.separator {
+  color: v.$color-text-soft;
+}
+
+.current {
+  .currentLabel {
+    font-weight: 600;
+    color: v.$color-text-main;
+  }
+}
+
+.currentLabel {
+  white-space: nowrap;
+}
+
+/* Responsive: sedikit kecil di mobile */
+@include r.respond-down("mobile") {
+  .breadcrumb {
+    font-size: 1.15rem;
+  }
+}

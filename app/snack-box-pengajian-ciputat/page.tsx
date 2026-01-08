@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./SnackBoxPengajianCiputatPage.module.scss";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 
 export const metadata: Metadata = {
   title:
@@ -58,6 +59,16 @@ const whatsappLink =
 const SnackBoxPengajianCiputatPage = () => {
   return (
     <main className={styles.page}>
+      {/* BREADCRUMB */}
+      <div className="container">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Produk & Paket", href: "/produk" },
+            { label: "Snack Box Pengajian Ciputat", href: "/snack-box-pengajian-ciputat" },
+          ]}
+        />
+      </div>
       {/* HERO */}
       <section
         className={`section ${styles.heroSection}`}

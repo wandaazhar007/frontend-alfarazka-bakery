@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./TokoRotiRumahanCiputatPage.module.scss";
+import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 
 export const metadata: Metadata = {
   title:
@@ -61,6 +62,16 @@ const whatsappLink =
 const TokoRotiRumahanCiputatPage = () => {
   return (
     <main className={styles.page}>
+      {/* BREADCRUMB */}
+      <div className="container">
+        <Breadcrumbs
+          items={[
+            { label: "Beranda", href: "/" },
+            { label: "Produk & Paket", href: "/produk" },
+            { label: "Toko Roti Rumahan Ciputat", href: "/toko-roti-rumahan-ciputat" },
+          ]}
+        />
+      </div>
       {/* HERO: BRAND & RUMAHAN */}
       <section
         className={`section ${styles.heroSection}`}
