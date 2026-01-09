@@ -453,7 +453,7 @@ const SnackPackagesSection: React.FC = () => {
 
               <div className={styles.cardFooter}>
                 <a
-                  href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20snack%20acara%20Alfarazka%20Bakery."
+                  href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20snack%20acara%20Alfarazka%20Bakery."
                   target="_blank"
                   rel="noreferrer"
                   className={styles.cardButton}

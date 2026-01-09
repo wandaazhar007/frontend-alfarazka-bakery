@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 };
 
 const whatsappLink =
-  "https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20mau%20tanya%20paket%20snack%20ulang%20tahun%20anak%20Alfarazka%20Bakery%20di%20Ciputat.";
+  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20paket%20snack%20ulang%20tahun%20anak%20Alfarazka%20Bakery%20di%20Ciputat.";
 
 const PaketSnackUlangTahunAnakCiputatPage = () => {
   return (

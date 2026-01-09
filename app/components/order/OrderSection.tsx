@@ -93,7 +93,7 @@ const OrderSection: React.FC = () => {
         {/* CTA + MICROCOPY */}
         <div className={styles.footer}>
           <Link
-            href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
+            href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
             className={styles.primaryButton}
           >
             Pesan Sekarang via WhatsApp

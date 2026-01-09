@@ -55,7 +55,7 @@ const jsonLdLocalBusiness = {
   name: "Alfarazka Bakery",
   image: "https://alfarazkabakery.com/images/roti-unyil-1.jpg",
   url: "https://alfarazkabakery.com",
-  telephone: "+62-821-9422-8282",
+  telephone: "+62-851-7975-3356",
   description:
     "Alfarazka Bakery adalah toko roti rumahan di Ciputat yang menyediakan roti unyil seribuan, roti meises, pizza mini, dan paket snack box untuk pengajian, arisan, ulang tahun anak, serta rapat kantor.",
   address: {
@@ -72,14 +72,14 @@ const jsonLdLocalBusiness = {
   ],
   sameAs: [
     "https://www.instagram.com/alfarazkabakery",
-    "https://wa.me/6282194228282",
+    "https://wa.me/6285179753356",
     "https://maps.app.goo.gl/dMbWuud6ZD9DSqap6",
   ],
   contactPoint: [
     {
       "@type": "ContactPoint",
       contactType: "customer service",
-      telephone: "+62-821-9422-8282",
+      telephone: "+62-851-7975-3356",
       areaServed: "ID",
       availableLanguage: ["id"],
     },

@@ -290,7 +290,7 @@ const KebijakanPage = () => {
           </p>
           <ul className={styles.list}>
             <li className={styles.listItem}>
-              WhatsApp: <strong>0821&nbsp;9422&nbsp;8282</strong>
+              WhatsApp: <strong>0851&nbsp;7975&nbsp;3356</strong>
             </li>
             <li className={styles.listItem}>
               Instagram:{" "}

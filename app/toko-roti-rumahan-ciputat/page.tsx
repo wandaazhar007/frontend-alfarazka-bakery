@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 };
 
 const whatsappLink =
-  "https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20mau%20tanya%20tentang%20roti%20rumahan%20halal%20Alfarazka%20Bakery%20di%20Ciputat.";
+  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20tentang%20roti%20rumahan%20halal%20Alfarazka%20Bakery%20di%20Ciputat.";
 
 const TokoRotiRumahanCiputatPage = () => {
   return (

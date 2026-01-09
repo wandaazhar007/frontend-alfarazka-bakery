@@ -61,7 +61,7 @@ const ProductHeroSection: React.FC = () => {
 
             <div className={styles.actions}>
               <Link
-                href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20katalog%20produk%20roti%20unyil%20dan%20paket%20snack%20Alfarazka%20Bakery."
+                href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20katalog%20produk%20roti%20unyil%20dan%20paket%20snack%20Alfarazka%20Bakery."
                 className={styles.primaryButton}
                 aria-label="Pesan roti unyil dan paket snack Alfarazka Bakery via WhatsApp"
               >

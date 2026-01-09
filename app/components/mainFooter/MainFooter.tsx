@@ -28,7 +28,7 @@ const MainFooter: React.FC = () => {
         {/* SOCIAL ICONS */}
         <div className={styles.socialRow}>
           <a
-            href="https://wa.me/6282194228282"
+            href="https://wa.me/6285179753356"
             target="_blank"
             rel="noreferrer"
             aria-label="WhatsApp Alfarazka Bakery"

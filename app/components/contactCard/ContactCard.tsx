@@ -10,7 +10,7 @@ import { faInstagram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import styles from "./ContactCard.module.scss";
 
 const whatsappLink =
-  "https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20atau%20pesan%20roti%20di%20Alfarazka%20Bakery.";
+  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20atau%20pesan%20roti%20di%20Alfarazka%20Bakery.";
 const instagramLink = "https://www.instagram.com/alfarazkabakery";
 const mapsLink = "https://maps.app.goo.gl/dMbWuud6ZD9DSqap6";
 

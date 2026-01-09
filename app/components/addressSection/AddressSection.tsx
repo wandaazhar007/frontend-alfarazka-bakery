@@ -48,7 +48,7 @@ const AddressSection: React.FC = () => {
           <div className={styles.block}>
             <h3 className={styles.blockTitle}>WhatsApp pemesanan</h3>
             <Link
-              href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20pemesanan%20roti%20Alfarazka%20Bakery."
+              href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20pemesanan%20roti%20Alfarazka%20Bakery."
               target="_blank"
               rel="noreferrer"
               className={styles.linkRow}
@@ -57,7 +57,7 @@ const AddressSection: React.FC = () => {
                 <FontAwesomeIcon icon={faWhatsapp} />
               </span>
               <span className={styles.linkText}>
-                0821 9422 8282
+                0851 7975 3356
                 <span className={styles.linkHint}>Klik untuk chat di WhatsApp</span>
               </span>
             </Link>

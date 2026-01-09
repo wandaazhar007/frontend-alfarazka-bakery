@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
               ))}
             </ul>
             <a
-              href="https://wa.me/6282194228282"
+              href="https://wa.me/6285179753356"
               target="_blank"
               rel="noreferrer"
               className={styles.navCta}
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
           </ul>
 
           <a
-            href="https://wa.me/6282194228282"
+            href="https://wa.me/6285179753356"
             target="_blank"
             rel="noreferrer"
             className={styles.mobileCta}

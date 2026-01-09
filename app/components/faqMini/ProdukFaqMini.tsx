@@ -255,7 +255,7 @@ const ProdukFaqMini: React.FC = () => {
 
               <div className={styles.ctaGroup}>
                 <Link
-                  href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20soal%20produk%20dan%20paket%20roti%20Alfarazka%20Bakery."
+                  href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20soal%20produk%20dan%20paket%20roti%20Alfarazka%20Bakery."
                   target="_blank"
                   rel="noreferrer"
                   className={styles.primaryButton}

@@ -10,7 +10,7 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import styles from "./CtaKontakKami.module.scss";
 
 const whatsappLink =
-  "https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20roti%20dan%20snack%20Alfarazka%20Bakery%20untuk%20acara%20saya.";
+  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20roti%20dan%20snack%20Alfarazka%20Bakery%20untuk%20acara%20saya.";
 
 const CtaKontakKami: React.FC = () => {
   return (

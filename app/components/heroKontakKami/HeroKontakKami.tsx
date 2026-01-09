@@ -14,7 +14,7 @@ import {
 import styles from "./HeroKontakKami.module.scss";
 
 const whatsappLink =
-  "https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20atau%20pesan%20roti%20di%20Alfarazka%20Bakery.";
+  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20atau%20pesan%20roti%20di%20Alfarazka%20Bakery.";
 
 const mapsLink = "https://maps.app.goo.gl/dMbWuud6ZD9DSqap6";
 
@@ -77,7 +77,7 @@ const HeroKontakKami: React.FC = () => {
               <div className={styles.highlightText}>
                 <h2>Kontak Utama</h2>
                 <p>
-                  WhatsApp: <strong>+62 821-9422-8282</strong>
+                  WhatsApp: <strong>+62 851-7975-3356</strong>
                   <br />
                   Instagram:{" "}
                   <a

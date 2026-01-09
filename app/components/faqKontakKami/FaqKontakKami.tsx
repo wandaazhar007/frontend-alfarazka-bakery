@@ -53,7 +53,7 @@ const FAQ_ITEMS: FaqItem[] = [
 ];
 
 const whatsappLink =
-  "https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20lebih%20lanjut%20soal%20pemesanan%20roti%20dan%20paket%20Alfarazka%20Bakery.";
+  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20lebih%20lanjut%20soal%20pemesanan%20roti%20dan%20paket%20Alfarazka%20Bakery.";
 
 const FaqKontakKami: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(FAQ_ITEMS[0]?.id ?? null);

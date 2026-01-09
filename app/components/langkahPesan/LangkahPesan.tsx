@@ -118,7 +118,7 @@ const LangkahPesan: React.FC = () => {
             Masih bingung jumlah yang pas untuk acara kamu?
           </p>
           <Link
-            href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20jumlah%20roti%20untuk%20acara."
+            href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20jumlah%20roti%20untuk%20acara."
             className={styles.ctaButton}
           >
             Konsultasi jumlah & varian via WhatsApp

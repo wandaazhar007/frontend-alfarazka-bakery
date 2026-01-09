@@ -247,7 +247,7 @@ const FaqMini: React.FC = () => {
             </div>
 
             <Link
-              href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20lebih%20lanjut%20soal%20pemesanan%20roti%20Alfarazka%20Bakery."
+              href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20lebih%20lanjut%20soal%20pemesanan%20roti%20Alfarazka%20Bakery."
               className={styles.ctaButton}
             >
               <FontAwesomeIcon icon={faWhatsapp} />

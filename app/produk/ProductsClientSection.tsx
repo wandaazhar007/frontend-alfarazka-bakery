@@ -326,7 +326,7 @@ const ProductsClientSection: React.FC = () => {
                       />
                     )}
                     <p className={styles.cardPrice}>
-                      Mulai{" "}
+                      {/* Mulai{" "} */}
                       <strong>
                         Rp{" "}
                         {product.price.toLocaleString("id-ID", {
@@ -339,7 +339,7 @@ const ProductsClientSection: React.FC = () => {
 
                   <div className={styles.cardFooter}>
                     <Link
-                      href={`https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(
+                      href={`https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(
                         product.name
                       )}%20dari%20Alfarazka%20Bakery.%20Apakah%20masih%20tersedia%3F`}
                       target="_blank"
