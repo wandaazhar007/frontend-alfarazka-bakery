@@ -95,7 +95,7 @@ const FaqKontakKami: React.FC = () => {
                 </div>
                 <div>
                   <p className={styles.optionLabel}>WhatsApp admin</p>
-                  <p className={styles.optionValue}>+62 821-9422-8282</p>
+                  <p className={styles.optionValue}>+62 851-7975-3356</p>
                 </div>
               </div>
 

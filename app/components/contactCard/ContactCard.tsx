@@ -52,7 +52,7 @@ const ContactCard: React.FC = () => {
               <dl className={styles.detailList}>
                 <div>
                   <dt>Nomor WhatsApp</dt>
-                  <dd>+62 821-9422-8282</dd>
+                  <dd>+62 851-7975-3356</dd>
                 </div>
                 <div>
                   <dt>Jenis chat</dt>

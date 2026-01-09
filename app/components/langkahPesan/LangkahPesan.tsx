@@ -41,7 +41,7 @@ const LangkahPesan: React.FC = () => {
               <h3 className={styles.stepTitle}>Chat WhatsApp Alfarazka Bakery</h3>
               <p className={styles.stepText}>
                 Kirim pesan ke{" "}
-                <strong>0821 9422 8282</strong> dan ceritakan rencana acara
+                <strong>0851-7975-3356</strong> dan ceritakan rencana acara
                 kamu: tanggal, waktu, kira-kira jumlah tamu, dan budget
                 per orang (jika ada).
               </p>
