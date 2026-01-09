@@ -16,6 +16,7 @@ import {
 
 import styles from "./PaketSnackRapatKantorCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
+import FaqRapatKantor from "../components/faqRapatKantor/FaqRapatKantor";
 
 export const metadata: Metadata = {
   title:
@@ -372,95 +373,7 @@ const PaketSnackRapatKantorCiputatPage = () => {
       </section>
 
       {/* FAQ RAPAT KANTOR */}
-      <section
-        className={`section ${styles.faqSection}`}
-        aria-labelledby="rapat-kantor-faq-heading"
-      >
-        <div className="container">
-          <div className={styles.faqInner}>
-            <div className={styles.faqIntro}>
-              <p className={styles.sectionKicker}>FAQ Rapat Kantor</p>
-              <h2
-                id="rapat-kantor-faq-heading"
-                className={styles.sectionTitle}
-              >
-                Pertanyaan yang Sering Muncul dari Kantor & Lembaga
-              </h2>
-              <p className={styles.sectionSubtitle}>
-                Sebelum memesan, biasanya bagian keuangan atau panitia acara
-                punya beberapa pertanyaan berikut. Kalau masih ragu, boleh
-                banget chat kami untuk dibantu.
-              </p>
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noreferrer"
-                className={styles.primaryButton}
-              >
-                Chat admin untuk tanya detail
-              </a>
-            </div>
-
-            <div className={styles.faqList}>
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Apakah bisa dibuatkan penawaran dulu?</h3>
-                  <p>
-                    Bisa. Sampaikan rencana jumlah peserta, kisaran budget
-                    per orang, dan jenis acara. Kami akan bantu buatkan
-                    gambaran paket dan estimasi biaya.
-                  </p>
-                </div>
-              </article>
-
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Minimal pesan untuk rapat kantor berapa?</h3>
-                  <p>
-                    Idealnya mulai dari 20–25 pax agar produksi lebih
-                    efektif. Namun untuk jumlah di bawah itu masih bisa
-                    dibicarakan terlebih dahulu.
-                  </p>
-                </div>
-              </article>
-
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Apakah wajib DP?</h3>
-                  <p>
-                    Untuk pesanan jumlah besar atau hari sibuk, biasanya
-                    kami minta DP sebagai komitmen slot. Untuk pesanan
-                    tertentu bisa dibahas fleksibel sesuai kondisi.
-                  </p>
-                </div>
-              </article>
-
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Bagaimana kalau rapat mendadak?</h3>
-                  <p>
-                    Silakan langsung hubungi kami via WhatsApp. Jika stok
-                    produksi hari itu memungkinkan dan slot masih ada,
-                    insyaAllah kami usahakan bantu.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FaqRapatKantor whatsappLink={whatsappLink} />
     </main>
   );
 };

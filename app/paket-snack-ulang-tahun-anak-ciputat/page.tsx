@@ -16,6 +16,7 @@ import {
 
 import styles from "./PaketSnackUlangTahunAnakCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
+import FaqPaketUltah from "../components/faqPaketUltah/FaqPaketUltah";
 
 export const metadata: Metadata = {
   title:
@@ -377,94 +378,7 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
       </section>
 
       {/* FAQ ORANG TUA */}
-      <section
-        className={`section ${styles.faqSection}`}
-        aria-labelledby="ulang-tahun-anak-faq-heading"
-      >
-        <div className="container">
-          <div className={styles.faqInner}>
-            <div className={styles.faqIntro}>
-              <p className={styles.sectionKicker}>FAQ Orang Tua</p>
-              <h2
-                id="ulang-tahun-anak-faq-heading"
-                className={styles.sectionTitle}
-              >
-                Pertanyaan yang Sering Diajukan Ortu
-              </h2>
-              <p className={styles.sectionSubtitle}>
-                Tenang, kamu tidak sendirian. Banyak orang tua yang bertanya
-                hal-hal berikut sebelum memesan paket snack ulang tahun anak.
-              </p>
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noreferrer"
-                className={styles.primaryButton}
-              >
-                Chat admin untuk tanya detail
-              </a>
-            </div>
-
-            <div className={styles.faqList}>
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Minimal order berapa kotak?</h3>
-                  <p>
-                    Umumnya kami sarankan mulai dari 20 kotak, tapi tetap
-                    fleksibel. Untuk jumlah di bawah itu, bisa didiskusikan
-                    dulu lewat WhatsApp.
-                  </p>
-                </div>
-              </article>
-
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Apakah bisa campur beberapa varian roti?</h3>
-                  <p>
-                    Bisa. Justru kami sarankan isi mix manis dan gurih supaya
-                    anak-anak tidak bosan. Kamu bisa request rasa favorit
-                    anak.
-                  </p>
-                </div>
-              </article>
-
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Pesan berapa hari sebelum acara?</h3>
-                  <p>
-                    Minimal H-1, tapi kalau jumlahnya banyak (puluhan sampai
-                    ratusan kotak), lebih baik booking beberapa hari sebelumnya
-                    supaya slot aman.
-                  </p>
-                </div>
-              </article>
-
-              <article className={styles.faqItem}>
-                <div className={styles.faqIcon}>
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </div>
-                <div>
-                  <h3>Apakah bisa antar ke sekolah / lokasi acara?</h3>
-                  <p>
-                    Untuk area sekitar Ciputat tertentu, insyaAllah bisa
-                    diantarkan dengan biaya tambahan. Detailnya bisa dibahas
-                    lewat chat supaya jelas jarak dan waktunya.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FaqPaketUltah whatsappLink={whatsappLink} />
     </main>
   );
 };
