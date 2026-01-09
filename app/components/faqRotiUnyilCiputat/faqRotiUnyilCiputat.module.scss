@@ -1,0 +1,262 @@
+/*
+Author: Wanda Azhar
+Location: Michigan, USA
+Contact: wandaazhar@gmail.com
+Description: FAQ section khusus halaman Roti Unyil Ciputat dengan layout dua kolom dan accordion, menyamakan tampilan dengan FAQ di halaman produk.
+*/
+
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.section {
+  background: radial-gradient(circle at top left,
+      rgba(255, 229, 232, 0.7),
+      transparent 60%),
+    radial-gradient(circle at bottom right,
+      rgba(255, 241, 226, 0.8),
+      transparent 60%),
+    v.$color-bg-soft;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.2fr);
+  gap: v.$space-5;
+  align-items: flex-start;
+  max-width: v.$layout-max-width;
+  margin: 0 auto;
+
+  @include r.respond-down("tablet") {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* BOX KIRI */
+
+.infoPanel {
+  background-color: v.$color-surface;
+  border-radius: v.$radius-lg;
+  padding: v.$space-5;
+  box-shadow: v.$shadow-soft;
+}
+
+.kicker {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18rem;
+  color: v.$color-primary;
+  font-weight: 600;
+  margin-bottom: v.$space-1;
+}
+
+.title {
+  font-size: 2.2rem;
+  margin-bottom: v.$space-2;
+  color: v.$color-text-main;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+  margin-bottom: v.$space-2;
+}
+
+.highlights {
+  list-style: none;
+  padding: 0;
+  margin: v.$space-3 0 v.$space-3 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 1.35rem;
+    color: v.$color-text-main;
+
+    svg {
+      color: v.$color-success;
+      font-size: 1.5rem;
+      margin-top: 0.2rem;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1.8rem;
+  border-radius: v.$radius-pill;
+  border: none;
+  font-size: 1.4rem;
+  font-weight: 600;
+  background-color: v.$color-primary;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: v.$shadow-soft;
+  transition:
+    background-color 0.16s ease,
+    transform 0.08s ease,
+    box-shadow 0.16s ease;
+
+  &:hover {
+    background-color: v.$color-primary-dark;
+    box-shadow: v.$shadow-card;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* BOX KANAN - FAQ (mirip dengan ProdukFaqMini) */
+
+.faqPanel {
+  background-color: v.$color-surface;
+  border-radius: v.$radius-lg;
+  padding: v.$space-4;
+  box-shadow: v.$shadow-soft;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.faqItem {
+  border-radius: v.$radius-md;
+  border: 0.1rem solid v.$color-border;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition:
+    box-shadow 0.18s ease,
+    transform 0.12s ease,
+    border-color 0.18s ease;
+}
+
+.faqItemOpen {
+  box-shadow: v.$shadow-soft;
+  border-color: v.$color-primary-soft;
+  transform: translateY(-0.1rem);
+}
+
+.faqQuestionButton {
+  width: 100%;
+  padding: 1.1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: v.$space-2;
+}
+
+.faqQuestionLeft {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+  min-width: 0;
+}
+
+.faqIcon {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: v.$radius-pill;
+  background: linear-gradient(135deg,
+      v.$color-primary,
+      v.$color-primary-dark );
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.faqQuestionText {
+  font-size: 1.35rem;
+  color: v.$color-text-main;
+  font-weight: 500;
+}
+
+.chevron {
+  font-size: 1.4rem;
+  color: v.$color-text-soft;
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+
+  svg {
+    font-size: 1.4rem;
+  }
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ANIMASI JAWABAN */
+
+.faqAnswerWrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-0.4rem);
+  padding: 0 1.4rem;
+  transition:
+    max-height 0.24s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    padding-top 0.2s ease,
+    padding-bottom 0.2s ease;
+}
+
+.answerOpen {
+  max-height: 20rem;
+  opacity: 1;
+  transform: translateY(0);
+  padding-top: 0;
+  padding-bottom: 1.2rem;
+}
+
+.faqAnswer {
+  font-size: 1.3rem;
+  color: v.$color-text-muted;
+}
+
+/* RESPONSIVE */
+
+@include r.respond-down("tablet") {
+  .infoPanel {
+    order: -1;
+  }
+
+  .section {
+    padding: v.$space-6 0;
+  }
+}
+
+@include r.respond-down("mobile") {
+
+  .infoPanel,
+  .faqPanel {
+    padding: v.$space-3;
+  }
+
+  .title {
+    font-size: 1.9rem;
+  }
+
+  .faqQuestionText {
+    font-size: 1.3rem;
+  }
+
+  .faqAnswer {
+    font-size: 1.25rem;
+  }
+}
