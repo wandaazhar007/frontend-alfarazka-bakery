@@ -46,7 +46,7 @@ const jsonLd = {
   logo: `${siteUrl}/images/icon-logo-alfarazka-bakery.png`,
   description:
     "Produsen roti unyil rumahan di Ciputat, Tangerang Selatan. Menyediakan roti unyil seribuan, roti meises, dan pizza mini untuk pengajian, arisan, ulang tahun, rapat kantor, dan nyemil harian.",
-  telephone: "+62-821-9422-8282",
+  telephone: "+62-851-7975-3356",
   priceRange: "Rp1.000 - Rp3.000",
   address: {
     "@type": "PostalAddress",
