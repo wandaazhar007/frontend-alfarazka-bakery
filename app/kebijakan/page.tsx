@@ -82,7 +82,7 @@ const KebijakanPage = () => {
             </li>
             <li className={styles.listItem}>
               Komunikasi resmi dilakukan melalui{" "}
-              <strong>WhatsApp 0821&nbsp;9422&nbsp;8282</strong> dan Instagram{" "}
+              <strong>WhatsApp 0851&nbsp;7975&nbsp;3356</strong> dan Instagram{" "}
               <strong>@alfarazkabakery</strong>.
             </li>
           </ul>
