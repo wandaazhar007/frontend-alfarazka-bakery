@@ -316,10 +316,14 @@ const ProductsClientSection: React.FC = () => {
                         {product.categoryName}
                       </span>
                     )}
+
                     {product.description && (
-                      <p className={styles.cardDescription}>
-                        {product.description}
-                      </p>
+                      <div
+                        className={styles.cardDescription}
+                        dangerouslySetInnerHTML={{
+                          __html: product.description,
+                        }}
+                      />
                     )}
                     <p className={styles.cardPrice}>
                       Mulai{" "}
