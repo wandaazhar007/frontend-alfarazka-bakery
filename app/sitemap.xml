@@ -28,6 +28,11 @@
     <lastmod>2026-01-08</lastmod>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://alfarazkabakery.com/kebijakan</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>0.6</priority>
+  </url>
 
   <!-- Landing page with specific (SEO hight intent) -->
   <url>
@@ -36,7 +41,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://alfarazkabakery.com/paket-snack-rapat-kantor-ciputat</loc>
+    <loc>https://alfarazkabakery.com/snack-box-pengajian-ciputat</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+  <url>
+    <loc>https://alfarazkabakery.com/snack-box-arisan-ciputat</loc>
     <lastmod>2026-01-08</lastmod>
     <priority>0.7</priority>
   </url>
@@ -45,5 +56,16 @@
     <lastmod>2026-01-08</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://alfarazkabakery.com/paket-snack-rapat-kantor-ciputat</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+   <url>
+    <loc>https://alfarazkabakery.com/toko-roti-rumahan-ciputat</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  
 
 </urlset>
