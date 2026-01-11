@@ -34,18 +34,17 @@ export const metadata: Metadata = {
       "Roti unyil seribuan, roti meises, dan pizza mini yang lembut dan fresh dari dapur rumahan di Ciputat. Cocok untuk pengajian, arisan, ulang tahun, dan acara kantor.",
     images: [
       {
-        url: "/images/og-alfarazka-bakery.png", // kalau ada OG khusus 1200x630, ganti ke sana
+        url: "/images/og-alfarazka-bakery.png",
         alt: "Logo Alfarazka Bakery – Roti Unyil Rumahan di Ciputat",
       },
     ],
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", type: "image/x-icon" },
-      { url: "/images/og-alfarazka-bakery.png", type: "image/png" },
+      { url: "/favicon.ico", type: "image/x-icon" }
     ],
     shortcut: "/favicon.ico",
-    apple: "/images/og-alfarazka-bakery.png",
+    apple: "/favicon.ico",
   },
 };
 
