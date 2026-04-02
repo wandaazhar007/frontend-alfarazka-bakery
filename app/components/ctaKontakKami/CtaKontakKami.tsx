@@ -1,3 +1,4 @@
+// app/components/ctaKontakKami/CtaKontakKami.tsx
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,11 +9,27 @@ import {
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import styles from "./CtaKontakKami.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20roti%20dan%20snack%20Alfarazka%20Bakery%20untuk%20acara%20saya.";
+const CtaKontakKami = async () => {
+  const settings = await fetchPublicSiteSettings();
 
-const CtaKontakKami: React.FC = () => {
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+  const serviceAreaText =
+    settings.serviceAreaText || DEFAULT_SITE_SETTINGS.serviceAreaText;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya ingin konsultasi paket roti dan snack ${businessName} untuk acara saya.`
+  );
+
   return (
     <section
       className={`section ${styles.section}`}
@@ -56,8 +73,7 @@ const CtaKontakKami: React.FC = () => {
                 <FontAwesomeIcon icon={faLocationDot} />
               </span>
               <span className={styles.pillText}>
-                <strong>Fokus area Ciputat & sekitarnya.</strong> Pengantaran
-                dan titik temu bisa dibicarakan sejak awal.
+                <strong>Fokus area Ciputat & sekitarnya.</strong> {serviceAreaText}
               </span>
             </li>
           </ul>
@@ -68,7 +84,7 @@ const CtaKontakKami: React.FC = () => {
               target="_blank"
               rel="noreferrer"
               className={styles.primaryButton}
-              aria-label="Chat admin Alfarazka Bakery via WhatsApp untuk konsultasi paket"
+              aria-label={`Chat admin ${businessName} via WhatsApp untuk konsultasi paket`}
             >
               <FontAwesomeIcon icon={faWhatsapp} />
               <span>Chat admin via WhatsApp</span>

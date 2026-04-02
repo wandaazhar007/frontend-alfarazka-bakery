@@ -1,11 +1,15 @@
 // app/components/jamOperasional/JamOperasional.tsx
 import styles from "./JamOperasional.module.scss";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 type DaySchedule = {
   id: string;
   label: string;
-  open: string; // "08:00"
-  close: string; // "17:00"
+  open: string;
+  close: string;
 };
 
 const SCHEDULE: DaySchedule[] = [
@@ -18,7 +22,12 @@ const SCHEDULE: DaySchedule[] = [
   { id: "minggu", label: "Minggu", open: "08:00", close: "14:00" },
 ];
 
-const JamOperasional: React.FC = () => {
+const JamOperasional = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+
   return (
     <section
       className={`section ${styles.section}`}
@@ -30,7 +39,7 @@ const JamOperasional: React.FC = () => {
           <div className={styles.info}>
             <p className={styles.kicker}>Jam Operasional</p>
             <h2 id="jam-operasional-heading" className={styles.title}>
-              Jam Operasional Dapur Alfarazka Bakery
+              Jam Operasional Dapur {businessName}
             </h2>
             <p className={styles.subtitle}>
               Dapur rumahan kami melayani pemesanan roti unyil & snack box
@@ -48,7 +57,7 @@ const JamOperasional: React.FC = () => {
           {/* RIGHT: SCHEDULE */}
           <div
             className={styles.schedule}
-            aria-label="Jam operasional Alfarazka Bakery per hari"
+            aria-label={`Jam operasional ${businessName} per hari`}
           >
             <dl className={styles.list}>
               {SCHEDULE.map((day) => (
@@ -69,9 +78,9 @@ const JamOperasional: React.FC = () => {
             </dl>
 
             <p className={styles.helperText}>
-              Jika ingin pesan untuk{" "}
-              <strong>tanggal tertentu atau jumlah besar</strong>, kamu boleh
-              chat lebih awal supaya kami bisa mengamankan slot produksi.
+              Jika ingin pesan untuk <strong>tanggal tertentu atau jumlah besar</strong>,
+              kamu boleh chat lebih awal supaya kami bisa mengamankan slot
+              produksi.
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
+// app/components/faqKontakKami/FaqKontakKami.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,6 +14,11 @@ import {
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import styles from "./FaqKontakKami.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 type FaqItem = {
   id: string;
@@ -40,7 +46,7 @@ const FAQ_ITEMS: FaqItem[] = [
     id: "alamat-detail",
     question: "Apakah alamat lengkap ditampilkan di website?",
     answer:
-      "Ya. Jl.Dewi Sartika No.25 RT 003/004, Kota Tangerang Selatan, Banten 15411, Indonesia, kami akan kirim titik Google Maps dan detail rute lewat WhatsApp.",
+      "Ya, alamat utama bisa ditampilkan di website. Untuk detail titik dan arahan paling praktis, kami juga bisa kirim Google Maps lewat WhatsApp.",
     icon: faLocationDot,
   },
   {
@@ -52,11 +58,53 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20lebih%20lanjut%20soal%20pemesanan%20roti%20dan%20paket%20Alfarazka%20Bakery.";
-
 const FaqKontakKami: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(FAQ_ITEMS[0]?.id ?? null);
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [phoneNumberDisplay, setPhoneNumberDisplay] = useState(
+    DEFAULT_SITE_SETTINGS.phoneNumberDisplay
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+  const [addressLabel, setAddressLabel] = useState(
+    DEFAULT_SITE_SETTINGS.addressLabel
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const settings = await fetchPublicSiteSettings();
+
+        setBusinessName(
+          settings.businessName || DEFAULT_SITE_SETTINGS.businessName
+        );
+        setPhoneNumberDisplay(
+          settings.phoneNumberDisplay ||
+          DEFAULT_SITE_SETTINGS.phoneNumberDisplay
+        );
+        setWhatsappNumber(
+          settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+        setAddressLabel(
+          settings.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel
+        );
+      } catch (error) {
+        console.error("Gagal memuat site settings di FaqKontakKami:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya ingin tanya lebih lanjut soal pemesanan roti dan paket ${businessName}.`
+    );
+  }, [whatsappNumber, businessName]);
 
   const toggleItem = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -69,7 +117,6 @@ const FaqKontakKami: React.FC = () => {
     >
       <div className="container">
         <div className={styles.inner}>
-          {/* LEFT: INTRO + CONTACT OPTIONS */}
           <div className={styles.infoPanel}>
             <p className={styles.kicker}>FAQ Kontak & Pemesanan</p>
             <h2 id="faq-kontak-kami-heading" className={styles.title}>
@@ -95,7 +142,7 @@ const FaqKontakKami: React.FC = () => {
                 </div>
                 <div>
                   <p className={styles.optionLabel}>WhatsApp admin</p>
-                  <p className={styles.optionValue}>+62 851-7975-3356</p>
+                  <p className={styles.optionValue}>{phoneNumberDisplay}</p>
                 </div>
               </div>
 
@@ -129,7 +176,6 @@ const FaqKontakKami: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT: FAQ ACCORDION */}
           <div
             className={styles.faqPanel}
             aria-label="Pertanyaan umum seputar kontak dan pemesanan"
@@ -149,6 +195,11 @@ const FaqKontakKami: React.FC = () => {
             <div className={styles.accordion}>
               {FAQ_ITEMS.map((item) => {
                 const isOpen = openId === item.id;
+                const answerText =
+                  item.id === "alamat-detail"
+                    ? `${addressLabel}. Untuk detail titik dan arahan paling praktis, kami juga bisa kirim Google Maps lewat WhatsApp.`
+                    : item.answer;
+
                 return (
                   <div
                     key={item.id}
@@ -182,7 +233,7 @@ const FaqKontakKami: React.FC = () => {
                       className={`${styles.faqAnswerWrapper} ${isOpen ? styles.answerOpen : ""
                         }`}
                     >
-                      <p className={styles.faqAnswer}>{item.answer}</p>
+                      <p className={styles.faqAnswer}>{answerText}</p>
                     </div>
                   </div>
                 );

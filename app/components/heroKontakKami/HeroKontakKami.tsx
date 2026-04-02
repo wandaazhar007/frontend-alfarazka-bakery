@@ -3,7 +3,6 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faWhatsapp,
-  faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faLocationDot,
@@ -12,13 +11,32 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./HeroKontakKami.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20atau%20pesan%20roti%20di%20Alfarazka%20Bakery.";
+const HeroKontakKami = async () => {
+  const settings = await fetchPublicSiteSettings();
 
-const mapsLink = "https://maps.app.goo.gl/dMbWuud6ZD9DSqap6";
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+  const phoneNumberDisplay =
+    settings.phoneNumberDisplay || DEFAULT_SITE_SETTINGS.phoneNumberDisplay;
+  const instagramUrl =
+    settings.instagramUrl || DEFAULT_SITE_SETTINGS.instagramUrl;
+  const mapsUrl = settings.mapsUrl || DEFAULT_SITE_SETTINGS.mapsUrl;
+  const serviceAreaText =
+    settings.serviceAreaText || DEFAULT_SITE_SETTINGS.serviceAreaText;
 
-const HeroKontakKami: React.FC = () => {
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya ingin tanya atau pesan roti di ${businessName}.`
+  );
+
   return (
     <section
       className={`section ${styles.hero}`}
@@ -30,7 +48,7 @@ const HeroKontakKami: React.FC = () => {
           <div className={styles.content}>
             <p className={styles.kicker}>Butuh bantuan pemesanan?</p>
             <h1 id="kontak-kami-hero-heading" className={styles.title}>
-              Hubungi <span>Alfarazka Bakery</span> di Ciputat
+              Hubungi <span>{businessName}</span> di Ciputat
             </h1>
             <p className={styles.subtitle}>
               Halaman ini khusus untuk kamu yang ingin tanya stok, cek
@@ -45,14 +63,14 @@ const HeroKontakKami: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className={styles.primaryButton}
-                aria-label="Hubungi Alfarazka Bakery via WhatsApp"
+                aria-label={`Hubungi ${businessName} via WhatsApp`}
               >
                 <FontAwesomeIcon icon={faWhatsapp} />
                 <span>Chat via WhatsApp</span>
               </a>
 
               <Link
-                href={mapsLink}
+                href={mapsUrl}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.secondaryLink}
@@ -63,8 +81,8 @@ const HeroKontakKami: React.FC = () => {
             </div>
 
             <p className={styles.microcopy}>
-              Biasanya kami merespon dalam jam operasional. Untuk pesan di luar jam,
-              insyaAllah akan dibalas di hari berikutnya.
+              Biasanya kami merespon dalam jam operasional. Untuk pesan di luar
+              jam, insyaAllah akan dibalas di hari berikutnya.
             </p>
           </div>
 
@@ -77,15 +95,17 @@ const HeroKontakKami: React.FC = () => {
               <div className={styles.highlightText}>
                 <h2>Kontak Utama</h2>
                 <p>
-                  WhatsApp: <strong>+62 851-7975-3356</strong>
+                  WhatsApp: <strong>{phoneNumberDisplay}</strong>
                   <br />
                   Instagram:{" "}
                   <a
-                    href="https://www.instagram.com/alfarazkabakery"
+                    href={instagramUrl}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    @alfarazkabakery
+                    {instagramUrl.includes("instagram.com/")
+                      ? `@${instagramUrl.split("instagram.com/")[1].replaceAll("/", "")}`
+                      : "Instagram Alfarazka Bakery"}
                   </a>
                 </p>
               </div>
@@ -115,8 +135,7 @@ const HeroKontakKami: React.FC = () => {
                 <h2>Area Layanan</h2>
                 <p>
                   Berbasis di <strong>Ciputat, Tangerang Selatan</strong> dengan
-                  pengantaran ke area sekitar: Pamulang, UIN Jakarta, Gintung,
-                  Legoso, dan titik-titik lain yang disepakati lewat WhatsApp.
+                  pengantaran ke area sekitar: {serviceAreaText}
                 </p>
               </div>
             </div>

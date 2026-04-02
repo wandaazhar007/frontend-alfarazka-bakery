@@ -8,20 +8,45 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./LokasiAreaPengantaran.module.scss";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
-const mapsUrl =
-  "https://maps.app.goo.gl/dMbWuud6ZD9DSqap6";
+function parseServiceAreas(serviceAreaText: string): string[] {
+  const normalized = serviceAreaText
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
 
-const serviceAreas: string[] = [
-  "Ciputat dan sekitarnya (Legoso, Cipayung, Jombang)",
-  "Sekitar UIN Jakarta, Gintung, dan Cirendeu",
-  "Pamulang & Alun-alun Pamulang",
-  "Beberapa titik di BSD dan sekitarnya (by request)",
-  "Sebagian area Tangerang Selatan lain yang masih terjangkau",
-  "Titip titik temu di sekitar jalan utama Ciputat – Pamulang",
-];
+  if (normalized.length > 0) {
+    return normalized;
+  }
 
-const LokasiAreaPengantaran: React.FC = () => {
+  return [
+    "Ciputat",
+    "Pamulang",
+    "UIN Jakarta",
+    "Gintung",
+    "Legoso",
+    "BSD tertentu",
+    "dan sekitarnya",
+  ];
+}
+
+const LokasiAreaPengantaran = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const mapsUrl = settings.mapsUrl || DEFAULT_SITE_SETTINGS.mapsUrl;
+  const addressLabel =
+    settings.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel;
+  const serviceAreaText =
+    settings.serviceAreaText || DEFAULT_SITE_SETTINGS.serviceAreaText;
+
+  const serviceAreas = parseServiceAreas(serviceAreaText);
+
   return (
     <section
       className={`section ${styles.section}`}
@@ -39,7 +64,7 @@ const LokasiAreaPengantaran: React.FC = () => {
               Dapur Rumahan di Ciputat, Melayani Sekitar Tangerang Selatan
             </h2>
             <p className={styles.subtitle}>
-              Alfarazka Bakery adalah usaha rumahan yang berlokasi di area
+              {businessName} adalah usaha rumahan yang berlokasi di area
               Ciputat. Pemesanan dilakukan lewat pre-order, dan pengambilan
               bisa <strong>diambil langsung</strong> atau{" "}
               <strong>diantar ke lokasi</strong> tertentu yang masih
@@ -53,7 +78,7 @@ const LokasiAreaPengantaran: React.FC = () => {
               <div>
                 <p className={styles.addressLabel}>Perkiraan lokasi dapur</p>
                 <address className={styles.address} translate="no">
-                  Ciputat, Tangerang Selatan, Banten{" "}
+                  {addressLabel}{" "}
                   <span className={styles.addressNote}>
                     (detail alamat lengkap akan dibagikan setelah pesanan fix)
                   </span>
@@ -66,9 +91,7 @@ const LokasiAreaPengantaran: React.FC = () => {
                   className={styles.mapLink}
                 >
                   <FontAwesomeIcon icon={faMapLocationDot} />
-                  <span>
-                    Lihat lokasi perkiraan di Google Maps
-                  </span>
+                  <span>Lihat lokasi perkiraan di Google Maps</span>
                 </Link>
               </div>
             </div>
@@ -84,16 +107,14 @@ const LokasiAreaPengantaran: React.FC = () => {
           {/* RIGHT: AREA PENGANTARAN */}
           <div
             className={styles.right}
-            aria-label="Area pengantaran utama Alfarazka Bakery"
+            aria-label={`Area pengantaran utama ${businessName}`}
           >
             <div className={styles.rightHeader}>
               <div className={styles.rightIcon}>
                 <FontAwesomeIcon icon={faTruckFast} />
               </div>
               <div>
-                <h3 className={styles.rightTitle}>
-                  Area Pengantaran Utama
-                </h3>
+                <h3 className={styles.rightTitle}>Area Pengantaran Utama</h3>
                 <p className={styles.rightSubtitle}>
                   Berikut gambaran area yang sering kami layani. Di luar
                   daftar ini, masih bisa dibicarakan selama jarak dan jadwal
@@ -104,7 +125,7 @@ const LokasiAreaPengantaran: React.FC = () => {
 
             <ul className={styles.areaList}>
               {serviceAreas.map((area, index) => (
-                <li key={index} className={styles.areaItem}>
+                <li key={`${area}-${index}`} className={styles.areaItem}>
                   <span className={styles.bullet} aria-hidden="true" />
                   <span>{area}</span>
                 </li>

@@ -1,20 +1,53 @@
 // app/components/contactCard/ContactCard.tsx
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPhone,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import styles from "./ContactCard.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20atau%20pesan%20roti%20di%20Alfarazka%20Bakery.";
-const instagramLink = "https://www.instagram.com/alfarazkabakery";
-const mapsLink = "https://maps.app.goo.gl/dMbWuud6ZD9DSqap6";
+function getInstagramHandle(instagramUrl: string) {
+  try {
+    const cleaned = instagramUrl.trim().replace(/\/+$/, "");
+    const parts = cleaned.split("instagram.com/");
+    if (parts.length > 1 && parts[1]) {
+      return `@${parts[1].replace(/\//g, "")}`;
+    }
+    return "Instagram";
+  } catch {
+    return "Instagram";
+  }
+}
 
-const ContactCard: React.FC = () => {
+const ContactCard = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const phoneNumberDisplay =
+    settings.phoneNumberDisplay || DEFAULT_SITE_SETTINGS.phoneNumberDisplay;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+  const instagramLink =
+    settings.instagramUrl || DEFAULT_SITE_SETTINGS.instagramUrl;
+  const mapsLink = settings.mapsUrl || DEFAULT_SITE_SETTINGS.mapsUrl;
+  const addressLabel =
+    settings.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel;
+  const serviceAreaText =
+    settings.serviceAreaText || DEFAULT_SITE_SETTINGS.serviceAreaText;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya ingin tanya atau pesan roti di ${businessName}.`
+  );
+
+  const instagramHandle = getInstagramHandle(instagramLink);
+
   return (
     <section
       className={`section ${styles.section}`}
@@ -22,7 +55,6 @@ const ContactCard: React.FC = () => {
     >
       <div className="container">
         <div className={styles.inner}>
-          {/* INTRO */}
           <header className={styles.header}>
             <p className={styles.kicker}>Kontak & Info Cepat</p>
             <h2 id="contact-card-heading" className={styles.title}>
@@ -36,9 +68,7 @@ const ContactCard: React.FC = () => {
             </p>
           </header>
 
-          {/* GRID CONTACT CARDS */}
           <div className={styles.grid}>
-            {/* WHATSAPP CARD */}
             <article className={styles.card}>
               <div className={styles.iconCirclePrimary}>
                 <FontAwesomeIcon icon={faWhatsapp} />
@@ -52,11 +82,13 @@ const ContactCard: React.FC = () => {
               <dl className={styles.detailList}>
                 <div>
                   <dt>Nomor WhatsApp</dt>
-                  <dd>+62 851-7975-3356</dd>
+                  <dd>{phoneNumberDisplay}</dd>
                 </div>
                 <div>
                   <dt>Jenis chat</dt>
-                  <dd>Konsultasi paket, pemesanan, dan konfirmasi pengantaran.</dd>
+                  <dd>
+                    Konsultasi paket, pemesanan, dan konfirmasi pengantaran.
+                  </dd>
                 </div>
               </dl>
 
@@ -74,12 +106,11 @@ const ContactCard: React.FC = () => {
               </p>
             </article>
 
-            {/* INSTAGRAM CARD */}
             <article className={styles.card}>
               <div className={styles.iconCircle}>
                 <FontAwesomeIcon icon={faInstagram} />
               </div>
-              <h3 className={styles.cardTitle}>Instagram Alfarazka Bakery</h3>
+              <h3 className={styles.cardTitle}>Instagram {businessName}</h3>
               <p className={styles.cardText}>
                 Lihat foto-foto roti unyil, ide paket snack, dan testimoni
                 pelanggan dari sekitar Ciputat & sekitarnya.
@@ -94,7 +125,7 @@ const ContactCard: React.FC = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      @alfarazkabakery
+                      {instagramHandle}
                     </Link>
                   </dd>
                 </div>
@@ -114,7 +145,6 @@ const ContactCard: React.FC = () => {
               </Link>
             </article>
 
-            {/* LOKASI / MAP CARD */}
             <article className={styles.card}>
               <div className={styles.iconCircle}>
                 <FontAwesomeIcon icon={faLocationDot} />
@@ -128,14 +158,11 @@ const ContactCard: React.FC = () => {
               <dl className={styles.detailList}>
                 <div>
                   <dt>Lokasi dapur</dt>
-                  <dd>Ciputat, Tangerang Selatan (by order / pre-order)</dd>
+                  <dd>{addressLabel}</dd>
                 </div>
                 <div>
                   <dt>Area utama</dt>
-                  <dd>
-                    Ciputat, Pamulang, UIN Jakarta, Gintung, Legoso, BSD
-                    tertentu, dan sekitarnya.
-                  </dd>
+                  <dd>{serviceAreaText}</dd>
                 </div>
               </dl>
 
