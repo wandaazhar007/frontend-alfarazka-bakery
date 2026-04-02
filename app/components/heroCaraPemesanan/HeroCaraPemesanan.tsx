@@ -1,9 +1,25 @@
-"use client";
-
+// app/components/heroCaraPemesanan/HeroCaraPemesanan.tsx
 import Link from "next/link";
 import styles from "./HeroCaraPemesanan.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
-const HeroCaraPemesanan: React.FC = () => {
+const HeroCaraPemesanan = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya ingin tanya pemesanan roti ${businessName}.`
+  );
+
   return (
     <section
       id="intro"
@@ -21,7 +37,7 @@ const HeroCaraPemesanan: React.FC = () => {
           </h1>
 
           <p className={styles.subtitle}>
-            Di Alfarazka Bakery, kamu cukup kirim chat, sebutkan tanggal,
+            Di {businessName}, kamu cukup kirim chat, sebutkan tanggal,
             jumlah, dan varian roti yang diinginkan. Kami bantu hitungkan
             kebutuhan snack box sampai pesananmu siap diantar atau diambil
             di Ciputat.
@@ -29,7 +45,7 @@ const HeroCaraPemesanan: React.FC = () => {
 
           <ul
             className={styles.highlights}
-            aria-label="Ringkasan cara pemesanan di Alfarazka Bakery"
+            aria-label={`Ringkasan cara pemesanan di ${businessName}`}
           >
             <li>Chat WhatsApp, tanpa perlu isi form rumit.</li>
             <li>
@@ -45,9 +61,9 @@ const HeroCaraPemesanan: React.FC = () => {
 
           <div className={styles.heroActions}>
             <Link
-              href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20pemesanan%20roti%20Alfarazka%20Bakery."
+              href={whatsappLink}
               className={styles.primaryButton}
-              aria-label="Konsultasi pemesanan roti Alfarazka Bakery via WhatsApp"
+              aria-label={`Konsultasi pemesanan roti ${businessName} via WhatsApp`}
             >
               Pesan / Konsultasi via WhatsApp
             </Link>
@@ -64,7 +80,10 @@ const HeroCaraPemesanan: React.FC = () => {
         </div>
 
         {/* KONTEN KANAN – KARTU RINGKAS ALUR */}
-        <aside className={styles.heroSideCard} aria-label="Ringkasan alur pemesanan">
+        <aside
+          className={styles.heroSideCard}
+          aria-label="Ringkasan alur pemesanan"
+        >
           <div className={styles.sideCardInner}>
             <p className={styles.sideLabel}>Sekilas alur pemesanan</p>
             <ol className={styles.sideSteps}>

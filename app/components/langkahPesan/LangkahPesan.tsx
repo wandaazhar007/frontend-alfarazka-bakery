@@ -1,16 +1,35 @@
-"use client";
-
+// app/components/langkahPesan/LangkahPesan.tsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarCheck,
   faClipboardList,
   faTruckFast,
-} from "@fortawesome/free-solid-svg-icons"; // kalau error, pisah import icon-icon yang ada
-import styles from "./LangkahPesan.module.scss";
+} from "@fortawesome/free-solid-svg-icons";
 import { faWhatsappSquare } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 
-const LangkahPesan: React.FC = () => {
+import styles from "./LangkahPesan.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
+
+const LangkahPesan = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const phoneNumberDisplay =
+    settings.phoneNumberDisplay || DEFAULT_SITE_SETTINGS.phoneNumberDisplay;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const consultationLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya ingin konsultasi jumlah roti untuk acara di ${businessName}.`
+  );
+
   return (
     <section
       id="langkah-pemesanan"
@@ -30,20 +49,21 @@ const LangkahPesan: React.FC = () => {
           </p>
         </header>
 
-        <ol className={styles.steps} aria-label="Step-by-step pemesanan roti Alfarazka Bakery">
-          {/* STEP 1 */}
+        <ol
+          className={styles.steps}
+          aria-label={`Step-by-step pemesanan roti ${businessName}`}
+        >
           <li className={styles.stepCard}>
             <div className={styles.iconWrapper}>
               <FontAwesomeIcon icon={faWhatsappSquare} className={styles.icon} />
             </div>
             <div className={styles.stepBody}>
               <p className={styles.stepNumber}>Langkah 1</p>
-              <h3 className={styles.stepTitle}>Chat WhatsApp Alfarazka Bakery</h3>
+              <h3 className={styles.stepTitle}>Chat WhatsApp {businessName}</h3>
               <p className={styles.stepText}>
-                Kirim pesan ke{" "}
-                <strong>0851-7975-3356</strong> dan ceritakan rencana acara
-                kamu: tanggal, waktu, kira-kira jumlah tamu, dan budget
-                per orang (jika ada).
+                Kirim pesan ke <strong>{phoneNumberDisplay}</strong> dan
+                ceritakan rencana acara kamu: tanggal, waktu, kira-kira jumlah
+                tamu, dan budget per orang (jika ada).
               </p>
               <p className={styles.stepHint}>
                 Tips: sertakan juga lokasi area pengantaran supaya kami bisa
@@ -52,7 +72,6 @@ const LangkahPesan: React.FC = () => {
             </div>
           </li>
 
-          {/* STEP 2 */}
           <li className={styles.stepCard}>
             <div className={styles.iconWrapper}>
               <FontAwesomeIcon icon={faClipboardList} className={styles.icon} />
@@ -72,14 +91,15 @@ const LangkahPesan: React.FC = () => {
             </div>
           </li>
 
-          {/* STEP 3 */}
           <li className={styles.stepCard}>
             <div className={styles.iconWrapper}>
               <FontAwesomeIcon icon={faCalendarCheck} className={styles.icon} />
             </div>
             <div className={styles.stepBody}>
               <p className={styles.stepNumber}>Langkah 3</p>
-              <h3 className={styles.stepTitle}>Konfirmasi harga & jadwal produksi</h3>
+              <h3 className={styles.stepTitle}>
+                Konfirmasi harga & jadwal produksi
+              </h3>
               <p className={styles.stepText}>
                 Setelah varian & jumlah fix, kami infokan total biaya dan
                 estimasi waktu siap. Untuk pesanan tertentu, bisa diminta{" "}
@@ -92,14 +112,15 @@ const LangkahPesan: React.FC = () => {
             </div>
           </li>
 
-          {/* STEP 4 */}
           <li className={styles.stepCard}>
             <div className={styles.iconWrapper}>
               <FontAwesomeIcon icon={faTruckFast} className={styles.icon} />
             </div>
             <div className={styles.stepBody}>
               <p className={styles.stepNumber}>Langkah 4</p>
-              <h3 className={styles.stepTitle}>Produksi, pengantaran, atau ambil sendiri</h3>
+              <h3 className={styles.stepTitle}>
+                Produksi, pengantaran, atau ambil sendiri
+              </h3>
               <p className={styles.stepText}>
                 Roti akan dibuat mendekati jam acara agar tetap fresh. Pesanan
                 bisa <strong>diantar</strong> ke area yang disepakati atau{" "}
@@ -117,10 +138,7 @@ const LangkahPesan: React.FC = () => {
           <p className={styles.ctaText}>
             Masih bingung jumlah yang pas untuk acara kamu?
           </p>
-          <Link
-            href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20jumlah%20roti%20untuk%20acara."
-            className={styles.ctaButton}
-          >
+          <Link href={consultationLink} className={styles.ctaButton}>
             Konsultasi jumlah & varian via WhatsApp
           </Link>
         </div>

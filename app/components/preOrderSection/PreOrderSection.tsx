@@ -1,5 +1,4 @@
-"use client";
-
+// app/components/preOrderSection/PreOrderSection.tsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
@@ -9,8 +8,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./PreOrderSection.module.scss";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
-const PreOrderSection: React.FC = () => {
+const PreOrderSection = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+
   return (
     <section
       id="ketentuan-preorder"
@@ -26,12 +34,12 @@ const PreOrderSection: React.FC = () => {
           <p className={styles.subtitle}>
             Supaya roti selalu fresh dan acara berjalan lancar, ada beberapa
             ketentuan pre-order yang perlu kamu ketahui. Tenang, semuanya masih
-            fleksibel dan bisa dibicarakan dulu lewat WhatsApp.
+            fleksibel dan bisa dibicarakan dulu lewat WhatsApp dengan{" "}
+            {businessName}.
           </p>
         </header>
 
         <div className={styles.grid}>
-          {/* CARD 1: JADWAL PRE-ORDER */}
           <article className={styles.card}>
             <div className={styles.iconWrapper}>
               <FontAwesomeIcon icon={faClock} className={styles.icon} />
@@ -59,7 +67,6 @@ const PreOrderSection: React.FC = () => {
             </div>
           </article>
 
-          {/* CARD 2: MINIMAL ORDER & VARIAN */}
           <article className={styles.card}>
             <div className={styles.iconWrapper}>
               <FontAwesomeIcon
@@ -90,7 +97,6 @@ const PreOrderSection: React.FC = () => {
             </div>
           </article>
 
-          {/* CARD 3: PEMBAYARAN & PERUBAHAN PESANAN */}
           <article className={styles.card}>
             <div className={styles.iconWrapper}>
               <FontAwesomeIcon
@@ -99,7 +105,9 @@ const PreOrderSection: React.FC = () => {
               />
             </div>
             <div className={styles.cardBody}>
-              <h3 className={styles.cardTitle}>Pembayaran & perubahan pesanan</h3>
+              <h3 className={styles.cardTitle}>
+                Pembayaran & perubahan pesanan
+              </h3>
               <ul className={styles.list}>
                 <li>
                   Untuk pesanan jumlah besar, bisa diminta{" "}
@@ -130,9 +138,10 @@ const PreOrderSection: React.FC = () => {
             />
           </div>
           <p className={styles.noteText}>
-            Ketentuan di atas dibuat supaya dapur bisa mengatur waktu produksi
-            dengan baik. Kalau kamu punya kebutuhan di luar ketentuan ini,
-            silakan sampaikan — insyaAllah kami akan coba bantu sebisa mungkin.
+            Ketentuan di atas dibuat supaya dapur {businessName} bisa mengatur
+            waktu produksi dengan baik. Kalau kamu punya kebutuhan di luar
+            ketentuan ini, silakan sampaikan — insyaAllah kami akan coba bantu
+            sebisa mungkin.
           </p>
         </div>
       </div>

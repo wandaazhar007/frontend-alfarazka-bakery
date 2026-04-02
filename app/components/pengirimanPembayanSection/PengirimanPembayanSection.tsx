@@ -1,19 +1,29 @@
-"use client";
-
+// app/components/pengirimanPembayanSection/PengirimanPembayanSection.tsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTruck,
   faLocationDot,
-  faStore,
   faMoneyBillWave,
   faCreditCard,
   faWallet,
-  faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./PengirimanPembayanSection.module.scss";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
-const PengirimanPembayanSection: React.FC = () => {
+const PengirimanPembayanSection = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const addressLabel =
+    settings.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel;
+  const serviceAreaText =
+    settings.serviceAreaText || DEFAULT_SITE_SETTINGS.serviceAreaText;
+
   return (
     <section
       id="pengiriman-pembayaran"
@@ -27,7 +37,7 @@ const PengirimanPembayanSection: React.FC = () => {
             Fleksibel soal pengiriman, mudah soal pembayaran
           </h2>
           <p className={styles.subtitle}>
-            Alfarazka Bakery melayani pengantaran ke area sekitar Ciputat dan
+            {businessName} melayani pengantaran ke area sekitar Ciputat dan
             sekitarnya. Kamu juga bisa ambil sendiri di dapur produksi jika lebih
             nyaman. Untuk pembayaran, kami sediakan beberapa pilihan yang praktis
             dan aman.
@@ -39,7 +49,6 @@ const PengirimanPembayanSection: React.FC = () => {
           <div className={styles.column}>
             <h3 className={styles.columnTitle}>Pengiriman</h3>
 
-            {/* CARD AREA LAYANAN */}
             <article className={styles.card}>
               <div className={styles.cardIcon}>
                 <FontAwesomeIcon icon={faLocationDot} />
@@ -51,10 +60,7 @@ const PengirimanPembayanSection: React.FC = () => {
                   Tangerang Selatan, seperti:
                 </p>
                 <ul className={styles.list}>
-                  <li>Alun-alun Pamulang & Legoso</li>
-                  <li>UIN Jakarta, Gintung, dan sekitarnya</li>
-                  <li>Ciputat & Ciputat Timur</li>
-                  <li>BSD, Cilandak, dan area sekitar (by request)</li>
+                  <li>{serviceAreaText}</li>
                 </ul>
                 <p className={styles.cardHint}>
                   Titik temu & ongkir disepakati di awal melalui WhatsApp,
@@ -63,7 +69,6 @@ const PengirimanPembayanSection: React.FC = () => {
               </div>
             </article>
 
-            {/* CARD OPSI PENGIRIMAN */}
             <article className={styles.card}>
               <div className={styles.cardIcon}>
                 <FontAwesomeIcon icon={faTruck} />
@@ -72,17 +77,16 @@ const PengirimanPembayanSection: React.FC = () => {
                 <h4 className={styles.cardHeading}>Pilihan pengiriman</h4>
                 <ul className={styles.list}>
                   <li>
-                    <strong>Diantar langsung</strong> oleh kurir/driver Alfarazka
-                    Bakery ke titik temu yang disepakati.
+                    <strong>Diantar langsung</strong> oleh kurir/driver{" "}
+                    {businessName} ke titik temu yang disepakati.
                   </li>
                   <li>
                     <strong>Meet point</strong> di lokasi yang mudah dijangkau
                     bersama, misalnya dekat jalan besar.
                   </li>
                   <li>
-                    <strong>Ambil sendiri</strong> di dapur produksi: Jl. Dewi
-                    Sartika No. 25 RT 003/004 Gg. Masjid Arryadh, Cimanggis,
-                    Ciputat.
+                    <strong>Ambil sendiri</strong> di dapur produksi:{" "}
+                    {addressLabel}.
                   </li>
                 </ul>
                 <p className={styles.cardHint}>
@@ -97,7 +101,6 @@ const PengirimanPembayanSection: React.FC = () => {
           <div className={styles.column}>
             <h3 className={styles.columnTitle}>Metode Pembayaran</h3>
 
-            {/* CARD METODE */}
             <article className={styles.card}>
               <div className={styles.cardIcon}>
                 <FontAwesomeIcon icon={faMoneyBillWave} />
@@ -125,7 +128,6 @@ const PengirimanPembayanSection: React.FC = () => {
               </div>
             </article>
 
-            {/* CARD DP & PELUNASAN */}
             <article className={styles.card}>
               <div className={styles.cardIcon}>
                 <FontAwesomeIcon icon={faCreditCard} />
@@ -162,8 +164,8 @@ const PengirimanPembayanSection: React.FC = () => {
           <p className={styles.noteText}>
             Jika kamu punya permintaan khusus terkait pengantaran atau pembayaran
             (misalnya koordinasi dengan panitia lain, titip ke satpam, dsb.),
-            cukup sampaikan di WhatsApp. Kami akan berusaha menyesuaikan selama
-            masih memungkinkan dan aman.
+            cukup sampaikan di WhatsApp. {businessName} akan berusaha
+            menyesuaikan selama masih memungkinkan dan aman.
           </p>
         </div>
       </div>
