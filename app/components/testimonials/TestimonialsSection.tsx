@@ -1,8 +1,14 @@
+// //app/components/testimonials/TestimonialsSection.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import styles from "./TestimonialsSection.module.scss";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 type Testimonial = {
   quote: string;
@@ -44,7 +50,26 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialsSection: React.FC = () => {
-  // Duplikasi array supaya slider kelihatan continuous
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+      } catch (error) {
+        console.error(
+          "Gagal memuat site settings di TestimonialsSection:",
+          error
+        );
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
   const sliderItems = [...testimonials, ...testimonials];
 
   return (
@@ -54,20 +79,18 @@ const TestimonialsSection: React.FC = () => {
       aria-labelledby="testimonials-heading"
     >
       <div className={styles.inner}>
-        {/* HEADER */}
         <header className={styles.header}>
           <p className={styles.kicker}>Testimoni Pelanggan</p>
           <h2 id="testimonials-heading" className={styles.title}>
-            Cerita Manis dari Pelanggan Alfarazka Bakery
+            Cerita Manis dari Pelanggan {businessName}
           </h2>
           <p className={styles.subtitle}>
             Banyak keluarga, komunitas, dan kantor yang sudah mempercayakan
-            snack acaranya ke Alfarazka Bakery. Berikut beberapa cerita singkat
+            snack acaranya ke {businessName}. Berikut beberapa cerita singkat
             dari mereka.
           </p>
         </header>
 
-        {/* SLIDER */}
         <div className={styles.slider} aria-label="Slider testimoni pelanggan">
           <div className={styles.sliderInner}>
             {sliderItems.map((item, index) => (
@@ -75,9 +98,7 @@ const TestimonialsSection: React.FC = () => {
                 <div className={styles.quoteIcon}>
                   <FontAwesomeIcon icon={faQuoteLeft} />
                 </div>
-                <blockquote className={styles.quote}>
-                  “{item.quote}”
-                </blockquote>
+                <blockquote className={styles.quote}>“{item.quote}”</blockquote>
                 <figcaption className={styles.caption}>
                   <span className={styles.name}>{item.name}</span>
                   <span className={styles.context}>{item.context}</span>
@@ -91,7 +112,7 @@ const TestimonialsSection: React.FC = () => {
           <p className={styles.microcopy}>
             *Testimoni di atas adalah contoh gambaran kepuasan pelanggan.
             Testimoni asli dapat terus bertambah seiring banyaknya acara yang
-            ditangani Alfarazka Bakery.
+            ditangani {businessName}.
           </p>
         </div>
       </div>

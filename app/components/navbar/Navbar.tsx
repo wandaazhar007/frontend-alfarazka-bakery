@@ -1,6 +1,7 @@
+//app/components/navbar/Navbar.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -9,6 +10,11 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import styles from "./Navbar.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 const navLinks = [
   { href: "/", label: "Beranda" },
@@ -20,7 +26,34 @@ const navLinks = [
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+
   const pathname = usePathname();
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+      } catch (error) {
+        console.error("Gagal memuat site settings di navbar:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(whatsappNumber);
+  }, [whatsappNumber]);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
@@ -40,14 +73,14 @@ const Navbar: React.FC = () => {
               <div className={styles.logoWrapper}>
                 <Image
                   src="/images/logo-alfarazka-bakery.png"
-                  alt="Logo Alfarazka Bakery"
+                  alt={`Logo ${businessName}`}
                   width={40}
                   height={40}
                   className={styles.logo}
                 />
               </div>
               <div className={styles.brandText}>
-                <span className={styles.brandName}>Alfarazka Bakery</span>
+                <span className={styles.brandName}>{businessName}</span>
               </div>
             </Link>
           </div>
@@ -67,8 +100,9 @@ const Navbar: React.FC = () => {
                 </li>
               ))}
             </ul>
+
             <a
-              href="https://wa.me/6285179753356"
+              href={whatsappLink}
               target="_blank"
               rel="noreferrer"
               className={styles.navCta}
@@ -112,7 +146,7 @@ const Navbar: React.FC = () => {
           </ul>
 
           <a
-            href="https://wa.me/6285179753356"
+            href={whatsappLink}
             target="_blank"
             rel="noreferrer"
             className={styles.mobileCta}

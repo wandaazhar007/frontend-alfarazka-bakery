@@ -1,11 +1,48 @@
+// //app/components/products/ProductsSection.tsx
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBreadSlice, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ProductsSection.module.scss";
 import Link from "next/link";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 const ProductsSection: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+      } catch (error) {
+        console.error("Gagal memuat site settings di ProductsSection:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya ingin konsultasi paket snack acara ${businessName}.`
+    );
+  }, [whatsappNumber, businessName]);
+
   return (
     <section
       id="produk"
@@ -33,7 +70,7 @@ const ProductsSection: React.FC = () => {
             <div className={styles.iconWrap}>
               <FontAwesomeIcon icon={faBreadSlice} />
             </div>
-            <h3 className={styles.cardTitle}>Katalog Roti Alfarazka Bakery</h3>
+            <h3 className={styles.cardTitle}>Katalog Roti {businessName}</h3>
             <p className={styles.cardText}>
               Pilih roti favoritmu dari berbagai varian roti unyil, roti meises,
               dan pizza mini yang lembut dan disukai anak maupun orang dewasa.
@@ -83,10 +120,7 @@ const ProductsSection: React.FC = () => {
               <Link href="/produk" className={styles.secondaryButton}>
                 Lihat paket & rekomendasi
               </Link>
-              <Link
-                href="https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20ingin%20konsultasi%20paket%20snack%20acara%20Alfarazka%20Bakery."
-                className={styles.linkWhatsApp}
-              >
+              <Link href={whatsappLink} className={styles.linkWhatsApp}>
                 Konsultasi paket via WhatsApp
               </Link>
             </div>

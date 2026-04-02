@@ -1,24 +1,35 @@
-"use client";
-
+//app/components/mainFooter/MainFooter.tsx
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFacebookF,
   faInstagram,
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
-import styles from "./MainFooter.module.scss";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 
-const MainFooter: React.FC = () => {
+import styles from "./MainFooter.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+} from "../../services/siteSettingsService";
+
+const MainFooter = async () => {
   const year = new Date().getFullYear();
+  const siteSettings = await fetchPublicSiteSettings();
+
+  const businessName = siteSettings.businessName || "Alfarazka Bakery";
+  const whatsappLink = buildWhatsAppUrl(siteSettings.whatsappNumber);
+  const instagramUrl =
+    siteSettings.instagramUrl || "https://www.instagram.com/alfarazkabakery22";
+  const mapsUrl =
+    siteSettings.mapsUrl || "https://maps.app.goo.gl/dMbWuud6ZD9DSqap6";
 
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
         {/* TITLE + DESKRIPSI SINGKAT */}
         <div className={styles.headingBlock}>
-          <h2 className={styles.brand}>Alfarazka Bakery</h2>
+          <h2 className={styles.brand}>{businessName}</h2>
           <p className={styles.subtitle}>
             Roti unyil rumahan di Ciputat dengan rasa lembut, harga ramah di
             kantong, dan cocok untuk teman ngopi atau snack acara keluarga.
@@ -28,28 +39,29 @@ const MainFooter: React.FC = () => {
         {/* SOCIAL ICONS */}
         <div className={styles.socialRow}>
           <a
-            href="https://wa.me/6285179753356"
+            href={whatsappLink}
             target="_blank"
             rel="noreferrer"
-            aria-label="WhatsApp Alfarazka Bakery"
+            aria-label={`WhatsApp ${businessName}`}
             className={styles.socialIcon}
           >
             <FontAwesomeIcon icon={faWhatsapp} />
           </a>
           <a
-            href="https://www.instagram.com/alfarazkabakery"
+            href={instagramUrl}
             target="_blank"
             rel="noreferrer"
-            aria-label="Instagram Alfarazka Bakery"
+            aria-label={`Instagram ${businessName}`}
             className={styles.socialIcon}
           >
             <FontAwesomeIcon icon={faInstagram} />
           </a>
+
           <a
-            href="https://maps.app.goo.gl/dMbWuud6ZD9DSqap6"
+            href={mapsUrl}
             target="_blank"
             rel="noreferrer"
-            aria-label="Lokasi Alfarazka Bakery"
+            aria-label={`Lokasi ${businessName}`}
             className={styles.socialIcon}
           >
             <FontAwesomeIcon icon={faLocationArrow} />
@@ -77,6 +89,9 @@ const MainFooter: React.FC = () => {
               <Link href="/kebijakan" className={styles.navItem}>
                 Kebijakan &amp; Ketentuan
               </Link>
+              <Link href="/kontak-kami" className={styles.navItem}>
+                Kontak Kami
+              </Link>
             </nav>
           </div>
 
@@ -84,10 +99,7 @@ const MainFooter: React.FC = () => {
           <div className={styles.navGroup}>
             <p className={styles.navHeading}>Paket &amp; Area Layanan</p>
             <nav className={styles.nav}>
-              <Link
-                href="/roti-unyil-ciputat"
-                className={styles.navItem}
-              >
+              <Link href="/roti-unyil-ciputat" className={styles.navItem}>
                 Roti Unyil Ciputat
               </Link>
               <Link
@@ -126,7 +138,7 @@ const MainFooter: React.FC = () => {
 
         {/* COPYRIGHT */}
         <p className={styles.copy}>
-          &copy; {year} Alfarazka Bakery. Semua hak cipta dilindungi.
+          &copy; {year} {businessName}. Semua hak cipta dilindungi.
         </p>
       </div>
     </footer>

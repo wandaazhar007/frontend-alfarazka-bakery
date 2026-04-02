@@ -1,5 +1,4 @@
 // app/layout.tsx
-// app/page.tsx
 /*
 Author: Wanda Azhar
 Location: Michigan, USA

@@ -1,5 +1,7 @@
+// //app/components/why/WhyAlfarazka.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLeaf,
@@ -9,8 +11,29 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./WhyAlfarazka.module.scss";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 const WhyAlfarazka: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+      } catch (error) {
+        console.error("Gagal memuat site settings di WhyAlfarazka:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
   return (
     <section
       id="keunggulan"
@@ -19,7 +42,7 @@ const WhyAlfarazka: React.FC = () => {
     >
       <div className={styles.inner}>
         <header className={styles.header}>
-          <p className={styles.kicker}>Kenapa Pilih Alfarazka Bakery?</p>
+          <p className={styles.kicker}>Kenapa Pilih {businessName}?</p>
           <h2 id="why-heading" className={styles.title}>
             Roti Rumahan, Rasa Konsisten, Harga Tetap Bersahabat
           </h2>
@@ -31,7 +54,6 @@ const WhyAlfarazka: React.FC = () => {
         </header>
 
         <div className={styles.grid}>
-          {/* Harga bersahabat */}
           <article className={styles.card}>
             <div className={styles.iconWrap}>
               <FontAwesomeIcon icon={faMoneyBillWave} />
@@ -43,7 +65,6 @@ const WhyAlfarazka: React.FC = () => {
             </p>
           </article>
 
-          {/* Fresh & higienis */}
           <article className={styles.card}>
             <div className={styles.iconWrap}>
               <FontAwesomeIcon icon={faLeaf} />
@@ -55,7 +76,6 @@ const WhyAlfarazka: React.FC = () => {
             </p>
           </article>
 
-          {/* Fleksibel untuk acara */}
           <article className={styles.card}>
             <div className={styles.iconWrap}>
               <FontAwesomeIcon icon={faHandshake} />
@@ -67,7 +87,6 @@ const WhyAlfarazka: React.FC = () => {
             </p>
           </article>
 
-          {/* Pre-order terjadwal */}
           <article className={styles.card}>
             <div className={styles.iconWrap}>
               <FontAwesomeIcon icon={faClock} />

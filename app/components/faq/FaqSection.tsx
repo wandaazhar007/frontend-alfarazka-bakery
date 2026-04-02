@@ -1,5 +1,7 @@
+// //app/components/faq/FaqSection.tsx
 "use client";
-import { useState } from "react";
+
+import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleQuestion,
@@ -8,6 +10,11 @@ import {
 
 import styles from "./FaqSection.module.scss";
 import Link from "next/link";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 type FaqItem = {
   question: string;
@@ -44,6 +51,35 @@ const faqList: FaqItem[] = [
 
 const FaqSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+      } catch (error) {
+        console.error("Gagal memuat site settings di FaqSection:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya ingin bertanya tentang pemesanan roti unyil ${businessName}.`
+    );
+  }, [whatsappNumber, businessName]);
 
   const handleToggle = (index: number) => {
     setActiveIndex((prev) => (prev === index ? null : index));
@@ -117,9 +153,7 @@ const FaqSection: React.FC = () => {
           {/* BOX KANAN – HEADLINE & COPYWRITING MENARIK */}
           <aside className={styles.right}>
             <p className={styles.kicker}>Butuh Bantuan?</p>
-            <h2 className={styles.title}>
-              FAQ Seputar Pemesanan Roti Unyil
-            </h2>
+            <h2 className={styles.title}>FAQ Seputar Pemesanan Roti Unyil</h2>
             <p className={styles.lead}>
               Masih bingung soal minimal order, cara pre-order, atau area
               pengantaran? Kami rangkum beberapa pertanyaan yang paling
@@ -127,20 +161,18 @@ const FaqSection: React.FC = () => {
             </p>
             <p className={styles.text}>
               Kalau pertanyaanmu belum terjawab di FAQ ini, kamu bisa langsung
-              chat kami via WhatsApp. Kami siap bantu jelaskan pilihan produk,
-              rekomendasi paket, sampai estimasi budget untuk acara kamu.
+              chat kami via WhatsApp. {businessName} siap bantu jelaskan pilihan
+              produk, rekomendasi paket, sampai estimasi budget untuk acara
+              kamu.
             </p>
 
             <div className={styles.ctaBox}>
-              <Link
-                href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20tentang%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
-                className={styles.primaryButton}
-              >
+              <Link href={whatsappLink} className={styles.primaryButton}>
                 Tanya lewat WhatsApp
               </Link>
               <p className={styles.microcopy}>
-                *Jawab cepat di jam operasional. Di luar jam tersebut, insyaAllah
-                akan dibalas secepatnya.
+                *Jawab cepat di jam operasional. Di luar jam tersebut,
+                insyaAllah akan dibalas secepatnya.
               </p>
             </div>
           </aside>

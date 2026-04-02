@@ -1,18 +1,54 @@
+// //app/components/order/OrderSection.tsx
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  // faWhatsapp,
   faListCheck,
   faMoneyBillWave,
   faTruck,
 } from "@fortawesome/free-solid-svg-icons";
-
-import styles from "./OrderSection.module.scss";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 
+import styles from "./OrderSection.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
+
 const OrderSection: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+      } catch (error) {
+        console.error("Gagal memuat site settings di OrderSection:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya ingin pemesanan roti unyil ${businessName}.`
+    );
+  }, [whatsappNumber, businessName]);
+
   return (
     <section
       id="cara-pemesanan"
@@ -24,7 +60,7 @@ const OrderSection: React.FC = () => {
         <header className={styles.header}>
           <p className={styles.kicker}>Cara Pemesanan</p>
           <h2 id="order-heading" className={styles.title}>
-            Pre-Order Roti Unyil Alfarazka Bakery dengan Mudah
+            Pre-Order Roti Unyil {businessName} dengan Mudah
           </h2>
           <p className={styles.subtitle}>
             Kamu bisa pesan untuk kebutuhan harian maupun acara. Cukup ikuti
@@ -35,7 +71,6 @@ const OrderSection: React.FC = () => {
 
         {/* STEP-BY-STEP */}
         <div className={styles.steps}>
-          {/* STEP 1 */}
           <article className={styles.stepCard}>
             <div className={styles.stepBadge}>1</div>
             <div className={styles.stepIcon}>
@@ -48,7 +83,6 @@ const OrderSection: React.FC = () => {
             </p>
           </article>
 
-          {/* STEP 2 */}
           <article className={styles.stepCard}>
             <div className={styles.stepBadge}>2</div>
             <div className={styles.stepIcon}>
@@ -61,7 +95,6 @@ const OrderSection: React.FC = () => {
             </p>
           </article>
 
-          {/* STEP 3 */}
           <article className={styles.stepCard}>
             <div className={styles.stepBadge}>3</div>
             <div className={styles.stepIcon}>
@@ -75,13 +108,14 @@ const OrderSection: React.FC = () => {
             </p>
           </article>
 
-          {/* STEP 4 */}
           <article className={styles.stepCard}>
             <div className={styles.stepBadge}>4</div>
             <div className={styles.stepIcon}>
               <FontAwesomeIcon icon={faTruck} />
             </div>
-            <h3 className={styles.stepTitle}>Produksi & Pengantaran/Pengambilan</h3>
+            <h3 className={styles.stepTitle}>
+              Produksi & Pengantaran/Pengambilan
+            </h3>
             <p className={styles.stepText}>
               Roti diproduksi fresh menjelang hari-H. Pesanan bisa diambil di
               Ciputat atau diantar ke area yang disepakati (dengan ongkir
@@ -92,10 +126,7 @@ const OrderSection: React.FC = () => {
 
         {/* CTA + MICROCOPY */}
         <div className={styles.footer}>
-          <Link
-            href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
-            className={styles.primaryButton}
-          >
+          <Link href={whatsappLink} className={styles.primaryButton}>
             Pesan Sekarang via WhatsApp
           </Link>
           <p className={styles.microcopy}>

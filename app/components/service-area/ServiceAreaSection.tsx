@@ -1,9 +1,96 @@
+// //app/components/service-area/ServiceAreaSection.tsx
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import styles from "./ServiceAreaSection.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
+
+const defaultAreaChips = [
+  "Ciputat",
+  "Cimanggis",
+  "Pamulang",
+  "Serpong",
+  "Situ Gintung",
+  "BSD",
+  "Cilandak",
+  "Legoso",
+  "Pondok Pinang",
+  "Pondok Indah",
+  "Cipete",
+  "Blok A",
+  "Fatmawati",
+  "Pasar Minggu",
+  "Lebak Bulus",
+  "Pejaten",
+  "Ragunan",
+  "Rempoa",
+  "Kebayoran Lama",
+  "Kebayoran Baru",
+  "Ciledug",
+  "Tanah Abang",
+  "Senayan",
+  "dan sekitarnya",
+];
 
 const ServiceAreaSection: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+  const [addressLabel, setAddressLabel] = useState(
+    DEFAULT_SITE_SETTINGS.addressLabel
+  );
+  const [serviceAreaText, setServiceAreaText] = useState(
+    DEFAULT_SITE_SETTINGS.serviceAreaText
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+        setAddressLabel(data.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel);
+        setServiceAreaText(
+          data.serviceAreaText || DEFAULT_SITE_SETTINGS.serviceAreaText
+        );
+      } catch (error) {
+        console.error("Gagal memuat site settings di ServiceAreaSection:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya ingin tanya area jangkauan pengantaran ${businessName}.`
+    );
+  }, [whatsappNumber, businessName]);
+
+  const areaChips = useMemo(() => {
+    const raw = String(serviceAreaText || "").trim();
+
+    if (!raw) return defaultAreaChips;
+
+    const parsed = raw
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+    return parsed.length > 0 ? parsed : defaultAreaChips;
+  }, [serviceAreaText]);
+
   return (
     <section
       id="area-layanan"
@@ -16,10 +103,10 @@ const ServiceAreaSection: React.FC = () => {
           <div className={styles.left}>
             <p className={styles.kicker}>Area Layanan</p>
             <h2 id="service-area-heading" className={styles.title}>
-              Jangkauan Alfarazka Bakery di Ciputat & Sekitarnya
+              Jangkauan {businessName} di Ciputat & Sekitarnya
             </h2>
             <p className={styles.text}>
-              Alfarazka Bakery berlokasi di Cimanggis, Ciputat, dan melayani
+              {businessName} berlokasi di {addressLabel}, dan melayani
               pemesanan untuk area sekitar Tangerang Selatan dan sekitarnya.
               Kamu bisa mengambil langsung ke rumah produksi, atau janjian titik
               temu dan pengantaran sesuai kesepakatan.
@@ -40,10 +127,7 @@ const ServiceAreaSection: React.FC = () => {
             </div>
 
             <div className={styles.actions}>
-              <Link
-                href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20area%20jangkauan%20pengantaran%20Alfarazka%20Bakery."
-                className={styles.primaryButton}
-              >
+              <Link href={whatsappLink} className={styles.primaryButton}>
                 Tanya area jangkauan via WhatsApp
               </Link>
             </div>
@@ -58,34 +142,11 @@ const ServiceAreaSection: React.FC = () => {
             </p>
 
             <div className={styles.chipsGrid}>
-              <span className={styles.chip}>Ciputat</span>
-              <span className={styles.chip}>Cimanggis</span>
-              <span className={styles.chip}>Pamulang</span>
-              <span className={styles.chip}>Serpong</span>
-              <span className={styles.chip}>Situ Gintung</span>
-              <span className={styles.chip}>BSD</span>
-              <span className={styles.chip}>Cilandak</span>
-              <span className={styles.chip}>Legoso</span>
-
-              <span className={styles.chip}>Pondok Pinang</span>
-              <span className={styles.chip}>Pondok Indah</span>
-              <span className={styles.chip}>Cipete</span>
-              <span className={styles.chip}>Blok A</span>
-              <span className={styles.chip}>Fatmawati</span>
-              <span className={styles.chip}>Pasar Minggu</span>
-              <span className={styles.chip}>Lebak Bulus</span>
-              <span className={styles.chip}>Pejaten</span>
-              <span className={styles.chip}>dan sekitarnya</span>
-
-              <span className={styles.chip}>Ragunan</span>
-              <span className={styles.chip}>Rempoa</span>
-              <span className={styles.chip}>Kebayoran lama</span>
-              <span className={styles.chip}>Kebayoran baru</span>
-
-              <span className={styles.chip}>Ciledug</span>
-              <span className={styles.chip}>Tanah Abang</span>
-              <span className={styles.chip}>Senayan</span>
-              <span className={styles.chip}>dan sekitarnya</span>
+              {areaChips.map((area, index) => (
+                <span key={`${area}-${index}`} className={styles.chip}>
+                  {area}
+                </span>
+              ))}
             </div>
 
             <p className={styles.microcopy}>

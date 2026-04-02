@@ -1,12 +1,48 @@
+// //app/components/hero/Hero.tsx
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import styles from "./Hero.module.scss";
-// import heroBanner from "../../../public/images/hero-banner-alfarazka-bakery.jpeg";
-import heroBanner from "../../../public/images/toko-alfarazka-bakery.png";
 import Link from "next/link";
+import styles from "./Hero.module.scss";
+import heroBanner from "../../../public/images/toko-alfarazka-bakery.png";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 const Hero: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+      } catch (error) {
+        console.error("Gagal memuat site settings di Hero:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya mau tanya pemesanan roti unyil ${businessName}.`
+    );
+  }, [whatsappNumber, businessName]);
+
   return (
     <section className={styles.hero} aria-labelledby="hero-heading">
       <div className={styles.heroInner}>
@@ -19,25 +55,36 @@ const Hero: React.FC = () => {
           </h1>
 
           <p className={styles.subtitle}>
-            Alfarazka Bakery menghadirkan roti unyil lembut seribuan,
+            {businessName} menghadirkan roti unyil lembut seribuan,
             roti meises, dan pizza mini yang freshly baked dari dapur
             rumahan di Ciputat. Cocok untuk pengajian, arisan, ulang
             tahun anak, rapat kantor, sampai bekal sekolah si kecil.
           </p>
 
-          {/* BULLET POINT KEUNGGULAN */}
-          <ul className={styles.benefits} aria-label="Keunggulan roti unyil Alfarazka Bakery">
+          <ul
+            className={styles.benefits}
+            aria-label={`Keunggulan roti unyil ${businessName}`}
+          >
             <li>
               <span className={styles.bulletTitle}>Mulai Rp1.000/pcs</span>
-              <span className={styles.bulletText}> – ramah di kantong untuk isi snack box.</span>
+              <span className={styles.bulletText}>
+                {" "}
+                – ramah di kantong untuk isi snack box.
+              </span>
             </li>
             <li>
               <span className={styles.bulletTitle}>Bisa mix varian</span>
-              <span className={styles.bulletText}> - untuk kebutuhan acara dan hampers.</span>
+              <span className={styles.bulletText}>
+                {" "}
+                - untuk kebutuhan acara dan hampers.
+              </span>
             </li>
             <li>
               <span className={styles.bulletTitle}>Pre-order H-1</span>
-              <span className={styles.bulletText}> - roti selalu fresh setiap hari</span>
+              <span className={styles.bulletText}>
+                {" "}
+                - roti selalu fresh setiap hari
+              </span>
             </li>
             <li>
               <span className={styles.bulletTitle}>Cocok untuk acara</span>
@@ -49,9 +96,11 @@ const Hero: React.FC = () => {
 
           <div className={styles.heroActions}>
             <Link
-              href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20pemesanan%20roti%20unyil%20Alfarazka%20Bakery."
+              href={whatsappLink}
               className={styles.primaryButton}
-              aria-label="Pesan roti unyil Alfarazka Bakery melalui WhatsApp"
+              aria-label={`Pesan roti unyil ${businessName} melalui WhatsApp`}
+              target="_blank"
+              rel="noreferrer"
             >
               Pesan via WhatsApp
             </Link>
@@ -72,7 +121,7 @@ const Hero: React.FC = () => {
           <div className={styles.heroImageInner}>
             <Image
               src={heroBanner}
-              alt="Roti unyil dan aneka roti rumahan dari Alfarazka Bakery di Ciputat."
+              alt={`Roti unyil dan aneka roti rumahan dari ${businessName} di Ciputat.`}
               priority
               className={styles.heroImage}
             />
