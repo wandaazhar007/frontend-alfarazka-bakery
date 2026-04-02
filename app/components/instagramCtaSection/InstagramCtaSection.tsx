@@ -1,5 +1,7 @@
+//app/components/instagramCtaSection/InstagramCtaSection.tsx
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import styles from "./InstagramCtaSection.module.scss";
 
@@ -12,8 +14,46 @@ import img10 from "../../../public/images/roti-unyil-10.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 const InstagramCtaSection: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [instagramUrl, setInstagramUrl] = useState(
+    DEFAULT_SITE_SETTINGS.instagramUrl
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setInstagramUrl(data.instagramUrl || DEFAULT_SITE_SETTINGS.instagramUrl);
+      } catch (error) {
+        console.error(
+          "Gagal memuat site settings di InstagramCtaSection:",
+          error
+        );
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const instagramHandle = useMemo(() => {
+    try {
+      const url = new URL(instagramUrl);
+      const path = url.pathname.replace(/^\/+|\/+$/g, "");
+      return path || "alfarazkabakery";
+    } catch {
+      return "alfarazkabakery";
+    }
+  }, [instagramUrl]);
+
   return (
     <section
       className={styles.section}
@@ -22,7 +62,7 @@ const InstagramCtaSection: React.FC = () => {
       <div className={styles.inner}>
         {/* TEKS KIRI */}
         <div className={styles.textBlock}>
-          <p className={styles.kicker}>Ikuti Alfarazka Bakery</p>
+          <p className={styles.kicker}>Ikuti {businessName}</p>
           <h2 id="instagram-cta-heading" className={styles.heading}>
             Lihat update menu &amp; ide hampers di Instagram
           </h2>
@@ -39,14 +79,16 @@ const InstagramCtaSection: React.FC = () => {
           </ul>
 
           <Link
-            href="https://instagram.com/alfarazkabakery"
+            href={instagramUrl}
             target="_blank"
             rel="noreferrer"
             className={styles.instagramButton}
-            aria-label="Kunjungi Instagram Alfarazka Bakery"
+            aria-label={`Kunjungi Instagram ${businessName}`}
           >
-            <span><FontAwesomeIcon icon={faInstagram} className={styles.icon} /></span>
-            <span>alfarazkabakery</span>
+            <span>
+              <FontAwesomeIcon icon={faInstagram} className={styles.icon} />
+            </span>
+            <span>{instagramHandle}</span>
           </Link>
 
           <p className={styles.microcopy}>

@@ -1,8 +1,35 @@
+// //app/components/timelineSection/TimelineSection.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import styles from "./TimelineSection.module.scss";
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 const TimelineSection: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [addressLabel, setAddressLabel] = useState(
+    DEFAULT_SITE_SETTINGS.addressLabel
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setAddressLabel(data.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel);
+      } catch (error) {
+        console.error("Gagal memuat site settings di TimelineSection:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
   return (
     <section
       className={styles.timelineSection}
@@ -10,35 +37,35 @@ const TimelineSection: React.FC = () => {
     >
       <div className={styles.timelineInner}>
         <header className={styles.header}>
-          <p className={styles.kicker}>Perjalanan Alfarazka Bakery</p>
+          <p className={styles.kicker}>Perjalanan {businessName}</p>
           <h2 id="timeline-heading" className={styles.title}>
             Dari dapur rumahan, menuju rencana pengembangan ke depan
           </h2>
           <p className={styles.subtitle}>
-            Alfarazka Bakery tumbuh pelan-pelan bersama kepercayaan pelanggan.
+            {businessName} tumbuh pelan-pelan bersama kepercayaan pelanggan.
             Berikut gambaran perjalanan dan rencana pengembangan kami dari
             2024 hingga 2028.
           </p>
         </header>
 
         <ol className={styles.timelineList}>
-          {/* 2024 */}
           <li className={styles.timelineItem}>
             <div className={styles.yearBadge}>2024</div>
             <div className={styles.itemContent}>
               <h3 className={styles.itemTitle}>
-                Lahirnya Alfarazka Bakery di Ciputat
+                Lahirnya {businessName} di {addressLabel}
               </h3>
               <p className={styles.itemText}>
                 Usaha roti unyil rumahan resmi diberi nama{" "}
-                <strong><em>Alfarazka Bakery</em></strong> pada 7 Juli 2024. Fokus pada
-                roti unyil seribuan, roti meises, dan pizza mini untuk tetangga
-                dan warga sekitar.
+                <strong>
+                  <em>{businessName}</em>
+                </strong>{" "}
+                pada 7 Juli 2024. Fokus pada roti unyil seribuan, roti meises,
+                dan pizza mini untuk tetangga dan warga sekitar.
               </p>
             </div>
           </li>
 
-          {/* 2025 */}
           <li className={styles.timelineItem}>
             <div className={styles.yearBadge}>2025</div>
             <div className={styles.itemContent}>
@@ -53,7 +80,6 @@ const TimelineSection: React.FC = () => {
             </div>
           </li>
 
-          {/* 2026 – Rencana pengembangan */}
           <li className={`${styles.timelineItem} ${styles.futureItem}`}>
             <div className={styles.yearBadge}>2026</div>
             <div className={styles.itemContent}>
@@ -69,7 +95,6 @@ const TimelineSection: React.FC = () => {
             </div>
           </li>
 
-          {/* 2028 – Rencana pengembangan */}
           <li className={`${styles.timelineItem} ${styles.futureItem}`}>
             <div className={styles.yearBadge}>2028</div>
             <div className={styles.itemContent}>

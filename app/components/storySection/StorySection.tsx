@@ -1,3 +1,7 @@
+//app/components/storySection/StorySection.tsx
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./StorySection.module.scss";
 
@@ -6,7 +10,33 @@ import roti2 from "../../../public/images/roti-unyil-2.jpg";
 import roti3 from "../../../public/images/roti-unyil-3.jpg";
 import roti4 from "../../../public/images/roti-unyil-11.jpg";
 
+import {
+  fetchPublicSiteSettings,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
+
 const StorySection: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [addressLabel, setAddressLabel] = useState(
+    DEFAULT_SITE_SETTINGS.addressLabel
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setAddressLabel(data.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel);
+      } catch (error) {
+        console.error("Gagal memuat site settings di StorySection:", error);
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
   return (
     <section
       className={styles.storySection}
@@ -19,7 +49,7 @@ const StorySection: React.FC = () => {
             <figure className={styles.photoItem}>
               <Image
                 src={roti1}
-                alt="Roti unyil aneka topping dari Alfarazka Bakery"
+                alt={`Roti unyil aneka topping dari ${businessName}`}
                 className={styles.photoImage}
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
@@ -53,15 +83,15 @@ const StorySection: React.FC = () => {
 
         {/* KANAN – CERITA */}
         <div className={styles.textColumn}>
-          <p className={styles.kicker}>Cerita Alfarazka Bakery</p>
+          <p className={styles.kicker}>Cerita {businessName}</p>
           <h2 id="story-heading" className={styles.title}>
             Dari Hobi Panggang Roti, Menjadi Teman Andalan Setiap Acara
           </h2>
 
           <p className={styles.paragraph}>
-            Alfarazka Bakery berawal dari hobi sederhana memanggang roti
-            untuk keluarga di rumah. Setiap akhir pekan, dapur kecil di
-            Ciputat selalu ramai dengan aroma roti unyil yang baru keluar
+            {businessName} berawal dari hobi sederhana memanggang roti
+            untuk keluarga di rumah. Setiap akhir pekan, dapur kecil di{" "}
+            {addressLabel} selalu ramai dengan aroma roti unyil yang baru keluar
             dari oven, dan pelan-pelan tetangga mulai ikut memesan untuk
             pengajian dan arisan.
           </p>
@@ -69,7 +99,7 @@ const StorySection: React.FC = () => {
           <p className={styles.paragraph}>
             Melihat banyak yang cocok dengan rasa dan teksturnya, pada{" "}
             <strong>7 Juli 2024</strong> usaha ini resmi diberi nama{" "}
-            <strong><em>Alfarazka Bakery</em></strong>. Sejak itu, kami fokus
+            <strong><em>{businessName}</em></strong>. Sejak itu, kami fokus
             mengerjakan pesanan roti unyil seribuan, roti meises, dan
             pizza mini untuk berbagai kebutuhan – dari bekal sekolah,
             snack box kantor, sampai hampers sederhana.
