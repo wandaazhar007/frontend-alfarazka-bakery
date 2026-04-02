@@ -1,6 +1,7 @@
+//app/produk/ProductsClientSection.tsx
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ProductFilterSection, {
   type FilterCategoryItem,
 } from "../components/productFilter/ProductFilterSection";
@@ -15,13 +16,11 @@ import {
 } from "../services/productService";
 import Link from "next/link";
 
-// NOTE: UBAH LIMIT PRODUK PER HALAMAN DI SINI
-// Ganti angka 4 jika ingin menampilkan lebih banyak produk per page.
 const PAGE_SIZE = 4;
+const ARTIFICIAL_DELAY_MS = 700;
+const SCROLL_OFFSET_PX = 96;
+const SCROLL_WAIT_MS = 420;
 
-const ARTIFICIAL_DELAY_MS = 700; // buat skeleton loading agak lama dikit
-
-// KOMPONEN KECIL UNTUK CAROUSEL GAMBAR DI CARD PRODUK
 type ProductImageCarouselProps = {
   name: string;
   imageUrl?: string | null;
@@ -33,7 +32,6 @@ const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
   imageUrl,
   imageUrls,
 }) => {
-  // Normalisasi array gambar:
   const sources: string[] = useMemo(() => {
     if (Array.isArray(imageUrls) && imageUrls.length > 0) {
       return imageUrls;
@@ -121,18 +119,20 @@ const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
   );
 };
 
+const wait = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms));
+
 const ProductsClientSection: React.FC = () => {
-  // FILTER STATE
+  const topRef = useRef<HTMLDivElement | null>(null);
+
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("all");
 
-  // CATEGORY STATE
   const [categories, setCategories] = useState<Category[]>([]);
   const [isCategoryLoading, setIsCategoryLoading] = useState(false);
   const [categoryError, setCategoryError] = useState<string | null>(null);
 
-  // PRODUCT STATE
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -141,7 +141,6 @@ const ProductsClientSection: React.FC = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [productError, setProductError] = useState<string | null>(null);
 
-  // --- DEBOUNCE SEARCH ---
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search.trim());
@@ -151,7 +150,6 @@ const ProductsClientSection: React.FC = () => {
     return () => clearTimeout(timer);
   }, [search]);
 
-  // --- LOAD CATEGORIES DARI API ---
   useEffect(() => {
     const loadCategories = async () => {
       setIsCategoryLoading(true);
@@ -172,7 +170,6 @@ const ProductsClientSection: React.FC = () => {
     loadCategories();
   }, []);
 
-  // Siapkan kategori untuk chip filter
   const filterCategories: FilterCategoryItem[] = useMemo(
     () => [
       { id: "all", label: "Semua produk" },
@@ -184,7 +181,6 @@ const ProductsClientSection: React.FC = () => {
     [categories]
   );
 
-  // Kalau kategori tidak valid setelah kategori baru datang -> reset ke 'all'
   useEffect(() => {
     const validIds = filterCategories.map((c) => c.id);
     if (!validIds.includes(selectedCategoryId)) {
@@ -193,7 +189,22 @@ const ProductsClientSection: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterCategories.length]);
 
-  // --- LOAD PRODUCTS DARI API ---
+  const scrollToTopAnchor = async () => {
+    if (!topRef.current) return;
+
+    const top =
+      topRef.current.getBoundingClientRect().top +
+      window.scrollY -
+      SCROLL_OFFSET_PX;
+
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: "smooth",
+    });
+
+    await wait(SCROLL_WAIT_MS);
+  };
+
   const loadProducts = async (targetPage: number) => {
     setIsLoadingProducts(true);
     setProductError(null);
@@ -207,12 +218,9 @@ const ProductsClientSection: React.FC = () => {
           selectedCategoryId === "all" ? undefined : selectedCategoryId,
       });
 
-      // buat skeleton tampak smooth
       const [data] = await Promise.all([
         dataPromise,
-        new Promise((resolve) =>
-          setTimeout(resolve, ARTIFICIAL_DELAY_MS)
-        ),
+        wait(ARTIFICIAL_DELAY_MS),
       ]);
 
       setProducts(data.products);
@@ -230,21 +238,28 @@ const ProductsClientSection: React.FC = () => {
     }
   };
 
-  // Saat debouncedSearch atau kategori berubah -> reset ke page 1 dan fetch
   useEffect(() => {
     loadProducts(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, selectedCategoryId]);
 
-  const handlePageChange = (direction: "prev" | "next") => {
+  const handlePageChange = async (direction: "prev" | "next") => {
+    if (isLoadingProducts) return;
+
+    let newPage = page;
+
     if (direction === "prev" && page > 1) {
-      const newPage = page - 1;
-      loadProducts(newPage);
+      newPage = page - 1;
     }
+
     if (direction === "next" && page < totalPages) {
-      const newPage = page + 1;
-      loadProducts(newPage);
+      newPage = page + 1;
     }
+
+    if (newPage === page) return;
+
+    await scrollToTopAnchor();
+    await loadProducts(newPage);
   };
 
   const pageInfoText = useMemo(() => {
@@ -260,132 +275,138 @@ const ProductsClientSection: React.FC = () => {
         <div className={styles.cardSkeletonImage} />
         <div className={styles.cardSkeletonLine} />
         <div className={styles.cardSkeletonLineShort} />
+        <div className={styles.cardSkeletonLineMedium} />
+        <div className={styles.cardSkeletonButton} />
       </div>
     ));
 
   return (
-    <section id="produk" className={styles.wrapper}>
+    <section ref={topRef} id="produk" className={styles.wrapper}>
       <div className="container">
-        {/* FILTER BAR */}
-        <ProductFilterSection
-          search={search}
-          onSearchChange={setSearch}
-          selectedCategoryId={selectedCategoryId}
-          onCategoryChange={setSelectedCategoryId}
-          categories={filterCategories}
-          isLoadingCategories={isCategoryLoading}
-        />
+        <div className={styles.inner}>
+          <ProductFilterSection
+            search={search}
+            onSearchChange={setSearch}
+            selectedCategoryId={selectedCategoryId}
+            onCategoryChange={setSelectedCategoryId}
+            categories={filterCategories}
+            isLoadingCategories={isCategoryLoading}
+          />
 
-        {categoryError && (
-          <p className={styles.categoryError}>{categoryError}</p>
-        )}
-
-        {/* DAFTAR PRODUK */}
-        <div className={styles.productSection}>
-          {productError && (
-            <div className={styles.errorBanner}>{productError}</div>
+          {categoryError && (
+            <p className={styles.categoryError}>{categoryError}</p>
           )}
 
-          <div className={styles.grid}>
-            {isLoadingProducts && renderSkeletonCards()}
+          <div className={styles.productSection}>
+            {productError && (
+              <div className={styles.errorBanner}>{productError}</div>
+            )}
 
-            {!isLoadingProducts &&
-              products.length === 0 &&
-              !isInitialLoad && (
-                <p className={styles.emptyState}>
-                  Belum ada produk yang cocok dengan pencarian atau kategori
-                  yang dipilih.
-                </p>
-              )}
+            <div
+              className={`${styles.grid} ${isLoadingProducts ? styles.gridLoading : ""
+                }`}
+            >
+              {isLoadingProducts && renderSkeletonCards()}
 
-            {!isLoadingProducts &&
-              products.length > 0 &&
-              products.map((product) => (
-                <article key={product.id} className={styles.card}>
-                  {/* IMAGE CAROUSEL */}
-                  <ProductImageCarousel
-                    name={product.name}
-                    imageUrl={product.imageUrl}
-                    imageUrls={product.imageUrls}
-                  />
+              {!isLoadingProducts &&
+                products.length === 0 &&
+                !isInitialLoad && (
+                  <p className={styles.emptyState}>
+                    Belum ada produk yang cocok dengan pencarian atau kategori
+                    yang dipilih.
+                  </p>
+                )}
 
-                  <div className={styles.cardBody}>
-                    <h3 className={styles.cardTitle}>{product.name}</h3>
-                    {product.categoryName && (
-                      <span className={styles.categoryBadge}>
-                        {product.categoryName}
-                      </span>
-                    )}
+              {!isLoadingProducts &&
+                products.length > 0 &&
+                products.map((product) => (
+                  <article key={product.id} className={styles.card}>
+                    <ProductImageCarousel
+                      name={product.name}
+                      imageUrl={product.imageUrl}
+                      imageUrls={product.imageUrls}
+                    />
 
-                    {product.description && (
-                      <div
-                        className={styles.cardDescription}
-                        dangerouslySetInnerHTML={{
-                          __html: product.description,
-                        }}
-                      />
-                    )}
-                    <p className={styles.cardPrice}>
-                      {/* Mulai{" "} */}
-                      <strong>
-                        Rp{" "}
-                        {product.price.toLocaleString("id-ID", {
-                          minimumFractionDigits: 0,
-                        })}
-                      </strong>{" "}
-                      / pcs
-                    </p>
-                  </div>
+                    <div className={styles.cardBody}>
+                      <h3 className={styles.cardTitle}>{product.name}</h3>
 
-                  <div className={styles.cardFooter}>
-                    <Link
-                      href={`https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(
-                        product.name
-                      )}%20dari%20Alfarazka%20Bakery.%20Apakah%20masih%20tersedia%3F`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={styles.cardButton}
-                    >
-                      Pesan produk ini
-                    </Link>
-                  </div>
-                </article>
-              ))}
-          </div>
+                      {product.categoryName && (
+                        <span className={styles.categoryBadge}>
+                          {product.categoryName}
+                        </span>
+                      )}
 
-          {/* PAGINATION */}
-          {totalPages > 1 && (
-            <div className={styles.paginationBar}>
-              <div className={styles.pageInfo}>{pageInfoText}</div>
-              <div className={styles.paginationControls}>
-                <button
-                  type="button"
-                  className={styles.pageButton}
-                  onClick={() => handlePageChange("prev")}
-                  disabled={page <= 1 || isLoadingProducts}
-                >
-                  Sebelumnya
-                </button>
-                <span className={styles.pageIndicator}>
-                  Halaman {page} dari {totalPages}
-                </span>
-                <button
-                  type="button"
-                  className={styles.pageButton}
-                  onClick={() => handlePageChange("next")}
-                  disabled={page >= totalPages || isLoadingProducts}
-                >
-                  Selanjutnya
-                </button>
+                      {product.description && (
+                        <div
+                          className={styles.cardDescription}
+                          dangerouslySetInnerHTML={{
+                            __html: product.description,
+                          }}
+                        />
+                      )}
+
+                      <p className={styles.cardPrice}>
+                        <strong>
+                          Rp{" "}
+                          {product.price.toLocaleString("id-ID", {
+                            minimumFractionDigits: 0,
+                          })}
+                        </strong>{" "}
+                        / pcs
+                      </p>
+                    </div>
+
+                    <div className={styles.cardFooter}>
+                      <Link
+                        href={`https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(
+                          product.name
+                        )}%20dari%20Alfarazka%20Bakery.%20Apakah%20masih%20tersedia%3F`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={styles.cardButton}
+                      >
+                        Pesan produk ini
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className={styles.paginationBar}>
+                <div className={styles.pageInfo}>{pageInfoText}</div>
+                <div className={styles.paginationControls}>
+                  <button
+                    type="button"
+                    className={styles.pageButton}
+                    onClick={() => handlePageChange("prev")}
+                    disabled={page <= 1 || isLoadingProducts}
+                  >
+                    Sebelumnya
+                  </button>
+
+                  <span className={styles.pageIndicator}>
+                    Halaman {page} dari {totalPages}
+                  </span>
+
+                  <button
+                    type="button"
+                    className={styles.pageButton}
+                    onClick={() => handlePageChange("next")}
+                    disabled={page >= totalPages || isLoadingProducts}
+                  >
+                    Selanjutnya
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {totalPages <= 1 && totalItems > 0 && (
-            <div className={styles.paginationBar}>
-              <div className={styles.pageInfo}>{pageInfoText}</div>
-            </div>
-          )}
+            {totalPages <= 1 && totalItems > 0 && (
+              <div className={styles.paginationBar}>
+                <div className={styles.pageInfo}>{pageInfoText}</div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
