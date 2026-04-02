@@ -10,77 +10,96 @@ import {
   faChildren,
   faGift,
   faClock,
-  faQuestionCircle,
   faMoneyBillWave,
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./PaketSnackUlangTahunAnakCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 import FaqPaketUltah from "../components/faqPaketUltah/FaqPaketUltah";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../services/siteSettingsService";
 
-export const metadata: Metadata = {
-  title:
-    "Paket Snack Ulang Tahun Anak Ciputat — Traktiran Sekolah & TPA | Alfarazka Bakery",
-  description:
-    "Butuh snack ulang tahun anak di Ciputat? Alfarazka Bakery sediakan paket roti unyil seribuan untuk traktiran sekolah, TPA, dan pesta ulang tahun anak di rumah.",
-  keywords: [
-    "paket snack ulang tahun anak ciputat",
-    "snack ulang tahun sekolah ciputat",
-    "roti unyil ulang tahun anak",
-    "traktiran sekolah ciputat",
-    "snack box ulang tahun anak",
-    "Alfarazka Bakery",
-  ],
-  alternates: {
-    canonical: "/paket-snack-ulang-tahun-anak-ciputat",
-  },
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "https://alfarazkabakery.com/paket-snack-ulang-tahun-anak-ciputat",
-    siteName: "Alfarazka Bakery",
-    title:
-      "Paket Snack Ulang Tahun Anak di Ciputat — Roti Unyil Seribuan | Alfarazka Bakery",
-    description:
-      "Paket snack ulang tahun anak yang praktis dan ramah di kantong. Cocok untuk traktiran sekolah, TPA, dan pesta ulang tahun di rumah area Ciputat.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Paket Snack Ulang Tahun Anak Ciputat — Traktiran Sekolah & TPA | Alfarazka Bakery",
-    description:
-      "Ide paket snack ulang tahun anak lengkap dengan contoh jumlah roti per anak dan opsi dekorasi box dari Alfarazka Bakery Ciputat.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://alfarazkabakery.com";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20paket%20snack%20ulang%20tahun%20anak%20Alfarazka%20Bakery%20di%20Ciputat.";
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchPublicSiteSettings();
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
 
-const PaketSnackUlangTahunAnakCiputatPage = () => {
+  return {
+    title: `Paket Snack Ulang Tahun Anak Ciputat — Traktiran Sekolah & TPA | ${businessName}`,
+    description: `Butuh snack ulang tahun anak di Ciputat? ${businessName} sediakan paket roti unyil seribuan untuk traktiran sekolah, TPA, dan pesta ulang tahun anak di rumah.`,
+    keywords: [
+      "paket snack ulang tahun anak ciputat",
+      "snack ulang tahun sekolah ciputat",
+      "roti unyil ulang tahun anak",
+      "traktiran sekolah ciputat",
+      "snack box ulang tahun anak",
+      businessName,
+    ],
+    alternates: {
+      canonical: "/paket-snack-ulang-tahun-anak-ciputat",
+    },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: `${siteUrl}/paket-snack-ulang-tahun-anak-ciputat`,
+      siteName: businessName,
+      title: `Paket Snack Ulang Tahun Anak di Ciputat — Roti Unyil Seribuan | ${businessName}`,
+      description:
+        "Paket snack ulang tahun anak yang praktis dan ramah di kantong. Cocok untuk traktiran sekolah, TPA, dan pesta ulang tahun di rumah area Ciputat.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Paket Snack Ulang Tahun Anak Ciputat — Traktiran Sekolah & TPA | ${businessName}`,
+      description: `Ide paket snack ulang tahun anak lengkap dengan contoh jumlah roti per anak dan opsi dekorasi box dari ${businessName} Ciputat.`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+const PaketSnackUlangTahunAnakCiputatPage = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya mau tanya paket snack ulang tahun anak ${businessName} di Ciputat.`
+  );
+
   return (
     <main className={styles.page}>
-      {/* BREADCRUMB */}
       <div className="container">
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },
             { label: "Produk & Paket", href: "/produk" },
-            { label: "Paket snack ulang tahun anak", href: "/paket-snack-ulang-tahun-anak-ciputat" },
+            {
+              label: "Paket snack ulang tahun anak",
+              href: "/paket-snack-ulang-tahun-anak-ciputat",
+            },
           ]}
         />
       </div>
-      {/* HERO */}
+
       <section
         className={`section ${styles.heroSection}`}
         aria-labelledby="ulang-tahun-anak-hero-heading"
       >
         <div className="container">
           <div className={styles.heroInner}>
-            {/* LEFT */}
             <div className={styles.heroContent}>
               <p className={styles.heroKicker}>Paket Snack Ulang Tahun Anak</p>
               <h1
@@ -92,7 +111,7 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
               </h1>
               <p className={styles.heroSubtitle}>
                 Biar momen ulang tahun si kecil lebih berkesan tanpa repot,
-                serahkan urusan snack ke Alfarazka Bakery. Roti unyil lembut,
+                serahkan urusan snack ke {businessName}. Roti unyil lembut,
                 varian rasa banyak, dan bisa disesuaikan dengan jumlah teman
                 sekolah, TPA, atau lingkungan rumah.
               </p>
@@ -133,12 +152,11 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
               </p>
             </div>
 
-            {/* RIGHT IMAGE */}
             <div className={styles.heroImageWrapper}>
               <div className={styles.heroImageInner}>
                 <Image
                   src="/images/roti-unyil-2.jpg"
-                  alt="Snack ulang tahun anak berupa roti unyil dari Alfarazka Bakery Ciputat"
+                  alt={`Snack ulang tahun anak berupa roti unyil dari ${businessName} Ciputat`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   className={styles.heroImage}
@@ -150,7 +168,6 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
         </div>
       </section>
 
-      {/* IDE PAKET ULANG TAHUN */}
       <section
         className={`section ${styles.packagesSection}`}
         aria-labelledby="ulang-tahun-anak-packages-heading"
@@ -242,7 +259,6 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
         </div>
       </section>
 
-      {/* CONTOH JUMLAH ROTI PER ANAK */}
       <section
         className={`section ${styles.portionSection}`}
         aria-labelledby="ulang-tahun-anak-portion-heading"
@@ -310,7 +326,6 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
         </div>
       </section>
 
-      {/* BONUS DEKORASI & PERSONLASI BOX */}
       <section
         className={`section ${styles.decorSection}`}
         aria-labelledby="ulang-tahun-anak-decor-heading"
@@ -367,7 +382,7 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
               <div className={styles.decorImage}>
                 <Image
                   src="/images/roti-unyil-7.jpg"
-                  alt="Snack box ulang tahun anak Alfarazka Bakery yang dikemas rapi"
+                  alt={`Snack box ulang tahun anak ${businessName} yang dikemas rapi`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                 />
@@ -377,7 +392,6 @@ const PaketSnackUlangTahunAnakCiputatPage = () => {
         </div>
       </section>
 
-      {/* FAQ ORANG TUA */}
       <FaqPaketUltah whatsappLink={whatsappLink} />
     </main>
   );

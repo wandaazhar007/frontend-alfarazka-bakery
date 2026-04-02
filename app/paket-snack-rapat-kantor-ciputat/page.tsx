@@ -11,77 +11,96 @@ import {
   faReceipt,
   faTruck,
   faClock,
-  faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./PaketSnackRapatKantorCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
 import FaqRapatKantor from "../components/faqRapatKantor/FaqRapatKantor";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../services/siteSettingsService";
 
-export const metadata: Metadata = {
-  title:
-    "Paket Snack Rapat Kantor Ciputat — Untuk Meeting, Guru, & Instansi | Alfarazka Bakery",
-  description:
-    "Cari paket snack rapat kantor di Ciputat? Alfarazka Bakery menyediakan roti unyil seribuan untuk meeting kantor, instansi, guru, dan lembaga dengan opsi pembayaran transfer, nota, dan pengantaran tepat waktu.",
-  keywords: [
-    "paket snack rapat kantor ciputat",
-    "snack rapat kantor ciputat",
-    "snack meeting kantor",
-    "snack rapat guru",
-    "snack instansi ciputat",
-    "roti unyil rapat kantor",
-    "Alfarazka Bakery",
-  ],
-  alternates: {
-    canonical: "/paket-snack-rapat-kantor-ciputat",
-  },
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "https://alfarazkabakery.com/paket-snack-rapat-kantor-ciputat",
-    siteName: "Alfarazka Bakery",
-    title:
-      "Paket Snack Rapat Kantor Ciputat — Roti Unyil Seribuan untuk Meeting | Alfarazka Bakery",
-    description:
-      "Paket snack rapat kantor yang rapi dan profesional dengan opsi pembayaran transfer, nota, dan pengantaran area Ciputat. Cocok untuk meeting kantor, guru, dan instansi.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Paket Snack Rapat Kantor Ciputat — Untuk Kantor & Instansi | Alfarazka Bakery",
-    description:
-      "Paket snack rapat kantor dengan roti unyil seribuan, pengantaran tepat waktu, dan opsi pembayaran transfer. Praktis untuk meeting, rapat guru, dan instansi di Ciputat.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://alfarazkabakery.com";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20paket%20snack%20rapat%20kantor%20Alfarazka%20Bakery%20di%20Ciputat.";
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchPublicSiteSettings();
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
 
-const PaketSnackRapatKantorCiputatPage = () => {
+  return {
+    title: `Paket Snack Rapat Kantor Ciputat — Untuk Meeting, Guru, & Instansi | ${businessName}`,
+    description: `Cari paket snack rapat kantor di Ciputat? ${businessName} menyediakan roti unyil seribuan untuk meeting kantor, instansi, guru, dan lembaga dengan opsi pembayaran transfer, nota, dan pengantaran tepat waktu.`,
+    keywords: [
+      "paket snack rapat kantor ciputat",
+      "snack rapat kantor ciputat",
+      "snack meeting kantor",
+      "snack rapat guru",
+      "snack instansi ciputat",
+      "roti unyil rapat kantor",
+      businessName,
+    ],
+    alternates: {
+      canonical: "/paket-snack-rapat-kantor-ciputat",
+    },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: `${siteUrl}/paket-snack-rapat-kantor-ciputat`,
+      siteName: businessName,
+      title: `Paket Snack Rapat Kantor Ciputat — Roti Unyil Seribuan untuk Meeting | ${businessName}`,
+      description:
+        "Paket snack rapat kantor yang rapi dan profesional dengan opsi pembayaran transfer, nota, dan pengantaran area Ciputat. Cocok untuk meeting kantor, guru, dan instansi.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Paket Snack Rapat Kantor Ciputat — Untuk Kantor & Instansi | ${businessName}`,
+      description: `Paket snack rapat kantor dengan roti unyil seribuan, pengantaran tepat waktu, dan opsi pembayaran transfer. Praktis untuk meeting, rapat guru, dan instansi di Ciputat dari ${businessName}.`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+const PaketSnackRapatKantorCiputatPage = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya mau tanya paket snack rapat kantor ${businessName} di Ciputat.`
+  );
+
   return (
     <main className={styles.page}>
-      {/* BREADCRUMB */}
       <div className="container">
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },
             { label: "Produk & Paket", href: "/produk" },
-            { label: "Paket snack rapat kantor", href: "/paket-snack-rapat-kantor-ciputat" },
+            {
+              label: "Paket snack rapat kantor",
+              href: "/paket-snack-rapat-kantor-ciputat",
+            },
           ]}
         />
       </div>
-      {/* HERO */}
+
       <section
         className={`section ${styles.heroSection}`}
         aria-labelledby="rapat-kantor-hero-heading"
       >
         <div className="container">
           <div className={styles.heroInner}>
-            {/* LEFT */}
             <div className={styles.heroContent}>
               <p className={styles.heroKicker}>Paket Snack Rapat Kantor</p>
               <h1
@@ -92,7 +111,7 @@ const PaketSnackRapatKantorCiputatPage = () => {
                 <span>Rapi, Tepat Waktu, dan Profesional</span> di Ciputat
               </h1>
               <p className={styles.heroSubtitle}>
-                Alfarazka Bakery menyiapkan snack rapat berbasis roti unyil
+                {businessName} menyiapkan snack rapat berbasis roti unyil
                 seribuan yang cocok untuk meeting kantor, rapat guru, hingga
                 kegiatan instansi. Kemasan rapi, rasa bersahabat, dan stok
                 bisa disesuaikan jumlah peserta.
@@ -134,12 +153,11 @@ const PaketSnackRapatKantorCiputatPage = () => {
               </p>
             </div>
 
-            {/* RIGHT IMAGE */}
             <div className={styles.heroImageWrapper}>
               <div className={styles.heroImageInner}>
                 <Image
                   src="/images/roti-unyil-3.jpg"
-                  alt="Snack rapat kantor berupa roti unyil dari Alfarazka Bakery Ciputat"
+                  alt={`Snack rapat kantor berupa roti unyil dari ${businessName} di Ciputat`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   className={styles.heroImage}
@@ -151,7 +169,6 @@ const PaketSnackRapatKantorCiputatPage = () => {
         </div>
       </section>
 
-      {/* PAKET RAPAT & MEETING */}
       <section
         className={`section ${styles.packagesSection}`}
         aria-labelledby="rapat-kantor-packages-heading"
@@ -245,7 +262,6 @@ const PaketSnackRapatKantorCiputatPage = () => {
         </div>
       </section>
 
-      {/* PEMBAYARAN & ADMINISTRASI */}
       <section
         className={`section ${styles.paymentSection}`}
         aria-labelledby="rapat-kantor-payment-heading"
@@ -306,7 +322,7 @@ const PaketSnackRapatKantorCiputatPage = () => {
               <div className={styles.paymentImage}>
                 <Image
                   src="/images/roti-unyil-8.jpg"
-                  alt="Snack rapat kantor Alfarazka Bakery dengan kemasan rapi"
+                  alt={`Snack rapat kantor ${businessName} dengan kemasan rapi`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                 />
@@ -316,7 +332,6 @@ const PaketSnackRapatKantorCiputatPage = () => {
         </div>
       </section>
 
-      {/* PENGANTARAN & KETEPATAN WAKTU */}
       <section
         className={`section ${styles.deliverySection}`}
         aria-labelledby="rapat-kantor-delivery-heading"
@@ -372,7 +387,6 @@ const PaketSnackRapatKantorCiputatPage = () => {
         </div>
       </section>
 
-      {/* FAQ RAPAT KANTOR */}
       <FaqRapatKantor whatsappLink={whatsappLink} />
     </main>
   );

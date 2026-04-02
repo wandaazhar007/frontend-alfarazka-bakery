@@ -14,69 +14,90 @@ import {
 
 import styles from "./SnackBoxPengajianCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../services/siteSettingsService";
 
-export const metadata: Metadata = {
-  title:
-    "Snack Box Pengajian Ciputat — Roti Unyil Seribuan untuk Majelis Taklim",
-  description:
-    "Butuh snack box pengajian di Ciputat? Alfarazka Bakery sediakan paket roti unyil seribuan yang hemat, rapi, dan cocok untuk pengajian, kajian, dan majelis taklim.",
-  keywords: [
-    "snack box pengajian ciputat",
-    "snack pengajian ciputat",
-    "snack box kajian ciputat",
-    "roti unyil untuk pengajian",
-    "paket snack pengajian tangsel",
-    "Alfarazka Bakery",
-  ],
-  alternates: {
-    canonical: "/snack-box-pengajian-ciputat",
-  },
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "https://alfarazkabakery.com/snack-box-pengajian-ciputat",
-    siteName: "Alfarazka Bakery",
-    title: "Snack Box Pengajian di Ciputat — Alfarazka Bakery",
-    description:
-      "Paket snack box pengajian yang rapi, hemat, dan insyaAllah berkah. Roti unyil seribuan untuk pengajian, kajian, dan majelis taklim di Ciputat.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Snack Box Pengajian Ciputat — Roti Unyil Seribuan untuk Majelis Taklim",
-    description:
-      "Paket snack box pengajian dari Alfarazka Bakery di Ciputat. Roti unyil lembut, fresh, dan ramah di kantong untuk jamaah.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://alfarazkabakery.com";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20paket%20snack%20box%20pengajian%20Alfarazka%20Bakery%20di%20Ciputat.";
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchPublicSiteSettings();
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
 
-const SnackBoxPengajianCiputatPage = () => {
+  return {
+    title: `Snack Box Pengajian Ciputat — Roti Unyil Seribuan untuk Majelis Taklim | ${businessName}`,
+    description: `Butuh snack box pengajian di Ciputat? ${businessName} sediakan paket roti unyil seribuan yang hemat, rapi, dan cocok untuk pengajian, kajian, dan majelis taklim.`,
+    keywords: [
+      "snack box pengajian ciputat",
+      "snack pengajian ciputat",
+      "snack box kajian ciputat",
+      "roti unyil untuk pengajian",
+      "paket snack pengajian tangsel",
+      businessName,
+    ],
+    alternates: {
+      canonical: "/snack-box-pengajian-ciputat",
+    },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: `${siteUrl}/snack-box-pengajian-ciputat`,
+      siteName: businessName,
+      title: `Snack Box Pengajian di Ciputat — ${businessName}`,
+      description:
+        "Paket snack box pengajian yang rapi, hemat, dan insyaAllah berkah. Roti unyil seribuan untuk pengajian, kajian, dan majelis taklim di Ciputat.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Snack Box Pengajian Ciputat — Roti Unyil Seribuan untuk Majelis Taklim | ${businessName}`,
+      description: `Paket snack box pengajian dari ${businessName} di Ciputat. Roti unyil lembut, fresh, dan ramah di kantong untuk jamaah.`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+const SnackBoxPengajianCiputatPage = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya mau tanya paket snack box pengajian ${businessName} di Ciputat.`
+  );
+
   return (
     <main className={styles.page}>
-      {/* BREADCRUMB */}
       <div className="container">
         <Breadcrumbs
           items={[
             { label: "Beranda", href: "/" },
             { label: "Produk & Paket", href: "/produk" },
-            { label: "Snack Box Pengajian Ciputat", href: "/snack-box-pengajian-ciputat" },
+            {
+              label: "Snack Box Pengajian Ciputat",
+              href: "/snack-box-pengajian-ciputat",
+            },
           ]}
         />
       </div>
-      {/* HERO */}
+
       <section
         className={`section ${styles.heroSection}`}
         aria-labelledby="snack-box-pengajian-hero-heading"
       >
         <div className="container">
           <div className={styles.heroInner}>
-            {/* LEFT */}
             <div className={styles.heroContent}>
               <p className={styles.heroKicker}>Snack Box Pengajian Ciputat</p>
               <h1
@@ -87,7 +108,7 @@ const SnackBoxPengajianCiputatPage = () => {
                 <span>Untuk Pengajian & Majelis Taklim</span>
               </h1>
               <p className={styles.heroSubtitle}>
-                Alfarazka Bakery menyiapkan paket snack box pengajian berisi roti
+                {businessName} menyiapkan paket snack box pengajian berisi roti
                 unyil seribuan yang lembut, manis–gurih seimbang, dan ditata
                 rapi untuk jamaah. Cocok untuk pengajian rutin, kajian akbar,
                 dan majelis taklim ibu-ibu di Ciputat.
@@ -129,12 +150,11 @@ const SnackBoxPengajianCiputatPage = () => {
               </p>
             </div>
 
-            {/* RIGHT IMAGE */}
             <div className={styles.heroImageWrapper}>
               <div className={styles.heroImageInner}>
                 <Image
                   src="/images/roti-unyil-6.jpg"
-                  alt="Snack box pengajian berisi roti unyil lembut dari Alfarazka Bakery Ciputat"
+                  alt={`Snack box pengajian berisi roti unyil lembut dari ${businessName} Ciputat`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   className={styles.heroImage}
@@ -146,7 +166,6 @@ const SnackBoxPengajianCiputatPage = () => {
         </div>
       </section>
 
-      {/* CONTOH PAKET */}
       <section
         className={`section ${styles.packagesSection}`}
         aria-labelledby="snack-box-packages-heading"
@@ -235,7 +254,6 @@ const SnackBoxPengajianCiputatPage = () => {
         </div>
       </section>
 
-      {/* REKOMENDASI JUMLAH */}
       <section
         className={`section ${styles.recommendationSection}`}
         aria-labelledby="snack-box-recommendation-heading"
@@ -295,7 +313,6 @@ const SnackBoxPengajianCiputatPage = () => {
         </div>
       </section>
 
-      {/* SUSUNAN SNACK BOX */}
       <section
         className={`section ${styles.compositionSection}`}
         aria-labelledby="snack-box-composition-heading"
@@ -359,7 +376,6 @@ const SnackBoxPengajianCiputatPage = () => {
         </div>
       </section>
 
-      {/* TIPS ANGGARAN */}
       <section
         className={`section ${styles.tipsSection}`}
         aria-labelledby="snack-box-tips-heading"

@@ -1,9 +1,18 @@
+//app/roti-unyil-ciputat/RotiUnyilFaqSection.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleCheck,
+  faCircleQuestion,
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./RotiUnyilCiputatPage.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../services/siteSettingsService";
 
 const FAQ_ITEMS = [
   {
@@ -16,17 +25,66 @@ const FAQ_ITEMS = [
     answer:
       "Bisa. Justru kami sarankan mix beberapa varian manis dan gurih supaya tamu punya pilihan. Kamu tinggal infokan kombinasi yang diinginkan.",
   },
-  // ...lanjutan FAQ lain...
+  {
+    question: "Pengiriman roti unyil bisa ke mana saja?",
+    answer:
+      "Fokus utama kami area Ciputat dan sekitarnya. Ongkir dan titik temu bisa dibicarakan via WhatsApp sesuai lokasi dan kebutuhan acara.",
+  },
+  {
+    question: "Pembayaran bisa pakai apa saja?",
+    answer:
+      "Bisa transfer bank atau e-wallet tertentu yang tersedia. Untuk pesanan jumlah besar, biasanya kami minta DP sebagai tanda jadi, lalu pelunasan saat atau sebelum pengantaran.",
+  },
 ];
-
-const whatsappLink =
-  "https://wa.me/6282194228282?text=Assalamualaikum%2C%20saya%20mau%20pesan%20roti%20unyil%20Alfarazka%20Bakery%20untuk%20Ciputat.";
 
 export default function RotiUnyilFaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+  const [serviceAreaText, setServiceAreaText] = useState(
+    DEFAULT_SITE_SETTINGS.serviceAreaText
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+        setServiceAreaText(
+          data.serviceAreaText || DEFAULT_SITE_SETTINGS.serviceAreaText
+        );
+      } catch (error) {
+        console.error(
+          "Gagal memuat site settings di RotiUnyilFaqSection:",
+          error
+        );
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya mau pesan roti unyil ${businessName} untuk Ciputat.`
+    );
+  }, [whatsappNumber, businessName]);
+
+  const shortServiceArea = useMemo(() => {
+    if (!serviceAreaText?.trim()) return "Ciputat & sekitarnya";
+    return serviceAreaText.trim();
+  }, [serviceAreaText]);
 
   const toggle = (index: number) => {
-    setOpenIndex(prev => (prev === index ? null : index));
+    setOpenIndex((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -36,7 +94,6 @@ export default function RotiUnyilFaqSection() {
     >
       <div className="container">
         <div className={styles.faqInner}>
-          {/* LEFT COPY – bisa copas dari versi sebelumnya */}
           <div className={styles.faqLeft}>
             <p className={styles.sectionKicker}>FAQ Roti Unyil Ciputat</p>
             <h2 id="roti-unyil-faq-heading" className={styles.sectionTitle}>
@@ -58,7 +115,7 @@ export default function RotiUnyilFaqSection() {
               </li>
               <li>
                 <FontAwesomeIcon icon={faCircleCheck} />
-                <span>Area utama Ciputat & sekitarnya, pengantaran sesuai kesepakatan.</span>
+                <span>Area utama {shortServiceArea}.</span>
               </li>
             </ul>
 
@@ -74,11 +131,11 @@ export default function RotiUnyilFaqSection() {
             </div>
           </div>
 
-          {/* RIGHT FAQ LIST – sekarang accordion */}
           <div className={styles.faqRight}>
             <dl className={styles.faqList}>
               {FAQ_ITEMS.map((item, index) => {
                 const isOpen = openIndex === index;
+
                 return (
                   <div key={item.question} className={styles.faqItem}>
                     <dt>
@@ -95,11 +152,8 @@ export default function RotiUnyilFaqSection() {
                         <span>{item.question}</span>
                       </button>
                     </dt>
-                    {isOpen && (
-                      <dd className={styles.faqAnswer}>
-                        {item.answer}
-                      </dd>
-                    )}
+
+                    {isOpen && <dd className={styles.faqAnswer}>{item.answer}</dd>}
                   </div>
                 );
               })}

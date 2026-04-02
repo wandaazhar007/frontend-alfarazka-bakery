@@ -1,13 +1,52 @@
+// //app/components/productHero/ProductHeroSection.tsx
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import styles from "./ProductHeroSection.module.scss";
 import Link from "next/link";
+import styles from "./ProductHeroSection.module.scss";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../../services/siteSettingsService";
 
 const ProductHeroSection: React.FC = () => {
+  const [businessName, setBusinessName] = useState(
+    DEFAULT_SITE_SETTINGS.businessName
+  );
+  const [whatsappNumber, setWhatsappNumber] = useState(
+    DEFAULT_SITE_SETTINGS.whatsappNumber
+  );
+
+  useEffect(() => {
+    const loadSiteSettings = async () => {
+      try {
+        const data = await fetchPublicSiteSettings();
+        setBusinessName(data.businessName || DEFAULT_SITE_SETTINGS.businessName);
+        setWhatsappNumber(
+          data.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber
+        );
+      } catch (error) {
+        console.error(
+          "Gagal memuat site settings di ProductHeroSection:",
+          error
+        );
+      }
+    };
+
+    loadSiteSettings();
+  }, []);
+
+  const whatsappLink = useMemo(() => {
+    return buildWhatsAppUrl(
+      whatsappNumber,
+      `Assalamualaikum, saya ingin tanya katalog produk roti unyil dan paket snack ${businessName}.`
+    );
+  }, [whatsappNumber, businessName]);
+
   return (
-    <section
-      className={styles.hero}
-      aria-labelledby="produk-hero-heading"
-    >
+    <section className={styles.hero} aria-labelledby="produk-hero-heading">
       <div className="container">
         <div className={styles.inner}>
           {/* KIRI – TEKS */}
@@ -21,7 +60,7 @@ const ProductHeroSection: React.FC = () => {
 
             <p className={styles.subtitle}>
               Pilih roti unyil, roti meises, dan pizza mini yang lembut dan
-              freshly baked dari dapur rumahan Alfarazka Bakery di Ciputat.
+              freshly baked dari dapur rumahan {businessName} di Ciputat.
               Cocok untuk pengajian, arisan, ulang tahun anak, hingga rapat
               kantor dengan budget yang tetap ramah di kantong.
             </p>
@@ -61,17 +100,16 @@ const ProductHeroSection: React.FC = () => {
 
             <div className={styles.actions}>
               <Link
-                href="https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20ingin%20tanya%20katalog%20produk%20roti%20unyil%20dan%20paket%20snack%20Alfarazka%20Bakery."
+                href={whatsappLink}
                 className={styles.primaryButton}
-                aria-label="Pesan roti unyil dan paket snack Alfarazka Bakery via WhatsApp"
+                aria-label={`Pesan roti unyil dan paket snack ${businessName} via WhatsApp`}
+                target="_blank"
+                rel="noreferrer"
               >
                 Pesan via WhatsApp
               </Link>
 
-              <Link
-                href="/cara-pemesanan"
-                className={styles.secondaryLink}
-              >
+              <Link href="/cara-pemesanan" className={styles.secondaryLink}>
                 Lihat cara pemesanan
               </Link>
             </div>
@@ -87,7 +125,7 @@ const ProductHeroSection: React.FC = () => {
             <div className={styles.imageWrapper}>
               <Image
                 src="/images/roti-unyil-5.jpg"
-                alt="Aneka roti unyil Alfarazka Bakery siap untuk acara."
+                alt={`Aneka roti unyil ${businessName} siap untuk acara.`}
                 fill
                 sizes="(max-width: 768px) 100vw, 45vw"
                 className={styles.image}

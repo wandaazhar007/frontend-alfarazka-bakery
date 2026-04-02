@@ -9,59 +9,76 @@ import {
   faStar,
   faCircleCheck,
   faClock,
-  faCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./RotiUnyilCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
-import RotiUnyilFaqSection from "./RotiUnyilFaqSection";
 import FaqRotiUnyilCiputat from "../components/faqRotiUnyilCiputat/faqRotiUnyilCiputat";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../services/siteSettingsService";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://alfarazkabakery.com";
 
-export const metadata: Metadata = {
-  title: "Roti Unyil Ciputat — Roti Seribuan Enak & Fresh | Alfarazka Bakery",
-  description:
-    "Cari roti unyil enak di Ciputat? Alfarazka Bakery siap dengan roti unyil seribuan yang lembut, fresh, dan cocok untuk pengajian, arisan, ulang tahun, dan snack harian.",
-  keywords: [
-    "roti unyil ciputat",
-    "roti unyil enak di ciputat",
-    "roti seribuan ciputat",
-    "snack box ciputat",
-    "roti rumahan ciputat",
-    "Alfarazka Bakery",
-  ],
-  alternates: {
-    canonical: "/roti-unyil-ciputat",
-  },
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "https://alfarazkabakery.com/roti-unyil-ciputat",
-    siteName: "Alfarazka Bakery",
-    title: "Roti Unyil Enak di Ciputat — Alfarazka Bakery",
-    description:
-      "Roti unyil rumahan seribuan di Ciputat, lembut dan fresh setiap hari. Pas untuk pengajian, arisan, ulang tahun anak, dan snack harian keluarga.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Roti Unyil Ciputat — Seribuan, Lembut, dan Fresh",
-    description:
-      "Roti unyil seribuan di Ciputat dari Alfarazka Bakery. Cocok untuk acara dan nyemil harian, pesan mudah lewat WhatsApp.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchPublicSiteSettings();
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20pesan%20roti%20unyil%20Alfarazka%20Bakery%20untuk%20Ciputat.";
+  return {
+    title: `Roti Unyil Ciputat — Roti Seribuan Enak & Fresh | ${businessName}`,
+    description: `Cari roti unyil enak di Ciputat? ${businessName} siap dengan roti unyil seribuan yang lembut, fresh, dan cocok untuk pengajian, arisan, ulang tahun, dan snack harian.`,
+    keywords: [
+      "roti unyil ciputat",
+      "roti unyil enak di ciputat",
+      "roti seribuan ciputat",
+      "snack box ciputat",
+      "roti rumahan ciputat",
+      businessName,
+    ],
+    alternates: {
+      canonical: "/roti-unyil-ciputat",
+    },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: `${siteUrl}/roti-unyil-ciputat`,
+      siteName: businessName,
+      title: `Roti Unyil Enak di Ciputat — ${businessName}`,
+      description: `Roti unyil rumahan seribuan di Ciputat, lembut dan fresh setiap hari. Pas untuk pengajian, arisan, ulang tahun anak, dan snack harian keluarga dari ${businessName}.`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Roti Unyil Ciputat — Seribuan, Lembut, dan Fresh | ${businessName}`,
+      description: `Roti unyil seribuan di Ciputat dari ${businessName}. Cocok untuk acara dan nyemil harian, pesan mudah lewat WhatsApp.`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
-const RotiUnyilCiputatPage = () => {
+const RotiUnyilCiputatPage = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya mau pesan roti unyil ${businessName} untuk Ciputat.`
+  );
+
   return (
     <>
       <main className={styles.page}>
-        {/* BREADCRUMB */}
         <div className="container">
           <Breadcrumbs
             items={[
@@ -71,14 +88,13 @@ const RotiUnyilCiputatPage = () => {
             ]}
           />
         </div>
-        {/* HERO */}
+
         <section
           className={`section ${styles.heroSection}`}
           aria-labelledby="roti-unyil-hero-heading"
         >
           <div className="container">
             <div className={styles.heroInner}>
-              {/* LEFT TEXT */}
               <div className={styles.heroContent}>
                 <p className={styles.heroKicker}>
                   Roti Unyil Seribuan di Ciputat
@@ -90,7 +106,7 @@ const RotiUnyilCiputatPage = () => {
                   Roti Unyil Lembut, <span>Teman Ngopi di Ciputat</span>
                 </h1>
                 <p className={styles.heroSubtitle}>
-                  Alfarazka Bakery menghadirkan roti unyil rumahan yang lembut,
+                  {businessName} menghadirkan roti unyil rumahan yang lembut,
                   fresh, dan manis-gurih seimbang. Mulai seribuan per pcs, pas
                   untuk pengajian, arisan, ulang tahun anak, sampai snack harian
                   keluarga di Ciputat dan Tangerang Selatan.
@@ -117,7 +133,7 @@ const RotiUnyilCiputatPage = () => {
                     target="_blank"
                     rel="noreferrer"
                     className={styles.primaryButton}
-                    aria-label="Pesan roti unyil Alfarazka Bakery via WhatsApp"
+                    aria-label={`Pesan roti unyil ${businessName} via WhatsApp`}
                   >
                     <FontAwesomeIcon icon={faMugHot} />
                     <span>Pesan Roti Unyil Sekarang</span>
@@ -134,12 +150,11 @@ const RotiUnyilCiputatPage = () => {
                 </p>
               </div>
 
-              {/* RIGHT IMAGE */}
               <div className={styles.heroImageWrapper}>
                 <div className={styles.heroImageInner}>
                   <Image
                     src="/images/roti-unyil-1.jpg"
-                    alt="Roti unyil lembut Alfarazka Bakery untuk acara di Ciputat"
+                    alt={`Roti unyil lembut ${businessName} untuk acara di Ciputat`}
                     fill
                     sizes="(max-width: 768px) 100vw, 40vw"
                     className={styles.heroImage}
@@ -151,7 +166,6 @@ const RotiUnyilCiputatPage = () => {
           </div>
         </section>
 
-        {/* KEUNGGULAN */}
         <section
           className={`section ${styles.featuresSection}`}
           aria-labelledby="roti-unyil-features-heading"
@@ -221,7 +235,6 @@ const RotiUnyilCiputatPage = () => {
           </div>
         </section>
 
-        {/* VARIAN RASA */}
         <section
           className={`section ${styles.variantsSection}`}
           aria-labelledby="roti-unyil-variants-heading"
@@ -297,7 +310,7 @@ const RotiUnyilCiputatPage = () => {
                 <div className={styles.variantImage}>
                   <Image
                     src="/images/roti-unyil-5.jpg"
-                    alt="Pizza mini dan roti meises dari Alfarazka Bakery"
+                    alt={`Pizza mini dan roti meises dari ${businessName}`}
                     fill
                     sizes="(max-width: 768px) 50vw, 25vw"
                   />
@@ -327,7 +340,6 @@ const RotiUnyilCiputatPage = () => {
           </div>
         </section>
 
-        {/* TESTIMONI SINGKAT */}
         <section
           className={`section ${styles.testimoniSection}`}
           aria-labelledby="roti-unyil-testimoni-heading"
@@ -395,7 +407,6 @@ const RotiUnyilCiputatPage = () => {
           </div>
         </section>
 
-        {/* FAQ MINI */}
         <FaqRotiUnyilCiputat whatsappLink={whatsappLink} />
       </main>
     </>

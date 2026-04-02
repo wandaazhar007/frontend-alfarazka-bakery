@@ -14,50 +14,69 @@ import {
 
 import styles from "./SnackBoxArisanCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../services/siteSettingsService";
 
-export const metadata: Metadata = {
-  title:
-    "Snack Box Arisan Ciputat — Roti Unyil untuk Arisan RT & Kumpul Ibu-Ibu",
-  description:
-    "Cari snack box arisan di Ciputat? Alfarazka Bakery sediakan paket roti unyil seribuan yang ramah di kantong untuk arisan RT, PKK, dan kumpul ibu-ibu.",
-  keywords: [
-    "snack box arisan ciputat",
-    "snack arisan ibu ibu ciputat",
-    "roti unyil untuk arisan",
-    "snack box arisan RT",
-    "Alfarazka Bakery",
-    "snack box pkk ciputat",
-  ],
-  alternates: {
-    canonical: "/snack-box-arisan-ciputat",
-  },
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "https://alfarazkabakery.com/snack-box-arisan-ciputat",
-    siteName: "Alfarazka Bakery",
-    title:
-      "Snack Box Arisan & Kumpul Ibu-Ibu di Ciputat — Alfarazka Bakery",
-    description:
-      "Paket snack box arisan yang santai, hemat, dan bikin suasana kumpul ibu-ibu makin hangat. Roti unyil seribuan dari Alfarazka Bakery di Ciputat.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Snack Box Arisan Ciputat — Roti Unyil untuk Arisan RT & Kumpul Ibu-Ibu",
-    description:
-      "Paket snack box arisan dari Alfarazka Bakery. Roti unyil lembut, harga ramah, cocok untuk arisan RT, PKK, dan kumpul keluarga di Ciputat.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://alfarazkabakery.com";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20paket%20snack%20box%20arisan%20Alfarazka%20Bakery%20di%20Ciputat.";
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchPublicSiteSettings();
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
 
-const SnackBoxArisanCiputatPage = () => {
+  return {
+    title: `Snack Box Arisan Ciputat — Roti Unyil untuk Arisan RT & Kumpul Ibu-Ibu | ${businessName}`,
+    description: `Cari snack box arisan di Ciputat? ${businessName} sediakan paket roti unyil seribuan yang ramah di kantong untuk arisan RT, PKK, dan kumpul ibu-ibu.`,
+    keywords: [
+      "snack box arisan ciputat",
+      "snack arisan ibu ibu ciputat",
+      "roti unyil untuk arisan",
+      "snack box arisan RT",
+      "snack box pkk ciputat",
+      businessName,
+    ],
+    alternates: {
+      canonical: "/snack-box-arisan-ciputat",
+    },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: `${siteUrl}/snack-box-arisan-ciputat`,
+      siteName: businessName,
+      title: `Snack Box Arisan & Kumpul Ibu-Ibu di Ciputat — ${businessName}`,
+      description:
+        "Paket snack box arisan yang santai, hemat, dan bikin suasana kumpul ibu-ibu makin hangat. Roti unyil seribuan dari Alfarazka Bakery di Ciputat.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Snack Box Arisan Ciputat — Roti Unyil untuk Arisan RT & Kumpul Ibu-Ibu | ${businessName}`,
+      description: `Paket snack box arisan dari ${businessName}. Roti unyil lembut, harga ramah, cocok untuk arisan RT, PKK, dan kumpul keluarga di Ciputat.`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+const SnackBoxArisanCiputatPage = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya mau tanya paket snack box arisan ${businessName} di Ciputat.`
+  );
+
   return (
     <main className={styles.page}>
       {/* BREADCRUMB */}
@@ -66,10 +85,14 @@ const SnackBoxArisanCiputatPage = () => {
           items={[
             { label: "Beranda", href: "/" },
             { label: "Produk & Paket", href: "/produk" },
-            { label: "Snack Box Arisan Ciputat", href: "/snack-box-arisan-ciputat" },
+            {
+              label: "Snack Box Arisan Ciputat",
+              href: "/snack-box-arisan-ciputat",
+            },
           ]}
         />
       </div>
+
       {/* HERO */}
       <section
         className={`section ${styles.heroSection}`}
@@ -77,7 +100,6 @@ const SnackBoxArisanCiputatPage = () => {
       >
         <div className="container">
           <div className={styles.heroInner}>
-            {/* LEFT */}
             <div className={styles.heroContent}>
               <p className={styles.heroKicker}>Snack Box Arisan Ciputat</p>
               <h1
@@ -88,8 +110,8 @@ const SnackBoxArisanCiputatPage = () => {
                 <span>Untuk Arisan & Kumpul Ibu-Ibu</span>
               </h1>
               <p className={styles.heroSubtitle}>
-                Arisan jadi makin hangat dengan snack roti unyil lembut dari
-                Alfarazka Bakery. Harga ramah di kantong, pilihan rasa banyak,
+                Arisan jadi makin hangat dengan snack roti unyil lembut dari{" "}
+                {businessName}. Harga ramah di kantong, pilihan rasa banyak,
                 dan bisa disesuaikan dengan tema arisan di Ciputat dan sekitar.
               </p>
 
@@ -129,12 +151,11 @@ const SnackBoxArisanCiputatPage = () => {
               </p>
             </div>
 
-            {/* RIGHT IMAGE */}
             <div className={styles.heroImageWrapper}>
               <div className={styles.heroImageInner}>
                 <Image
                   src="/images/roti-unyil-8.jpg"
-                  alt="Snack box arisan berisi roti unyil dari Alfarazka Bakery Ciputat"
+                  alt={`Snack box arisan berisi roti unyil dari ${businessName} Ciputat`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   className={styles.heroImage}
@@ -299,7 +320,7 @@ const SnackBoxArisanCiputatPage = () => {
               <div className={styles.vibesLarge}>
                 <Image
                   src="/images/roti-unyil-9.jpg"
-                  alt="Roti unyil lembut untuk arisan di Ciputat"
+                  alt={`Roti unyil lembut untuk arisan dari ${businessName} di Ciputat`}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />

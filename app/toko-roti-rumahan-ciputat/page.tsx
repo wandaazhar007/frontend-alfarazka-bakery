@@ -16,50 +16,69 @@ import {
 
 import styles from "./TokoRotiRumahanCiputatPage.module.scss";
 import Breadcrumbs from "../components/breadcrumbs/Breadcrumbs";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "../services/siteSettingsService";
 
-export const metadata: Metadata = {
-  title:
-    "Toko Roti Rumahan Halal di Ciputat — Aman untuk Keluarga | Alfarazka Bakery",
-  description:
-    "Sedang mencari toko roti rumahan halal di Ciputat? Alfarazka Bakery menghadirkan roti unyil dan roti rumahan yang lembut, higienis, dan insyaAllah halal, aman untuk anak dan keluarga.",
-  keywords: [
-    "toko roti rumahan ciputat",
-    "toko roti halal ciputat",
-    "roti rumahan halal",
-    "roti unyil ciputat",
-    "roti rumahan untuk keluarga",
-    "Alfarazka Bakery",
-  ],
-  alternates: {
-    canonical: "/toko-roti-rumahan-ciputat",
-  },
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "https://alfarazkabakery.com/toko-roti-rumahan-ciputat",
-    siteName: "Alfarazka Bakery",
-    title:
-      "Toko Roti Rumahan Halal di Ciputat — Lembut, Higienis, & Aman untuk Keluarga",
-    description:
-      "Alfarazka Bakery adalah toko roti rumahan di Ciputat yang fokus pada roti unyil, roti meises, dan snack acara. Dibuat dari dapur rumahan yang bersih, insyaAllah halal, dan ramah untuk anak.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Toko Roti Rumahan Halal di Ciputat — Aman untuk Anak & Keluarga | Alfarazka Bakery",
-    description:
-      "Roti rumahan halal, higienis, dan lembut dari Ciputat. Cocok untuk pengajian, arisan, ulang tahun anak, dan camilan keluarga.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://alfarazkabakery.com";
 
-const whatsappLink =
-  "https://wa.me/6285179753356?text=Assalamualaikum%2C%20saya%20mau%20tanya%20tentang%20roti%20rumahan%20halal%20Alfarazka%20Bakery%20di%20Ciputat.";
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchPublicSiteSettings();
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
 
-const TokoRotiRumahanCiputatPage = () => {
+  return {
+    title: `Toko Roti Rumahan Halal di Ciputat — Aman untuk Keluarga | ${businessName}`,
+    description: `Sedang mencari toko roti rumahan halal di Ciputat? ${businessName} menghadirkan roti unyil dan roti rumahan yang lembut, higienis, dan insyaAllah halal, aman untuk anak dan keluarga.`,
+    keywords: [
+      "toko roti rumahan ciputat",
+      "toko roti halal ciputat",
+      "roti rumahan halal",
+      "roti unyil ciputat",
+      "roti rumahan untuk keluarga",
+      businessName,
+    ],
+    alternates: {
+      canonical: "/toko-roti-rumahan-ciputat",
+    },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: `${siteUrl}/toko-roti-rumahan-ciputat`,
+      siteName: businessName,
+      title: `Toko Roti Rumahan Halal di Ciputat — Lembut, Higienis, & Aman untuk Keluarga | ${businessName}`,
+      description: `${businessName} adalah toko roti rumahan di Ciputat yang fokus pada roti unyil, roti meises, dan snack acara. Dibuat dari dapur rumahan yang bersih, insyaAllah halal, dan ramah untuk anak.`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Toko Roti Rumahan Halal di Ciputat — Aman untuk Anak & Keluarga | ${businessName}`,
+      description:
+        "Roti rumahan halal, higienis, dan lembut dari Ciputat. Cocok untuk pengajian, arisan, ulang tahun anak, dan camilan keluarga.",
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+const TokoRotiRumahanCiputatPage = async () => {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const whatsappLink = buildWhatsAppUrl(
+    whatsappNumber,
+    `Assalamualaikum, saya mau tanya tentang roti rumahan halal ${businessName} di Ciputat.`
+  );
+
   return (
     <main className={styles.page}>
       {/* BREADCRUMB */}
@@ -68,10 +87,14 @@ const TokoRotiRumahanCiputatPage = () => {
           items={[
             { label: "Beranda", href: "/" },
             { label: "Produk & Paket", href: "/produk" },
-            { label: "Toko Roti Rumahan Ciputat", href: "/toko-roti-rumahan-ciputat" },
+            {
+              label: "Toko Roti Rumahan Ciputat",
+              href: "/toko-roti-rumahan-ciputat",
+            },
           ]}
         />
       </div>
+
       {/* HERO: BRAND & RUMAHAN */}
       <section
         className={`section ${styles.heroSection}`}
@@ -79,7 +102,6 @@ const TokoRotiRumahanCiputatPage = () => {
       >
         <div className="container">
           <div className={styles.heroInner}>
-            {/* LEFT TEXT */}
             <div className={styles.heroContent}>
               <p className={styles.heroKicker}>Toko Roti Rumahan di Ciputat</p>
               <h1
@@ -90,7 +112,7 @@ const TokoRotiRumahanCiputatPage = () => {
                 <span> Aman untuk Anak & Keluarga</span>
               </h1>
               <p className={styles.heroSubtitle}>
-                Alfarazka Bakery adalah toko roti rumahan di Ciputat yang
+                {businessName} adalah toko roti rumahan di Ciputat yang
                 menghadirkan roti unyil lembut, roti meises, dan snack acara
                 yang insyaAllah halal, dibuat dari dapur keluarga yang bersih
                 dan penuh perhatian.
@@ -132,12 +154,11 @@ const TokoRotiRumahanCiputatPage = () => {
               </p>
             </div>
 
-            {/* RIGHT IMAGE */}
             <div className={styles.heroImageWrapper}>
               <div className={styles.heroImageInner}>
                 <Image
                   src="/images/toko-alfarazka-bakery.png"
-                  alt="Toko roti rumahan halal Alfarazka Bakery di Ciputat"
+                  alt={`Toko roti rumahan halal ${businessName} di Ciputat`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   className={styles.heroImage}
@@ -165,7 +186,7 @@ const TokoRotiRumahanCiputatPage = () => {
                 Berawal dari Dapur Kecil, untuk Keluarga dan Lingkungan Sekitar
               </h2>
               <p className={styles.sectionSubtitle}>
-                Alfarazka Bakery lahir dari keinginan sederhana: menyediakan
+                {businessName} lahir dari keinginan sederhana: menyediakan
                 camilan yang lembut, enak, dan insyaAllah halal untuk keluarga
                 sendiri, lalu pelan-pelan menjangkau tetangga, pengajian, dan
                 acara-acara kecil di sekitar Ciputat.
@@ -197,12 +218,11 @@ const TokoRotiRumahanCiputatPage = () => {
               </ul>
             </div>
 
-            {/* small collage */}
             <div className={styles.storyGallery}>
               <div className={styles.storyImageLarge}>
                 <Image
                   src="/images/roti-unyil-1.jpg"
-                  alt="Roti unyil rumahan dari Alfarazka Bakery"
+                  alt={`Roti unyil rumahan dari ${businessName}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                 />
@@ -385,7 +405,7 @@ const TokoRotiRumahanCiputatPage = () => {
                 id="toko-roti-rumahan-closing-heading"
                 className={styles.sectionTitle}
               >
-                Mau Coba Roti Rumahan Halal dari Alfarazka Bakery?
+                Mau Coba Roti Rumahan Halal dari {businessName}?
               </h2>
               <p className={styles.sectionSubtitle}>
                 Baik untuk camilan keluarga, snack pengajian kecil, atau bekal
@@ -411,7 +431,7 @@ const TokoRotiRumahanCiputatPage = () => {
               <div className={styles.closingImage}>
                 <Image
                   src="/images/roti-unyil-4.jpg"
-                  alt="Roti rumahan halal Alfarazka Bakery siap dinikmati keluarga"
+                  alt={`Roti rumahan halal ${businessName} siap dinikmati keluarga`}
                   fill
                   sizes="(max-width: 768px) 100vw, 35vw"
                 />
