@@ -1,4 +1,5 @@
-// app/page.tsx
+//app/page.tsx
+
 /*
 Author: Wanda Azhar
 Location: Michigan, USA
@@ -14,99 +15,117 @@ import OrderSection from "./components/order/OrderSection";
 import TestimonialsSection from "./components/testimonials/TestimonialsSection";
 import FaqSection from "./components/faq/FaqSection";
 import ServiceAreaSection from "./components/service-area/ServiceAreaSection";
-
-const siteName = "Alfarazka Bakery";
+import {
+  fetchPublicSiteSettings,
+  buildWhatsAppUrl,
+  DEFAULT_SITE_SETTINGS,
+} from "./services/siteSettingsService";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
   "https://alfarazkabakery.com";
 
-const ogImagePath = "/images/og-alfarazka-bakery.png"; // ideal: 1200x630
+const ogImagePath = "/images/og-alfarazka-bakery.png";
 
-const title =
-  "Alfarazka Bakery – Roti Unyil Rumahan di Ciputat | Nyemil Sehat, Teman Ngopi";
-
-const description =
-  "Alfarazka Bakery menghadirkan roti unyil seribuan, roti meises, dan pizza mini fresh dari dapur rumahan di Ciputat. Cocok untuk pengajian, arisan, ulang tahun, rapat kantor, dan nyemil harian.";
-
-const keywords: string[] = [
-  "Alfarazka Bakery",
-  "roti unyil Ciputat",
-  "roti unyil seribuan",
-  "roti unyil Tangerang Selatan",
-  "snack box Ciputat",
-  "snack pengajian Ciputat",
-  "snack arisan Ciputat",
-  "snack ulang tahun Ciputat",
-  "pizza mini Ciputat",
-  "roti meises Ciputat",
-];
-
-// ✅ Edit ini agar sama persis dengan FAQ yang tampil di halaman
 const FAQ_ITEMS: Array<{ question: string; answer: string }> = [
   {
-    question: "Minimal order berapa?",
+    question: "Berapa minimal order roti unyil?",
     answer:
-      "Minimal order bisa berbeda tergantung jenis produk dan kebutuhan acara. Silakan chat WhatsApp untuk info minimal order dan rekomendasi jumlah sesuai jumlah tamu.",
+      "Untuk pemesanan harian bisa mulai dari 20–25 pcs. Untuk kebutuhan acara seperti pengajian, arisan, atau rapat, biasanya pelanggan memesan mulai 50, 100, hingga 200 pcs sesuai jumlah tamu.",
   },
   {
-    question: "Bisa untuk acara pengajian, arisan, atau rapat kantor?",
+    question: "Kapan sebaiknya saya melakukan pre-order?",
     answer:
-      "Bisa. Roti unyil dan snack kami cocok untuk pengajian, arisan, ulang tahun, rapat kantor, dan kebutuhan nyemil harian.",
+      "Disarankan H-1 untuk jumlah standar. Jika kamu membutuhkan ratusan pcs atau ada beberapa jenis acara dalam satu hari, sebaiknya menghubungi beberapa hari sebelumnya agar jadwal produksi bisa kami atur dengan nyaman.",
   },
   {
-    question: "Area pengantaran/pickup di mana?",
+    question: "Apakah bisa mix varian dalam satu pesanan?",
     answer:
-      "Kami melayani area Ciputat dan Tangerang Selatan. Untuk area sekitar (mis. Pamulang, BSD, Cilandak), silakan konfirmasi via WhatsApp.",
+      "Bisa. Kamu bisa mix beberapa varian roti unyil, roti meises, dan pizza mini dalam satu pesanan. Tinggal sampaikan kombinasi rasa yang diinginkan saat chat WhatsApp.",
   },
   {
-    question: "Cara pesan bagaimana?",
+    question: "Area mana saja yang bisa dilayani pengantaran?",
     answer:
-      "Pesan via WhatsApp. Kamu bisa tanya menu, harga, varian, ketersediaan, serta jadwal ambil/antar.",
+      "Kami melayani area sekitar Ciputat dan Tangerang Selatan, seperti Alun-alun Pamulang, UIN Jakarta, Gintung, BSD, Cilandak, Legoso, dan sekitarnya. Titik temu dan ongkir bisa disesuaikan saat diskusi di WhatsApp.",
+  },
+  {
+    question: "Metode pembayaran yang tersedia apa saja?",
+    answer:
+      "Pembayaran dapat dilakukan via transfer bank atau e-wallet sesuai kesepakatan. Untuk pesanan tertentu bisa diminta DP, dan pelunasan dilakukan saat pesanan selesai atau sebelum pengantaran.",
   },
 ];
 
-export const metadata: Metadata = {
-  title,
-  description,
-  keywords,
-  alternates: {
-    canonical: `${siteUrl}/`,
-  },
-  openGraph: {
-    type: "website",
-    siteName,
-    locale: "id_ID",
-    url: `${siteUrl}/`,
+function buildKeywords(businessName: string) {
+  return [
+    businessName,
+    "roti unyil Ciputat",
+    "roti unyil seribuan",
+    "roti unyil Tangerang Selatan",
+    "snack box Ciputat",
+    "snack pengajian Ciputat",
+    "snack arisan Ciputat",
+    "snack ulang tahun Ciputat",
+    "pizza mini Ciputat",
+    "roti meises Ciputat",
+  ];
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const addressLabel =
+    settings.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel;
+
+  const title = `${businessName} – Roti Unyil Rumahan di Ciputat | Nyemil Sehat, Teman Ngopi`;
+
+  const description = `${businessName} menghadirkan roti unyil seribuan, roti meises, dan pizza mini fresh dari dapur rumahan di ${addressLabel}. Cocok untuk pengajian, arisan, ulang tahun, rapat kantor, dan nyemil harian.`;
+
+  return {
     title,
     description,
-    images: [
-      {
-        url: ogImagePath,
-        width: 1200,
-        height: 630,
-        alt: "Alfarazka Bakery – Roti Unyil Rumahan di Ciputat",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: [ogImagePath],
-  },
-};
+    keywords: buildKeywords(businessName),
+    alternates: {
+      canonical: `${siteUrl}/`,
+    },
+    openGraph: {
+      type: "website",
+      siteName: businessName,
+      locale: "id_ID",
+      url: `${siteUrl}/`,
+      title,
+      description,
+      images: [
+        {
+          url: ogImagePath,
+          width: 1200,
+          height: 630,
+          alt: `${businessName} – Roti Unyil Rumahan di Ciputat`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImagePath],
+    },
+  };
+}
 
-function buildHomeWebPageJsonLd() {
-  const whatsappUrl = "https://wa.me/6285179753356";
-
+function buildHomeWebPageJsonLd(params: {
+  title: string;
+  description: string;
+  whatsappUrl: string;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `${siteUrl}/#home`,
-    name: title,
+    name: params.title,
     url: `${siteUrl}/`,
-    description,
+    description: params.description,
     isPartOf: { "@id": `${siteUrl}/#localbusiness` },
     primaryImageOfPage: {
       "@type": "ImageObject",
@@ -118,12 +137,12 @@ function buildHomeWebPageJsonLd() {
       {
         "@type": "OrderAction",
         name: "Pesan via WhatsApp",
-        target: [whatsappUrl],
+        target: [params.whatsappUrl],
       },
       {
         "@type": "ContactAction",
         name: "Tanya Harga & Ketersediaan",
-        target: [whatsappUrl],
+        target: [params.whatsappUrl],
       },
     ],
   };
@@ -159,14 +178,31 @@ function buildFaqJsonLd() {
   };
 }
 
-export default function HomePage() {
-  const homeJsonLd = buildHomeWebPageJsonLd();
+export default async function HomePage() {
+  const settings = await fetchPublicSiteSettings();
+
+  const businessName =
+    settings.businessName || DEFAULT_SITE_SETTINGS.businessName;
+  const addressLabel =
+    settings.addressLabel || DEFAULT_SITE_SETTINGS.addressLabel;
+  const whatsappNumber =
+    settings.whatsappNumber || DEFAULT_SITE_SETTINGS.whatsappNumber;
+
+  const title = `${businessName} – Roti Unyil Rumahan di Ciputat | Nyemil Sehat, Teman Ngopi`;
+  const description = `${businessName} menghadirkan roti unyil seribuan, roti meises, dan pizza mini fresh dari dapur rumahan di ${addressLabel}. Cocok untuk pengajian, arisan, ulang tahun, rapat kantor, dan nyemil harian.`;
+
+  const whatsappUrl = buildWhatsAppUrl(whatsappNumber);
+
+  const homeJsonLd = buildHomeWebPageJsonLd({
+    title,
+    description,
+    whatsappUrl,
+  });
   const breadcrumbJsonLd = buildBreadcrumbJsonLd();
   const faqJsonLd = buildFaqJsonLd();
 
   return (
     <main>
-      {/* Page JSON-LD */}
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
